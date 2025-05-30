@@ -1,0 +1,37 @@
+baseURL = 'https://bugbountycoi.org/'
+languageCode = 'en-us'
+title = 'Bug Bounty COI'
+theme = 'PaperMod'
+
+[params]
+defaultTheme = "auto"
+ShowReadingTime = true
+ShowShareButtons = true
+ShowPostNavLinks = true
+ShowBreadCrumbs = true
+ShowCodeCopyButtons = true
+ShowRssButtonInSectionTermList = true
+ShowToc = true
+
+  [params.homeInfoParams]
+  Title = "Bug Bounty Community of Interest"
+  Content = """
+Welcome to the Bug Bounty Community of Interest (BBCOI) group - a community of bug bounty program managers from various companies.
+  """
+
+  [[params.socialIcons]]
+  name = "github"
+  url = "https://github.com/bugbountycoi"
+
+[menu]
+  [[menu.main]]
+  identifier = "posts"
+  name = "Posts"
+  url = "/posts/"
+  weight = 10
+
+  [[menu.main]]
+  identifier = "join"
+  name = "Join Us"
+  url = "/join/"
+  weight = 20
