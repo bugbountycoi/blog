@@ -1,0 +1,77 @@
+{{- define "main" }}
+
+{{/* Latest Release Banner */}}
+{{ $pages := where .Site.RegularPages "Section" "framework" }}
+{{ $latest := index (sort $pages "Date" "desc") 0 }}
+{{ if $latest }}
+<div class="latest-release">
+  <h3>Latest Update</h3>
+  <div class="release-info">
+    <p><strong>{{ $latest.Title }}</strong></p>
+    <p>Version {{ $latest.Params.version }} - Released {{ $latest.Date.Format "January 2, 2006" }}</p>
+    <p>{{ $latest.Params.summary }}</p>
+    <a href="{{ $latest.RelPermalink }}" class="read-more">Read More →</a>
+  </div>
+</div>
+{{ end }}
+
+<header class="page-header">
+  {{- if .Description }}
+  <div class="post-description">
+    {{ .Description }}
+  </div>
+  {{- end }}
+</header>
+
+{{- if .Content }}
+<div class="post-content">
+  {{- if not (.Param "disableAnchoredHeadings") }}
+  {{- partial "anchored_headings.html" .Content -}}
+  {{- else }}{{ .Content }}{{ end }}
+</div>
+{{- end }}
+
+<div class="posts-list">
+  {{ range $pages.ByWeight }}
+    {{ if not .Params.draft }}
+    <article class="post-entry">
+      <header class="entry-header">
+        <h2>Chapter {{ .Params.chapter }}: {{ .Title }}</h2>
+      </header>
+      <div class="entry-content">
+        <p>{{ .Params.summary }}</p>
+      </div>
+      <footer class="entry-footer">
+        <span>Version {{ .Params.version }} · Updated {{ .Date.Format "January 2, 2006" }}</span>
+      </footer>
+      <a class="entry-link" aria-label="post link to {{ .Title }}" href="{{ .Permalink }}"></a>
+    </article>
+    {{ end }}
+  {{ end }}
+</div>
+
+<style>
+.latest-release {
+  background: var(--entry);
+  border-left: 4px solid var(--primary);
+  padding: 1.5rem;
+  margin: 2rem 0;
+  border-radius: var(--radius);
+}
+
+.release-info {
+  margin-top: 1rem;
+}
+
+.read-more {
+  display: inline-block;
+  margin-top: 1rem;
+  color: var(--primary);
+  text-decoration: none;
+}
+
+.read-more:hover {
+  text-decoration: underline;
+}
+</style>
+{{- end }}

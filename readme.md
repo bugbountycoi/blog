@@ -74,10 +74,70 @@ To deploy manually:
 
 ## Contributing
 
+### General Contributions
+
 1. Create a new branch for your changes
 2. Make your changes and test locally
 3. Submit a pull request
 4. Wait for review and approval
+
+### Contributing Framework Chapters
+
+The Bug Bounty Industry Framework is organized into chapters. To contribute a new chapter:
+
+1. Install Hugo (v0.147.6 or later) if you haven't already:
+   ```bash
+   brew install hugo
+   ```
+
+2. Clone the repository and create a new chapter:
+   ```bash
+   git clone --recursive https://github.com/bugbountycoi/website.git
+   cd website
+   hugo new content framework/your-chapter-name.md
+   ```
+
+3. Fill in the chapter front matter:
+   ```yaml
+   ---
+   title: "Your Chapter Title"
+   date: YYYY-MM-DD
+   chapter: X  # Assign the next available chapter number
+   version: "1.0"
+   authors: ["Your Name"]
+   draft: true
+   weight: 100  # Lower numbers appear first in the TOC
+   summary: "A brief summary of this chapter"
+   ---
+   ```
+
+4. Follow the template structure:
+   - Overview
+   - Key Concepts
+   - Guidelines
+   - Examples
+   - References
+   - Changelog
+
+5. Test your changes locally:
+   ```bash
+   hugo server --buildDrafts
+   ```
+
+6. Submit your chapter:
+   - Create a new branch
+   - Set `draft: false` when ready
+   - Submit a pull request
+
+Framework chapters are reviewed by the BBCOI community before publication.
+
+## Framework Updates
+
+Chapters are regularly updated based on:
+- Community feedback
+- Industry developments
+- New best practices
+- Real-world experiences
 
 ## License
 

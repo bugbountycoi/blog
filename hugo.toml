@@ -6,12 +6,17 @@ theme = 'PaperMod'
 [params]
 defaultTheme = "auto"
 ShowReadingTime = true
-ShowShareButtons = true
+ShowShareButtons = false
 ShowPostNavLinks = true
 ShowBreadCrumbs = true
 ShowCodeCopyButtons = true
 ShowRssButtonInSectionTermList = true
 ShowToc = true
+ShowAllPagesInNav = false
+displayFullLangName = true
+mainSections = ['framework']
+
+
 
   [params.homeInfoParams]
   Title = "Bug Bounty Community of Interest"
@@ -31,7 +36,19 @@ Welcome to the Bug Bounty Community of Interest (BBCOI) group - a community of b
   weight = 10
 
   [[menu.main]]
+  identifier = "cfp"
+  name = "CFP"
+  url = "/cfp/"
+  weight = 25
+
+  [[menu.main]]
+  identifier = "framework"
+  name = "Industry Framework"
+  url = "/framework/"
+  weight = 15
+
+  [[menu.main]]
   identifier = "join"
   name = "Join Us"
   url = "/join/"
-  weight = 20
+  weight = 25
