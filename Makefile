@@ -1,5 +1,9 @@
 #!/usr/bin/env make
 
+.PHONY: init
+init:
+	hugo mod get
+
 .PHONY: update
 update:
 	hugo mod get -u
