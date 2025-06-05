@@ -1,1 +1,54 @@
 # TODO: Generate a preview deployment
+name: Deploy PR to Preview Branch
+
+on:
+  pull_request:
+    branches:
+      - main
+
+permissions:
+  contents: read
+  pages: write      # to deploy to Pages
+  id-token: write   # to verify the deployment originates from an appropriate source
+
+concurrency:
+  # Concurrent builds inside PRs, but don't affect other PRs
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+defaults:
+  run:
+    shell: bash
+
+env:
+  HUGO_VERSION: 0.147.6
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Install Hugo CLI
+        run: |
+          wget -O ${{ runner.temp }}/hugo.deb https://github.com/gohugoio/hugo/releases/download/v${HUGO_VERSION}/hugo_extended_${HUGO_VERSION}_linux-amd64.deb \
+          && sudo dpkg -i ${{ runner.temp }}/hugo.deb
+
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Go
+        uses: actions/setup-go@v5
+        with:
+          go-version-file: 'go.mod'
+
+#      - name: Setup Pages
+#        id: pages
+#        uses: actions/configure-pages@v5
+
+      - name: Initialize
+        run: |
+          make init
+
+      - name: Check for compilation issues
+        # If there is a failure, will exit code non-zero and log the issue
+        run: hugo
