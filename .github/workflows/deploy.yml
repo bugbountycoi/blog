@@ -43,6 +43,9 @@ jobs:
         with:
           go-version-file: 'go.mod'
 
+      - uses: actions/setup-python@v3
+      - uses: pre-commit/action@v3.0.1
+
       - name: Setup Pages
         id: pages
         uses: actions/configure-pages@v5
