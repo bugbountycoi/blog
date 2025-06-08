@@ -11,21 +11,17 @@
 		"ghcr.io/devcontainers/features/hugo:1": {
 			"extended": true
 		},
-		"ghcr.io/devcontainers-extra/features/pre-commit:2": {}
+		"ghcr.io/devcontainers-extra/features/pre-commit:2": {},
+		// To test GHA workflows locally. Uncomment and "rebuild" codespace to use.
+		"ghcr.io/devcontainers-extra/features/act:1": {},
+		"ghcr.io/devcontainers/features/docker-in-docker:2": {}
 	},
 
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
 	// "forwardPorts": [],
 
 	// Configure tool-specific properties.
-	"customizations": {
-		"vscode": {
-			"extensions": [
-				"redhat.vscode-yaml",
-				"yzhang.markdown-all-in-one"
-			]
-		}
-	},
+	// "customizations": {},
 
 	"onCreateCommand": "sudo apt update && sudo apt full-upgrade -y",
 	"postStartCommand": "git pull --prune; make init"
