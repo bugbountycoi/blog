@@ -12,7 +12,7 @@
 			"extended": true
 		},
 		"ghcr.io/devcontainers-extra/features/pre-commit:2": {},
-		// To test GHA workflows locally. Uncomment and "rebuild" codespace to use.
+		// To test GHA workflows locally
 		"ghcr.io/devcontainers-extra/features/act:1": {},
 		"ghcr.io/devcontainers/features/docker-in-docker:2": {}
 	},
