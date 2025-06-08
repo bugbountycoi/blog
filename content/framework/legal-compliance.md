@@ -120,12 +120,12 @@ Disclosure Timeline:
   Initial Report:
     - Acknowledgment within 24 hours
     - Preliminary assessment within 72 hours
-  
+
   Resolution Phase:
     - 90-day fix timeline
     - Regular status updates
     - Researcher consultation
-  
+
   Public Disclosure:
     - Coordinated release
     - Technical details review

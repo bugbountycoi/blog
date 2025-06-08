@@ -18,3 +18,13 @@ updates:
       github-actions:
         patterns:
           - '*'
+
+  # Keep devcontainer features up-to-date
+  - package-ecosystem: "devcontainers"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    groups:
+      devcontainer-features:
+        patterns:
+          - "*"
