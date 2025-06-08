@@ -55,6 +55,9 @@ jobs:
         run: |
           make init
 
+      - name: Check for linting issues
+        run: pre-commit
+
       - name: Check for compilation issues
         # If there is a failure, will exit code non-zero and log the issue
         run: hugo
