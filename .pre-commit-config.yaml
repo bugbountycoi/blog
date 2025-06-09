@@ -1,0 +1,29 @@
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v5.0.0
+    hooks:
+      - id: check-merge-conflict
+      - id: check-yaml
+      - id: check-toml
+      - id: end-of-file-fixer
+      - id: mixed-line-ending
+        args: [--fix=auto]
+      - id: check-added-large-files
+      - id: trailing-whitespace
+        args: [--markdown-linebreak-ext=md]
+
+  # Optimize size of any blog images since they are hosted directly via GitHub Pages, not otherwise optimized
+  - repo: https://github.com/boidolr/pre-commit-images
+    rev: v1.8.8
+    hooks:
+      - id: optimize-avif
+      - id: optimize-jpg
+      - id: optimize-png
+      - id: optimize-svg
+      - id: optimize-webp
+
+  # Strip EXIF data from any blog images stored in the repo
+  - repo: https://github.com/stefmolin/exif-stripper
+    rev: 0.6.2
+    hooks:
+      - id: strip-exif

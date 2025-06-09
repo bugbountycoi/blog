@@ -22,7 +22,7 @@ The Bug Bounty Industry Framework is organized into chapters. To contribute a ne
 1. Complete all setup instructions on [DEVELOPMENT.md](DEVELOPMENT.md).
 2. Create a new chapter
    ```bash
-   hugo new content framework/your-chapter-name.md 
+   hugo new content framework/your-chapter-name.md
    ```
 
 3. Fill in the chapter front matter:

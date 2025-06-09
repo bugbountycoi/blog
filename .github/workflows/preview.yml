@@ -41,13 +41,23 @@ jobs:
         with:
           go-version-file: 'go.mod'
 
+      - name: Setup Python
+        uses: actions/setup-python@v5
+
+      - name: Setup Pre-Commit
+        run: |
+          echo "$HOME/.local/bin" >> "$GITHUB_PATH"
+          pipx install pre-commit
+
 #      - name: Setup Pages
 #        id: pages
 #        uses: actions/configure-pages@v5
 
       - name: Initialize
-        run: |
-          make init
+        run: make init
+
+      - name: Check for linting issues
+        run: pre-commit
 
       - name: Check for compilation issues
         # If there is a failure, will exit code non-zero and log the issue
