@@ -52,17 +52,37 @@ menu:
       identifier: "posts"
       url: "/posts"
 
-    - name: "Call For Presentations"
+    - name: "Join Us"
+      weight: 2
+      identifier: "join"
+      url: "/join"
+
+    - name: "CFP"
       weight: 2
       identifier: "cfp"
       url: "/cfp"
 
-    - name: "Industry Framework"
+    - name: "Framework"
       weight: 3
       identifier: "framework"
       url: "/framework"
 
-    - name: "Join Us"
-      weight: 99
-      identifier: "join"
-      url: "/join"
+    - name: "About"
+      weight: 4
+      identifier: "about"
+      url: "/about-us"
+
+    - name: "Privacy Policy"
+      weight: 5
+      identifier: "privacy-policy"
+      url: "/privacy-policy"
+
+    #- name: "Terms of Service"
+    #  weight: 4
+    #  identifier: "terms-of-service"
+    #  url: "/terms-of-service"
+
+    #- name: "Code of Conduct"
+    #  weight: 5
+    #  identifier: "code-of-conduct"
+    #  url: "/code-of-conduct"
