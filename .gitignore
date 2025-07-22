@@ -15,3 +15,5 @@ hugo.linux
 # ides
 .vscode
 .idea
+
+CNAME
