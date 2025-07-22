@@ -15,10 +15,9 @@ tags: [
   "strategy",
   "intel"
 ]
+draft: false
+summary: "A case study on Intel's innovative approach to bug bounty retesting. This post explores the challenges of incentivizing researchers to retest mitigations and details a successful experiment that used a collaborative, results-based model to significantly increase participation and validation coverage."
 ---
-
-{{< toc style="block" >}}
-
 
 Author: Chris Holt, Intel Bug Bounty Program Manager
 
