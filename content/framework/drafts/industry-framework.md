@@ -1,6 +1,7 @@
 ---
 title: "Bug Bounty Program Management Framework"
 date: 2025-05-30
+draft: true
 description: "A comprehensive framework for managing bug bounty programs effectively"
 tags: ["framework", "best practices", "program management"]
 author: "BBCOI"

@@ -4,7 +4,7 @@ date: 2025-05-30
 chapter: 6
 version: "1.0"
 authors: ["BBCOI"]
-draft: false
+draft: true
 weight: 60
 summary: "Comprehensive guide to measuring, analyzing, and reporting bug bounty program performance, including key metrics, dashboards, and stakeholder communications."
 ---

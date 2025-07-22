@@ -4,7 +4,7 @@ date: 2025-05-30
 chapter: 4
 version: "1.0"
 authors: ["BBCOI"]
-draft: false
+draft: true
 weight: 40
 summary: "Comprehensive guidelines for security testing in bug bounty programs, including testing methodologies, tools, and best practices for responsible disclosure."
 ---

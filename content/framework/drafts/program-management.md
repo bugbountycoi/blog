@@ -4,8 +4,7 @@ date: 2025-05-30
 chapter: 1
 version: "1.0"
 authors: ["BBCOI"]
-draft: false
-weight: 10
+draft: true
 summary: "A comprehensive framework for managing bug bounty programs effectively, covering scope definition, reward structures, triage processes, and program metrics."
 ---
 

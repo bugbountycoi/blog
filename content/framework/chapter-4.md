@@ -6,6 +6,7 @@ authors: [
   "Annika Erickson",
   "Kathleen Trimble-Noble",
   "Christopher Robinson",
+  "Chris Holt",
   "Deana Shick"
 ]
 tags: [
@@ -21,17 +22,16 @@ tags: [
   "communications"
 ]
 ---
-
-{{< toc style="block" >}}
-
-
-## **Introduction**
-
 By now, we hope that you have read [Chapters 1](./chapter-1.md), and [3](./chapter-3.md), and are ready to begin scoping and budgeting your Bug Bounty program. If you haven’t read those chapters and are new to Bug Bounty, we encourage you to do so before going any further. This chapter is broken down into two primary topics: establishing program scope and how to properly allocate resources to support your Bug Bounty program.
+
+<!--more-->
+{{< toc style="block" >}}
 
 Once you set you have [chartered your program and strategic objectives](./chapter-3.md), it is time to begin defining your scope, or the types or amount of infrastructure and/or products available for vulnerability research and testing. In general, we advise to start with a smaller scope and expand to other infrastructure and/or products, rather than boiling the ocean all in one go. This chapter describes some considerations for scope, eligibility criteria for sound reporting, and how to properly focus your program to optimize value for your organization.
 
 Once you have completed scoping, budgeting for your program is the next $50,000 question, so to speak. Budgeting and planning will depend greatly upon how much experience your organization has with Bug Bounty programs. If you have never done any work in this space, the task of setting and funding the whole program up can be a bit daunting. For those organizations that have an existing program or perhaps already contract out this capability, the task of planning will be one of refinement and tweaking rather than foundational concerns like staffing, tooling, and so on. This chapter discusses what to do if you are starting from scratch, and different funding models to help you during any state of your Bug Bounty program.
+
+
 
 ## **Defining Scope for your Bug Bounty Program**
 
