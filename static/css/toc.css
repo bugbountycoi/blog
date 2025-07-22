@@ -1,0 +1,19 @@
+.toc-block {
+  border: 1px solid #1a1a1a;
+  background: #ddd6d6;
+  padding: 1em;
+  margin-bottom: 2em;
+  border-radius: 6px;
+}
+
+.toc-sidebar {
+  position: sticky;
+  top: 2em;
+  float: right;
+  width: 300px;
+  margin-left: 2em;
+  background: #ddd6d6;
+  border: 1px solid #1a1a1a;
+  padding: 1em;
+  border-radius: 6px;
+}

@@ -39,6 +39,8 @@ params:
       follow:
         github:
           url: "https://github.com/bugbountycoi"
+        linkedin:
+          url: "https://www.linkedin.com/company/bb-coi"
 
 # Can also define in page front matter instead of globally
 # https://gohugo.io/content-management/menus/

@@ -1,0 +1,15 @@
+{{ $style := .Get "style" | default "block" }}
+
+<link rel="stylesheet" href="/css/toc.css">
+
+{{ if eq $style "sidebar" }}
+  <div class="toc-sidebar">
+    <h2>Table of Contents</h2>
+    {{ .Page.TableOfContents }}
+  </div>
+{{ else }}
+  <div class="toc-block">
+    <h2>Table of Contents</h2>
+    {{ .Page.TableOfContents }}
+  </div>
+{{ end }}
