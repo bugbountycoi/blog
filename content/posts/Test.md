@@ -15,7 +15,7 @@ tags: [
   "strategy",
   "intel"
 ]
-draft: false
+draft: true
 summary: "This is a test, this is only a test, do not be alarmed. this is only a test. If this was the real thing we would all be dying."
 ---
 Author: Lady_N
