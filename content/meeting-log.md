@@ -43,7 +43,7 @@ summary: "A list of past meeting topics and presenters."
 | August | Inti de Ceukelaire | Presentation: A Public and Data-centric [Bounty Calculator](https://www.intigriti.com/blog/business-insights/bug-bounty-calculator-crunch-the-numbers-and-optimize-your-vdp)  |
 | July | Kieran Classens | Presentation: History, Tooling, and Lessons from Applying AI to Triage |
 | June | n/a | Discussion |
-| May | | Discussion: Framework working session|
+| May | | Discussion: Framework working session |
 | April | Jonathan Kuskos | Discussion: Pledge of Ethics draft|
 | March | Austin Sturm | Discussion: Bounty reports, farming|
 | February | n/a | Discussion: Active Projects
@@ -58,7 +58,7 @@ summary: "A list of past meeting topics and presenters."
 | September | | |
 | August | | |
 | July | | |
-| June | | |
+| June | Katie Noble | Presentation: How to Build, Drive, and Thrive a Bug Bounty Program |
 | May | | |
 | April | | |
 | March | | |
@@ -71,15 +71,16 @@ summary: "A list of past meeting topics and presenters."
 | December | n/a | Social: Holiday Hangout, Swag Swap|
 | November | | |
 | October | | |
-| September | | |
+| September | Katie Noble | Presentation: Bug Bounty Platforms – Decision Making |
 | August | | |
 | July | | |
 | June | | |
 | May | | |
-| April | | |
-| March | | |
-| February | n/a | Social: The Art of Teas and Coffees|
-| January | Admin Board | Annual Meeting: Strategy, Board Election, Active Projects |  
+| April | Chris Holt| Discussion:
+Supply vs Demand; Growing the pool of researchers, accessibility, utilities, and partnerships |
+| March | Admin Board | Annual Meeting: Board Election, Strategy |
+| February | Katie Noble, Chris Holt | Social: The Art of Teas and Coffees |
+| January | Katie Noble | Discussion: Developing Bug Bounty Epics |  
 
 ### 2021
 | Month | Speaker/Host | Topic |
@@ -87,28 +88,29 @@ summary: "A list of past meeting topics and presenters."
 | December | n/a | Social: Holiday Hangout, Swag Swap |
 | November | | |
 | October | | |
-| September | | |
-| August | | |
-| July | | |
-| June | | |
-| May | | |
-| April | | |
-| March | | |
-| February | | |
-| January | Admin Board | Annual Meeting: Strategy, Board Election, Active Projects |  
+| September | -- | Discussion: [EPSS](https://www.first.org/epss/) |
+| August | Katie Noble | Discussion: How to Measure BB Program Success |
+| July | Matthew Luallen | Presentation |
+| June | -- | Discussion: Strategic planning, Admin Board Elections |
+| May | Dr. Amit Elazari | Discussion: Policy Update - What all these new policies mean |
+| April | Becky Bracken | Presentation: Demystifing Journalist Experience - ThreatPost |
+| March | Sarah Jacobs | Presentation: Neurodiversity in Research |
+| February | Jay Angus | Discussion: Common terms - The Impact on language on the security community "terms and conditions" |
+| January | -- | Strategic Sync with Wider BB: How are we doing? |  
 
 ### 2020
 | Month | Speaker/Host | Topic |
 | :-- | :-- | :-- |
 | December | n/a | Social: Holiday Hangout, Swag Swap |
-| November | | |
-| October | | |
-| September | | |
+| November | Daniel Gruss, Anders Fogh | Discussion: Researcher Motivations Open Q&A |
+| October | Art Manion | Presentation: the "In’s and out's" of SSVC |
+| September | Matt Kennedy | Presentation: How to measure Impacts for Incentives |
 | August | Chris Holt, Katie Noble | Discussion: COI Admin Board elections |
-| July | | |
-| June | | |
-| May | | |
-| April | | |
-| March | | |
-| February | | |
-| January | n/a/ | Inaugural COI Meeting|  
+| August | Professor Aron Laszka | Discussion: [The Hackers’ Viewpoint: Exploring Challenges and Benefits of Bug-Bounty Programs](https://www2.cs.uh.edu/~gnawali/papers/bugbounty-wsiw20-abstract.html) [pdf](https://www2.cs.uh.edu/~gnawali/papers/bugbounty-wsiw20.pdf)|
+| July | Alexander Romero | Presentation: Hack the Pentagon |
+| June | Priya Iyer | Discussion: Inclusiveness of security language; analysis of researcher motivations |
+| May | Chris Holt | Presentation: LHE/VHE, how to design a successful event |
+| April | -- | Discussion: group charter design|
+| March | -- | Discussion: working group structure and rules, future topics; Building relationships and trust with Security Researchers |
+| February | -- | <REDACTED_company> Bug Bounty Program overview |
+| January | n/a | Inaugural COI Meeting |  
