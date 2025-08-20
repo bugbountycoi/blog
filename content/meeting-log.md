@@ -36,13 +36,13 @@ summary: "A list of past meeting topics and presenters."
 ### 2024
 | Month | Speaker/Host | Topic |
 | :-- | :-- | :-- |
-| December | n/a | Social: Holiday Hangout, Swag Swap|
+| December | -- | Social: Holiday Hangout, Swag Swap|
 | November | Bonnie Byer-Viteri | Presentation: Growing a Security Champion Program Into a Security Powerhouse |
 | October | Aviram Zrahia | Presentation: [The simple economics of an external shock to a bug bounty platform](https://academic.oup.com/cybersecurity/article/10/1/tyae006/7667075?login=false) |
-| September | n/a | Discussion |
+| September | -- | Discussion |
 | August | Inti de Ceukelaire | Presentation: A Public and Data-centric [Bounty Calculator](https://www.intigriti.com/blog/business-insights/bug-bounty-calculator-crunch-the-numbers-and-optimize-your-vdp)  |
 | July | Kieran Classens | Presentation: History, Tooling, and Lessons from Applying AI to Triage |
-| June | n/a | Discussion |
+| June | -- | Discussion |
 | May | | Discussion: Framework working session |
 | April | Jonathan Kuskos | Discussion: Pledge of Ethics draft|
 | March | Austin Sturm | Discussion: Bounty reports, farming|
@@ -52,7 +52,7 @@ summary: "A list of past meeting topics and presenters."
 ### 2023
 | Month | Speaker/Host | Topic |
 | :-- | :-- | :-- |
-| December | n/a | Social: Holiday Hangout, Swag Swap|
+| December | -- | Social: Holiday Hangout, Swag Swap|
 | November | | |
 | October | | |
 | September | | |
@@ -68,7 +68,7 @@ summary: "A list of past meeting topics and presenters."
 ### 2022
 | Month | Speaker/Host | Topic |
 | :-- | :-- | :-- |
-| December | n/a | Social: Holiday Hangout, Swag Swap|
+| December | -- | Social: Holiday Hangout, Swag Swap|
 | November | | |
 | October | | |
 | September | Katie Noble | Presentation: Bug Bounty Platforms – Decision Making |
@@ -85,7 +85,7 @@ Supply vs Demand; Growing the pool of researchers, accessibility, utilities, and
 ### 2021
 | Month | Speaker/Host | Topic |
 | :-- | :-- | :-- |
-| December | n/a | Social: Holiday Hangout, Swag Swap |
+| December | -- | Social: Holiday Hangout, Swag Swap |
 | November | | |
 | October | | |
 | September | -- | Discussion: [EPSS](https://www.first.org/epss/) |
@@ -101,7 +101,7 @@ Supply vs Demand; Growing the pool of researchers, accessibility, utilities, and
 ### 2020
 | Month | Speaker/Host | Topic |
 | :-- | :-- | :-- |
-| December | n/a | Social: Holiday Hangout, Swag Swap |
+| December | -- | Social: Holiday Hangout, Swag Swap |
 | November | Daniel Gruss, Anders Fogh | Discussion: Researcher Motivations Open Q&A |
 | October | Art Manion | Presentation: the "In’s and out's" of SSVC |
 | September | Matt Kennedy | Presentation: How to measure Impacts for Incentives |
@@ -113,4 +113,4 @@ Supply vs Demand; Growing the pool of researchers, accessibility, utilities, and
 | April | -- | Discussion: group charter design|
 | March | -- | Discussion: working group structure and rules, future topics; Building relationships and trust with Security Researchers |
 | February | -- | <REDACTED_company> Bug Bounty Program overview |
-| January | n/a | Inaugural COI Meeting |  
+| January | -- | Inaugural COI Meeting |  
