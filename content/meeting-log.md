@@ -24,7 +24,7 @@ summary: "A list of past meeting topics and presenters."
 | November | tbd | tbd |
 | October | tbd | tbd |
 | September | tbd | tbd |
-| August | | |
+| August | Justin Gardner | Presentation |
 | July | n/a | *cancelled* |
 | June | Harley Kimball | Presentation: Bug Bounty Village (and other projects) |
 | May | Chris Holt | Presentation: Active BB COI Projects |
@@ -43,7 +43,7 @@ summary: "A list of past meeting topics and presenters."
 | August | Inti de Ceukelaire | Presentation: A Public and Data-centric [Bounty Calculator](https://www.intigriti.com/blog/business-insights/bug-bounty-calculator-crunch-the-numbers-and-optimize-your-vdp)  |
 | July | Kieran Classens | Presentation: History, Tooling, and Lessons from Applying AI to Triage |
 | June | -- | Discussion |
-| May | | Discussion: Framework working session |
+| May | -- | Discussion: Framework working session |
 | April | Jonathan Kuskos | Discussion: Pledge of Ethics draft|
 | March | Austin Sturm | Discussion: Bounty reports, farming|
 | February | n/a | Discussion: Active Projects
@@ -53,31 +53,30 @@ summary: "A list of past meeting topics and presenters."
 | Month | Speaker/Host | Topic |
 | :-- | :-- | :-- |
 | December | -- | Social: Holiday Hangout, Swag Swap|
-| November | | |
-| October | | |
-| September | | |
-| August | | |
-| July | | |
+| November | -- | |
+| October | -- | |
+| September | -- | |
+| August | -- | |
+| July | -- | |
 | June | Katie Noble | Presentation: How to Build, Drive, and Thrive a Bug Bounty Program |
-| May | | |
-| April | | |
-| March | | |
-| February | | |
+| May | -- | |
+| April | -- | |
+| March | -- | |
+| February | -- | |
 | January | Admin Board | Annual Meeting: Strategy, Board Election, Active Projects |  
 
 ### 2022
 | Month | Speaker/Host | Topic |
 | :-- | :-- | :-- |
 | December | -- | Social: Holiday Hangout, Swag Swap|
-| November | | |
-| October | | |
+| November | -- | |
+| October | -- | |
 | September | Katie Noble | Presentation: Bug Bounty Platforms – Decision Making |
-| August | | |
-| July | | |
-| June | | |
-| May | | |
-| April | Chris Holt| Discussion:
-Supply vs Demand; Growing the pool of researchers, accessibility, utilities, and partnerships |
+| August | -- | |
+| July | -- | |
+| June | -- | |
+| May | -- | |
+| April | Chris Holt| Discussion: Supply vs Demand; Growing the pool of researchers, accessibility, utilities, and partnerships |
 | March | Admin Board | Annual Meeting: Board Election, Strategy |
 | February | Katie Noble, Chris Holt | Social: The Art of Teas and Coffees |
 | January | Katie Noble | Discussion: Developing Bug Bounty Epics |  
@@ -86,8 +85,8 @@ Supply vs Demand; Growing the pool of researchers, accessibility, utilities, and
 | Month | Speaker/Host | Topic |
 | :-- | :-- | :-- |
 | December | -- | Social: Holiday Hangout, Swag Swap |
-| November | | |
-| October | | |
+| November | -- | |
+| October | -- | |
 | September | -- | Discussion: [EPSS](https://www.first.org/epss/) |
 | August | Katie Noble | Discussion: How to Measure BB Program Success |
 | July | Matthew Luallen | Presentation |
