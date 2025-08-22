@@ -22,6 +22,9 @@ tags: [
   "legal considerations",
   "communications"
 ]
+menu:
+  framework:
+    weight: 3
 ---
 
 By now, you have read [Chapter 1](./chapter-1.md), and you may be wondering if a Bug Bounty program is right for your organization. You might be intrigued by the idea of interacting with researchers, and wondering about the risks of exposure that comes with researchers hacking away at your product. Perhaps you or someone in your organization has floated the idea of a Bug Bounty program, and you are wondering if it will allow you to meet the trend that you observe in the industry today. The decision to establish a Bug Bounty program should not be made lightly or as a reaction to some unexpected or sudden event.  It is a decision that should be evaluated and executed with business-like objectivity and with the unique needs and culture of your business in mind.  

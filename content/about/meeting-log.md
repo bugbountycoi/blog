@@ -5,26 +5,23 @@ authors: [
   "bbcoi"
 ]
 tags: [
-  "social",
-  "meeting",
-  "discussion",
-  "presentation",
-  "speakers",
-  "notes",
-  "log"
+  "social", "meeting", "discussion", "presentation", "speakers", "notes", "log", "about", "policy"
 ]
-draft: true
-summary: "A list of past meeting topics and presenters."
+draft: false
+menu: 
+  about:
+    weight: 1
+summary: A list of past meeting topics and presenters.
 ---
 
-### 2025
+## 2025
 | Month | Speaker/Host | Topic |
 | :-- | :-- | :-- |
 | December | tbd | tbd |
 | November | tbd | tbd |
 | October | tbd | tbd |
 | September | tbd | tbd |
-| August | Justin Gardner | Presentation |
+| August | tbd | tbd |
 | July | n/a | *cancelled* |
 | June | Harley Kimball | Presentation: Bug Bounty Village (and other projects) |
 | May | Chris Holt | Presentation: Active BB COI Projects |
@@ -33,7 +30,9 @@ summary: "A list of past meeting topics and presenters."
 | February | Austin Sturm, Chris Holt, Wesley Sponslor | Presentation: Self-Hosted live hacking events |
 | January | Admin Board | Annual Meeting: Strategy, Board Election, Active Projects |  
 
-### 2024
+---
+
+## 2024
 | Month | Speaker/Host | Topic |
 | :-- | :-- | :-- |
 | December | -- | Social: Holiday Hangout, Swag Swap|
@@ -49,7 +48,9 @@ summary: "A list of past meeting topics and presenters."
 | February | n/a | Discussion: Active Projects
 | January | Admin Board | Annual Meeting: Strategy, Board Election |
 
-### 2023
+---
+
+## 2023
 | Month | Speaker/Host | Topic |
 | :-- | :-- | :-- |
 | December | -- | Social: Holiday Hangout, Swag Swap|
@@ -65,7 +66,9 @@ summary: "A list of past meeting topics and presenters."
 | February | -- | |
 | January | Admin Board | Annual Meeting: Strategy, Board Election, Active Projects |  
 
-### 2022
+---
+
+## 2022
 | Month | Speaker/Host | Topic |
 | :-- | :-- | :-- |
 | December | -- | Social: Holiday Hangout, Swag Swap|
@@ -81,7 +84,9 @@ summary: "A list of past meeting topics and presenters."
 | February | Katie Noble, Chris Holt | Social: The Art of Teas and Coffees |
 | January | Katie Noble | Discussion: Developing Bug Bounty Epics |  
 
-### 2021
+---
+
+## 2021
 | Month | Speaker/Host | Topic |
 | :-- | :-- | :-- |
 | December | -- | Social: Holiday Hangout, Swag Swap |
@@ -97,7 +102,9 @@ summary: "A list of past meeting topics and presenters."
 | February | Jay Angus | Discussion: Common terms - The Impact on language on the security community "terms and conditions" |
 | January | -- | Strategic Sync with Wider BB: How are we doing? |  
 
-### 2020
+---
+
+## 2020
 | Month | Speaker/Host | Topic |
 | :-- | :-- | :-- |
 | December | -- | Social: Holiday Hangout, Swag Swap |

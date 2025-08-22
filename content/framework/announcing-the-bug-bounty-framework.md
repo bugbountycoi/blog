@@ -8,6 +8,9 @@ tags: [
     "security", 
     "announcement"
     ]
+menu:
+  framework:
+    weight: 1
 ---
 
 Our Bug Bounty Community of Interest (BB COI) has been hard at work this year discussing the challenging problems many Bug Bounty programs (BBP) face, potentially including Vulnerability Disclosure Programs (VDP). Throughout our conversations and research, we noticed that there is little comprehensive guidance covering the Bug Bounty space. In an effort to demystify Bug Bounty programs for all audiences, the Bug Bounty Community of Interest is proud to announce our Bug Bounty Framework! Here is what you can expect from us.

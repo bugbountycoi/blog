@@ -22,6 +22,9 @@ tags: [
   "metrics",
   "program charter"
 ]
+menu:
+  framework:
+    weight: 4
 ---
 
 If you have stumbled upon this Chapter of the [Bug Bounty Framework](/tags/framework), you may have decided that a Bug Bounty program fits your needs . Creating a program charter and defining your strategic objectives are important steps in defining **why** your Bug Bounty program should exist and what constitutes success. Setting strategic objectives, with clear goals, and establishing the program charter will help to ensure that you have a holistic program plan. The overarching objective for this type of internal documentation is to reduce internal roadblocks and develop a clear plan to help guide your program, while clarifying and articulating your goals and objectives to your internal organization. In this Chapter, we will describe the key steps to consider as you create your program’s charter. This Chapter builds on our previous Chapters where we define different types of Bug Bounty programs ([Chapter 1: What is a Bug Bounty Program?](./chapter-1.md)) and provide detailed information on strategic and operational factors to determine if a Bug Bounty program is right for your organization ([Chapter 2: Is a Bug Bounty Program Right for You?](./chapter-2.md)).

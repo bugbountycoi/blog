@@ -5,12 +5,13 @@ authors: [
   "bbcoi"
 ]
 tags: [
-  "privacy",
-  "policy",
-  "legal"
+  "about", "privacy", "policy", "legal"
 ]
 draft: false
-summary: "An overview of how the Bug Bounty Community of Interest website handles user data. This policy details what personal data is collected through comments, cookies, and media uploads, why it's collected, how long it's retained, and the rights users have over their data."
+menu: 
+  about:
+    weight: 1
+summary: How the Bug Bounty Community of Interest website handles user data.
 ---
 
 

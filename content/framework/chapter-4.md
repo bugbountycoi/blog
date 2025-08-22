@@ -21,6 +21,9 @@ tags: [
   "legal considerations",
   "communications"
 ]
+menu:
+  framework:
+    weight: 5
 ---
 By now, we hope that you have read [Chapters 1](./chapter-1.md), and [3](./chapter-3.md), and are ready to begin scoping and budgeting your Bug Bounty program. If you haven’t read those chapters and are new to Bug Bounty, we encourage you to do so before going any further. This chapter is broken down into two primary topics: establishing program scope and how to properly allocate resources to support your Bug Bounty program.
 

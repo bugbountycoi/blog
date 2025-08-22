@@ -1,6 +1,4 @@
 baseURL: "https://bugbountycoi.org/"
-languageCode: "en-us"
-title: "Bug Bounty COI"
 
 module:
   imports:
@@ -15,7 +13,7 @@ enableRobotsTXT: true
 
 languages:
   en:
-    title: "Bug Bounty COI"
+    title: "Bug Bounty Community of Interest"
 sitemap:
   changefreq: monthly
   priority: 0.5
@@ -33,18 +31,27 @@ params:
   # choose a background color from any on this page: http://tachyons.io/docs/themes/skins/ and preface it with "bg-"
   background_color_class: bg-black
   recent_posts_number: 3
+  since: 2019
   ananke:
     # TODO: don't think I did this right
     social:
       follow:
-        github:
-          url: "https://github.com/bugbountycoi"
-        linkedin:
-          url: "https://www.linkedin.com/company/bb-coi"
+        networks:
+          - github
+          - linkedin
+        new_window_icon: true  # Optional: adds external link icon
+      github:
+        profilelink: "https://github.com/bugbountycoi"
+        icon: "github"
+      linkedin:
+        profilelink: "https://www.linkedin.com/company/bb-coi"
+        icon: "linkedin"
+
+
 
 # Can also define in page front matter instead of globally
 # https://gohugo.io/content-management/menus/
-menu:
+menus:
   main:
     # Note: we don't have a content/posts/ right now
     - name: "Posts"
@@ -66,16 +73,6 @@ menu:
       weight: 3
       identifier: "framework"
       url: "/framework"
-
-    - name: "About"
-      weight: 4
-      identifier: "about"
-      url: "/about-us"
-
-    - name: "Privacy Policy"
-      weight: 5
-      identifier: "privacy-policy"
-      url: "/privacy-policy"
 
     #- name: "Terms of Service"
     #  weight: 4

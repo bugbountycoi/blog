@@ -15,7 +15,9 @@ tags: [
   "reporting",
   "disclosure policy"
 ]
-
+menu:
+  framework:
+    weight: 2
 ---
 
 Bug Bounty programs (or, “Bug Bounties”) have quickly become a mainstay in many security programs. Bug Bounties encourage [reporters](https://vuls.cert.org/confluence/display/CVD/3.2.+Reporter) (including vulnerability finders, researchers, ethical hackers, and so on) to submit vulnerabilities to an organization for rewards. This chapter covers the basics of what Bug Bounties are, the types of programs, requirements for success, and how Bug Bounties differ from other kinds of security testing. 

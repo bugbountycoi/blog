@@ -1,0 +1,63 @@
+/* Dropdown menu hidden by default */
+.dropdown-menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  display: none;
+  opacity: 0;
+  visibility: hidden;
+  z-index: 999;
+  background-color: white;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  padding: 0.5rem;
+  transition: opacity 0.2s ease-in-out;
+  pointer-events: auto;
+
+}
+
+.wider-dropdown {
+  width: 300px;
+}
+
+
+/* Show dropdown when hovering over parent group */
+.group:hover .dropdown-menu {
+  display: block;
+  opacity: 1;
+  visibility: visible;
+  
+}
+
+/* Rotate arrow on hover */
+.group:hover .arrow-icon {
+  transform: rotate(180deg);
+}
+
+/* Smooth transitions */
+.arrow-icon,
+.site-navigation a {
+  transition: transform 0.2s ease-in-out, color 0.2s ease-in-out;
+}
+
+/* Submenu item styling */
+.dropdown-menu li {
+  margin-bottom: 0.5rem;
+}
+
+.dropdown-menu a {
+  color: black;
+  text-decoration: none;
+}
+
+.dropdown-menu a:hover {
+  color: #0077cc;
+}
+
+
+
+/* Custom styles for the footer/disclaimer block */
+.disclaimer {
+  font-size: 0.9rem;
+  color: #666;
+  margin-top: 1rem;
+}

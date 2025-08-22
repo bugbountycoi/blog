@@ -17,6 +17,9 @@ tags: [
   "researcher relations",
   "communication"
 ]
+menu:
+  framework:
+    weight: 7
 ---
 
 Like any scenario involving human interaction, you’re going to have to deal with disputes over severity assignments and payment amounts for your Bug Bounty Program.

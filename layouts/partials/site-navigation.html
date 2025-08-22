@@ -1,0 +1,92 @@
+<nav class="pv3 ph3 ph4-ns" role="navigation">
+  <div class="flex-l center items-center justify-between">
+    <a href="{{ .Site.Home.RelPermalink }}" class="f3 fw2 hover-white white-90 dib no-underline">
+      {{ with .Site.Params.site_logo }}
+        <img src="{{ urls.RelURL . }}" class="w100 mw5-ns" alt="{{ $.Site.Title }}" />
+      {{ else }}
+        {{ .Site.Title }}
+      {{ end }}
+    </a>
+
+    <div class="flex-l items-center">
+      {{ partials.Include "i18nlist.html" . }}
+
+      {{ if .Site.Menus.main }}
+        <ul class="{{ compare.Conditional (compare.Eq $.Site.Language.LanguageDirection "rtl") "pr0 ml3" "pl0 mr3" }}">
+          {{ $aboutMenu := site.Menus.about }}
+          {{ if $aboutMenu }}
+            <li class="list f5 f4-ns fw4 dib group relative pr3">
+              <a class="hover-white white-90 no-underline flex items-center transition-all duration-200 ease-in-out" href="/about/" title="About">
+                About
+                <svg class="ml1 arrow-icon transition-transform duration-200 ease-in-out" width="10" height="10" viewBox="0 0 10 10" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M1 3l4 4 4-4" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+                </svg>
+              </a>
+              <ul class="absolute bg-white shadow-5 pa2 mt2 z-999 dropdown-menu dn group-hover-db  wider-dropdown">
+                {{ range $aboutMenu }}
+                  <li class="mb2">
+                    <a class="black hover-blue no-underline" href="{{ .URL }}">
+                      {{ truncate 30 .Name }}
+                    </a>
+                  </li>
+                {{ end }}
+              </ul>
+            </li>
+          {{ end }}
+
+          {{ $frameworkMenu := site.Menus.framework }}
+          {{ if $frameworkMenu }}
+            <li class="list f5 f4-ns fw4 dib group relative pr3">
+              <a class="hover-white white-90 no-underline flex items-center transition-all duration-200 ease-in-out" href="/framework/" title="Framework">
+                Framework
+                <svg class="ml1 arrow-icon transition-transform duration-200 ease-in-out" width="10" height="10" viewBox="0 0 10 10" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M1 3l4 4 4-4" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+                </svg>
+              </a>
+              <ul class="absolute bg-white shadow-5 pa2 mt2 z-999 dropdown-menu dn group-hover-db wider-dropdown">
+                {{ range $frameworkMenu }}
+                  <li class="mb2">
+                    <a class="black hover-blue no-underline" href="{{ .URL }}" title="{{ .Name }}">
+                      {{ truncate 30 .Name }}
+                    </a>
+                  </li>
+                {{ end }}
+              </ul>
+            </li>
+          {{ end }}
+        </ul>
+      {{ end }}
+          
+          {{ range .Site.Menus.main }}
+            {{ if (and (ne .Identifier "about") (ne .Identifier "framework")) }}
+              <li class="list f5 f4-ns fw4 dib relative group {{ compare.Conditional (compare.Eq $.Site.Language.LanguageDirection "rtl") "pl3" "pr3" }}">
+                <a class="hover-white white-90 no-underline flex items-center transition-all duration-200 ease-in-out" href="{{ .URL }}" title="{{ lang.Translate "pageTitle" . }}">
+                  {{ .Name }}
+                  {{ if .HasChildren }}
+                    <svg class="ml1 arrow-icon transition-transform duration-200 ease-in-out" width="10" height="10" viewBox="0 0 10 10" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M1 3l4 4 4-4" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+                    </svg>
+                  {{ end }}
+                </a>
+
+                {{ if .HasChildren }}
+                  <ul class="absolute bg-white shadow-5 pa2 mt2 z-999 dropdown-menu dn group-hover-db">
+                    {{ range .Children }}
+                      <li class="mb2">
+                        <a class="black hover-blue no-underline" href="{{ .URL }}">
+                          {{ .Name }}
+                        </a>
+                      </li>
+                    {{ end }}
+                  </ul>
+                {{ end }}
+              </li>
+            {{ end }}
+          {{ end }}
+
+          
+
+      {{ partials.IncludeCached "social/follow.html" . }}
+    </div>
+  </div>
+</nav>

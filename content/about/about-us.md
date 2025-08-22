@@ -1,9 +1,17 @@
 ---
 title: "About Us"
-tags: [
+date: 2020-01-01
+authors: [
   "bbcoi"
 ]
-date: 2020-01-01
+tags: [
+  "about", "policy"
+]
+draft: false
+menu:
+  about:
+    weight: 1
+summary: An overview of the group.
 ---
 
 ![group](/images/stockvault-network-corporate-communications269603-1024x430.jpg)
