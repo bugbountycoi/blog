@@ -22,11 +22,12 @@ The objective of this Community of Interest (COI) is to create a forum for inter
 
 ## MEMBERSHIP:
 
-People that would like to contribute to or may benefit from the vision are welcome to join this COI. This group is composed of individuals that have a deep interest or subject matter expertise in the Bug Bounty ecosystem. Individuals are represented as themselves not as envoys of specific companies. This community more closely aligns with a professional affiliation versus an industry group. New members must apply through the BB COI website. The COI Admin Board will vote on new members at least once per month and offer a request for comments to the COI community members through the General channel. The COI has 24hrs to “thumbs-up” a candidate. If a current member has concerns regarding the admittance of the candidate, they may Direct Message the sponsor (if stated) and the COI Chair for “airing of grievances.” If the sponsor and COI chair get more than one “thumbs down” on a candidate, the sponsor will lead a discussion with the COI for resolution. It is the sponsor’s responsibility to notify the candidate of the admittance status as soon as feasible.
+People that would like to contribute to or may benefit from the vision are welcome to join this COI. This group is composed of individuals that have a deep interest or subject matter expertise in the Bug Bounty ecosystem. Individuals are represented as themselves not as envoys of specific companies. This community more closely aligns with a professional affiliation versus an industry group. New members must apply through the BB COI website. The COI Admin Board will vote on new members at least once per month and offer a request for comments to the COI community members through the General channel. The COI has 24hrs to “thumbs-up” a candidate. If a current member has concerns regarding the admittance of the candidate, they may Direct Message the sponsor (if stated) and the COI Chair for “airing of grievances.” If the sponsor and COI chair get more than one “thumbs down” on a candidate, the sponsor will lead a discussion with the COI for resolution. In case of disagreement, it is the sponsor’s responsibility to notify the candidate of the admittance status as soon as feasible. All members must agree and adhere to the [Membership Pledge](./membership-pledge.md) and sign the [Non-Disclosure Agreement](./non-disclosure-agreement.md).
 
 ## NEW MEMBER ONBOARDING:
 
-New members will be contacted by the COI Chair for a “Meet and Greet” session. This is an informal introduction, where the new member is provided the COI Charter and basic information regarding the purpose, ethical responsibilities, membership participation expectations and any other materials. All members must agree and adhere to the [Membership Pledge of Ethics](./membership-pledge.md)
+New members will be contacted by the Admin Board for a “Meet and Greet” session. This is an informal introduction, where the new member is provided the COI Charter and basic information regarding the purpose, ethical responsibilities, membership participation expectations and any other materials. 
+
 
 ## ADMINISTRATIVE BOARD:
 
@@ -35,7 +36,7 @@ The purpose of the Administrative Board is primarily to host and moderate the CO
 
 ## SPECIAL PROJECT GROUPS:
 
-Special project groups may be stood up for specific projects. At the completion of the project, the group disbands. To create a special project group, a member must nominate the project to the COI and receive approval from the COI. Special project groups are voluntary, and members may join a special project group by request.
+Special project groups may be created for specific projects. At the completion of the project, the group disbands. To create a special project group, a member must nominate the project to the COI and receive approval from the COI. Special project groups are voluntary, and members may join a special project group by request.
 
 ## GOALS AND DELIVERABLES:
 
