@@ -5,7 +5,7 @@ tags: [
 ]
 ---
 
-| Out Vision | Out Values | Our Goals |
+| Our Vision | Our Values | Our Goals |
 | :-: | :-: | :-: |
 | ![](/images/vision.jpg) | ![](/images/values.jpg) | ![](/images/goals.jpg) |
 | Create a forum for interested parties to discuss common issues, share expertise, and best practices. | Inspire the Bug Bounty community to pursue worthy initiatives designed to build trust and collaborative environments. | Encourage information sharing, awareness, active engagement, and evolution of the Bug Bounty community. |
