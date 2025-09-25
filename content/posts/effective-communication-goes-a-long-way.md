@@ -15,7 +15,7 @@ draft: false
 summary: "A discussion on the importance of communication in bug bounty programs, based on insights from the paper 'The Hackers’ Viewpoint'. This post highlights that responsiveness, managing expectations, and respectful human interaction are key drivers for bug hunters when participating in a program."
 ---
 
-![](/images/communication.jpg))
+![](/images/communication.jpg)
 
 In response to:  [The Hackers’ Viewpoint: Exploring Challenges and Benefits of Bug-Bounty Programs](https://www.in.tum.de/fileadmin/w00bws/cybertrust/papers/2020-WSIW-Akgul.pdf)
 
@@ -35,4 +35,4 @@ From a Bug Hunter’s perspective, consistent communication – or lack thereof 
 
 These same lessons can be applied in the opposite direction, too. Most frustration can be solved by taking a step back to assess a situation, then talking it out.
 
-The researchers provide more insights than just the communication divide. For more information, check out the full document  [here](https://www.in.tum.de/fileadmin/w00bws/cybertrust/papers/2020-WSIW-Akgul.pdf).
+The researchers provide more insights than just the communication divide. For more information, check out the full document [here](https://www.in.tum.de/fileadmin/w00bws/cybertrust/papers/2020-WSIW-Akgul.pdf).
