@@ -14,14 +14,23 @@ menu:
 summary: A list of past meeting topics and presenters.
 ---
 
+## 2026
+| Month | Speaker/Host | Topic |
+| :-- | :-- | :-- |
+| January | Admin Board | Annual Meeting: Strategy, Board Election, Active Projects |  
+
+---
+
 ## 2025
 | Month | Speaker/Host | Topic |
 | :-- | :-- | :-- |
 | December | tbd | tbd |
+| December | -- | Social: Holiday Hangout, Swag Swap |
 | November | tbd | tbd |
 | October | tbd | tbd |
-| September | tbd | tbd |
-| August | tbd | tbd |
+| September | Alex Rice | Presentation: [AI @ HackerOne](https://docs.hackerone.com/en/articles/10908081-hai-security-trust): Hai Architecture Review |
+| September | Justin Gardner | Presentation: How to Capture Hacker Attention - a framework |
+| August | Adam Bacchus | Discussion: AI in Bounty |
 | July | n/a | *cancelled* |
 | June | Harley Kimball | Presentation: Bug Bounty Village (and other projects) |
 | May | Chris Holt | Presentation: Active BB COI Projects |
