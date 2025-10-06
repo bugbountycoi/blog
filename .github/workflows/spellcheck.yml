@@ -9,8 +9,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     # The checkout step
-    - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
-    - uses: rojopolis/spellcheck-github-actions@3ac4dc4e6dffa64c3608272a8d2c24da9fa951a6
+    - uses: actions/checkout@ff7abcd0c3c05ccf6adc123a8cd1fd4fb30fb493
+    - uses: rojopolis/spellcheck-github-actions@faa165278854fcef6267ee2e368223cb875159fe
       name: Spellcheck
       with:
         config_path: config/spellcheck.yml 
