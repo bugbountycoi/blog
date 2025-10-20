@@ -26,8 +26,8 @@ summary: A list of past meeting topics and presenters.
 | :-- | :-- | :-- |
 | December | tbd | tbd |
 | December | -- | Social: Holiday Hangout, Swag Swap |
-| November | tbd | tbd |
-| October | tbd | tbd |
+| November | Evan Dornbush | Presentation: Non-bounty options for researchers |
+| October | Sam Erb | Presentation: VRP @ Google, A look inside a large self-hosted VRP |
 | September | Alex Rice | Presentation: [AI @ HackerOne](https://docs.hackerone.com/en/articles/10908081-hai-security-trust): Hai Architecture Review |
 | September | Justin Gardner | Presentation: How to Capture Hacker Attention - a framework |
 | August | Adam Bacchus | Discussion: AI in Bounty |
