@@ -2,6 +2,7 @@
 title: "Introduction to the Bug Bounty Framework"
 date: 2021-05-04
 author: "BugBountyCOI"
+draft: true
 tags: ["bug bounty", "framework", "security", "announcement"]
 ---
 

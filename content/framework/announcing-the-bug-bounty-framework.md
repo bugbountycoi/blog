@@ -11,6 +11,13 @@ tags: [
 menu:
   framework:
     weight: 1
+timeline:
+  icon: "bullhorn"
+  badge: "Foundation"
+  header: "Announcing the Bug Bounty Framework"
+  subheader: "May 3, 2021"
+  description: "**Demystifying Bug Bounty Programs**"
+  content: "Learn about the Bug Bounty Community of Interest's comprehensive framework and what you can expect from this guide. This introductory piece sets the stage for understanding who the framework is for, what it covers, and why collaborative security matters."
 ---
 
 Our Bug Bounty Community of Interest (BB COI) has been hard at work this year discussing the challenging problems many Bug Bounty programs (BBP) face, potentially including Vulnerability Disclosure Programs (VDP). Throughout our conversations and research, we noticed that there is little comprehensive guidance covering the Bug Bounty space. In an effort to demystify Bug Bounty programs for all audiences, the Bug Bounty Community of Interest is proud to announce our Bug Bounty Framework! Here is what you can expect from us.

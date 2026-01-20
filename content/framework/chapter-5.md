@@ -23,6 +23,13 @@ tags: [
 menu:
   framework:
     weight: 6
+timeline:
+  icon: "gift"
+  badge: "Incentives"
+  header: "Chapter 5: Incentives and Payments"
+  subheader: "October 19, 2021"
+  description: "**Rewarding Researchers**"
+  content: "Design effective incentive structures and payment processes for your bug bounty program. This chapter covers bounty structures, payment methods, non-monetary incentives, and recognition programs.\n\n**Key Topics:**\n- Bounty Structure and Ranges\n- Payment Processing\n- Non-Monetary Incentives\n- Recognition Programs"
 ---
 
 Vulnerability Disclosure Programs (VDP) are differentiated from a sub-classification known as Bug Bounty programs (BBP) when rewards are offered. There are many methods to determine your incentive or payment schedule. Typically, payouts are tied to one of many factors. We are going to dive into the most common factors that we have seen across Bug Bounty programs. Monetary payments are the most common incentivization mechanism, though many Bug Bounty programs will start with reputation points (depending on the crowdsourced provider) or sending swag to participants. For monetary payments, you should pick the amount per issue that fits into your scope and budget – there is no industry standard amount that organizations pay per issue. It comes down to your own risk calculation and goals of your Bug Bounty program.

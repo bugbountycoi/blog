@@ -24,6 +24,13 @@ tags: [
 menu:
   framework:
     weight: 5
+timeline:
+  icon: "currency-dollar"
+  badge: "Resources"
+  header: "Chapter 4: Scope and Budget"
+  subheader: "September 7, 2021"
+  description: "**Planning Resources**"
+  content: "Learn how to define the right scope for your bug bounty program and allocate appropriate resources. This chapter covers scoping strategies, eligibility criteria, budgeting models, and resource planning.\n\n**Key Topics:**\n- Defining Program Scope\n- Enterprise vs. Product Testing\n- Budget and Resource Planning\n- Funding Models"
 ---
 By now, we hope that you have read [Chapters 1](./chapter-1.md), and [3](./chapter-3.md), and are ready to begin scoping and budgeting your Bug Bounty program. If you haven’t read those chapters and are new to Bug Bounty, we encourage you to do so before going any further. This chapter is broken down into two primary topics: establishing program scope and how to properly allocate resources to support your Bug Bounty program.
 

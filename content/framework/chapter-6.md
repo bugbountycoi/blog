@@ -20,6 +20,13 @@ tags: [
 menu:
   framework:
     weight: 7
+timeline:
+  icon: "chat-bubble-left-right"
+  badge: "Operations"
+  header: "Chapter 6: Handling Disputes"
+  subheader: "November 16, 2021"
+  description: "**Managing Conflicts**"
+  content: "Navigate challenging situations and manage disputes effectively in your bug bounty program. This chapter covers conflict resolution, mediation techniques, escalation procedures, and maintaining positive researcher relationships.\n\n**Key Topics:**\n- Dispute Resolution Processes\n- Mediation Techniques\n- Escalation Procedures\n- Maintaining Researcher Relationships"
 ---
 
 Like any scenario involving human interaction, you’re going to have to deal with disputes over severity assignments and payment amounts for your Bug Bounty Program.

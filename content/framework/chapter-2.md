@@ -25,6 +25,13 @@ tags: [
 menu:
   framework:
     weight: 3
+timeline:
+  icon: "question-mark-circle"
+  badge: "Assessment"
+  header: "Chapter 2: Is a Bug Bounty Program Right for You?"
+  subheader: "June 23, 2021"
+  description: "**Readiness Evaluation**"
+  content: "Evaluate whether your organization is ready for a bug bounty program. This chapter covers critical success factors, executive buy-in, VDP prerequisites, and common pitfalls to avoid.\n\n**Key Topics:**\n- Existing VDP Requirements\n- Executive Leadership Buy-In\n- Vulnerability Management Processes\n- Legal and Competitive Landscape"
 ---
 
 By now, you have read [Chapter 1](./chapter-1.md), and you may be wondering if a Bug Bounty program is right for your organization. You might be intrigued by the idea of interacting with researchers, and wondering about the risks of exposure that comes with researchers hacking away at your product. Perhaps you or someone in your organization has floated the idea of a Bug Bounty program, and you are wondering if it will allow you to meet the trend that you observe in the industry today. The decision to establish a Bug Bounty program should not be made lightly or as a reaction to some unexpected or sudden event.  It is a decision that should be evaluated and executed with business-like objectivity and with the unique needs and culture of your business in mind.  
@@ -241,4 +248,4 @@ All that said, Bug Bounty is an adrenaline-inducing, exciting element of your in
 ---
 
 ## Next chapter: Charter Your Program/Set Strategic Objectives
-In the next [chapter](./chapter-3.md), we discuss how to formally instantiate your Bug Bounty program with a charter and well thought out strategic objectives. We dig deeper into objective setting and getting executive buy-in. Finally, we will offer tips and tricks to make sure you are equipped to keep moving the program forward and avoid analysis paralysis in early program stages. 
+In the next [chapter](./chapter-3.md), we discuss how to formally instantiate your Bug Bounty program with a charter and well thought out strategic objectives. We dig deeper into objective setting and getting executive buy-in. Finally, we will offer tips and tricks to make sure you are equipped to keep moving the program forward and avoid analysis paralysis in early program stages.

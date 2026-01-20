@@ -18,6 +18,13 @@ tags: [
 menu:
   framework:
     weight: 2
+timeline:
+  icon: "eye"
+  badge: "Fundamentals"
+  header: "Chapter 1: What is a Bug Bounty Program?"
+  subheader: "May 4, 2021"
+  description: "**Understanding the Basics**"
+  content: "Explore the fundamentals of bug bounty programs, different types of programs, requirements for success, and how bug bounties differ from traditional security testing. This chapter provides essential context for anyone new to the bug bounty space.\n\n**Key Topics:**\n- Types of Bug Bounty Programs\n- Infrastructure vs. Product Testing\n- Private vs. Public Programs\n- Requirements for Success"
 ---
 
 Bug Bounty programs (or, “Bug Bounties”) have quickly become a mainstay in many security programs. Bug Bounties encourage [reporters](https://vuls.cert.org/confluence/display/CVD/3.2.+Reporter) (including vulnerability finders, researchers, ethical hackers, and so on) to submit vulnerabilities to an organization for rewards. This chapter covers the basics of what Bug Bounties are, the types of programs, requirements for success, and how Bug Bounties differ from other kinds of security testing. 

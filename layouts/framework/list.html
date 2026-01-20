@@ -1,0 +1,123 @@
+{{ define "main" }}
+<article>
+  
+  <header class="max-w-prose">
+    {{ if .Params.showBreadcrumbs | default (.Site.Params.article.showBreadcrumbs | default false) }}
+      {{ partial "breadcrumbs.html" . }}
+    {{ end }}
+    <h1 class="mt-0 text-4xl font-extrabold text-neutral-900 dark:text-neutral">
+      {{ .Title | emojify }}
+    </h1>
+    <div class="mt-1 mb-6 text-base text-neutral-500 dark:text-neutral-400 print:hidden">
+      {{ partial "article-meta/basic.html" (dict "context" . "scope" "single") }}
+    </div>
+  </header>
+
+  <section class="flex flex-col max-w-full mt-0 prose dark:prose-invert lg:flex-row">
+    {{ if or (.Params.showTableOfContents | default (.Site.Params.article.showTableOfContents | default false)) (.Params.showTaxonomies | default (.Site.Params.article.showTaxonomies | default false)) }}
+    <div class="order-first px-0 lg:order-last lg:max-w-xs ltr:lg:pl-8 rtl:lg:pr-8">
+      <div class="toc ltr:pl-5 rtl:pr-5 print:hidden lg:sticky {{ if hasPrefix .Site.Params.header.layout "fixed" -}}
+        lg:top-[140px]{{ else }}lg:top-10{{ end }}">
+        {{ if .Params.showTableOfContents | default (.Site.Params.article.showTableOfContents | default false) }}
+          {{ partial "toc.html" . }}
+        {{ end }}
+        {{ if .Params.showTaxonomies | default (.Site.Params.article.showTaxonomies | default false) }}
+          {{ partial "taxonomies.html" . }}
+        {{ end }}
+      </div>
+    </div>
+    {{ end }}
+
+    <div class="min-w-0 min-h-0 max-w-prose grow">
+      <!-- Main Content from _index.md -->
+      <div class="framework-content">
+        {{ .Content }}
+      </div>
+
+      <!-- Industry Framework Content -->
+      {{ $industryFramework := .Site.GetPage "content/framework/drafts/industry-framework.md" }}
+      {{ if $industryFramework }}
+        <div class="industry-framework-content mb-12">
+          {{ $industryFramework.Content }}
+        </div>
+      {{ end }}
+
+      <!-- Framework Timeline -->
+      <div class="framework-timeline mt-12">
+        <h2 class="text-3xl font-bold mb-8">Framework Chapters</h2>
+        
+        <!-- Timeline container using blowfish styling -->
+        <ol class="border-s-2 border-primary-500 dark:border-primary-300 list-none">
+          {{ $frameworkPages := where .Site.RegularPages "Section" "framework" }}
+          {{ $frameworkPages = where $frameworkPages "Params.timeline" "!=" nil }}
+          {{ range $frameworkPages.ByWeight.Reverse }}
+            {{ $timeline := .Params.timeline }}
+            {{ if $timeline }}
+              <li>
+                <div class="flex">
+                  <div class="bg-primary-500 dark:bg-primary-300 text-neutral-50 dark:text-neutral-700 min-w-[30px] h-8 text-2xl flex items-center justify-center rounded-full ltr:-ml-12 rtl:-mr-[79px] mt-5">
+                    {{ partial "icon" (index $timeline "icon" | default "check") }}
+                  </div>
+                  <div class="block p-6 rounded-lg shadow-2xl flex-1 ms-6 mb-10 break-words">
+                    <div class="flex justify-between">
+                      {{ if index $timeline "header" }}
+                        <h2 class="mt-0">
+                          <a href="{{ .RelPermalink }}" class="text-primary-700 dark:text-primary-400 hover:underline">
+                            {{ index $timeline "header" }}
+                          </a>
+                        </h2>
+                      {{ end }}
+                      {{ if index $timeline "badge" }}
+                        <h3 class="">
+                          {{ partial "badge" (index $timeline "badge") }}
+                        </h3>
+                      {{ end }}
+                    </div>
+                    {{ if index $timeline "subheader" }}
+                      <h4 class="mt-2 mb-3 text-neutral-500 dark:text-neutral-400">
+                        {{ index $timeline "subheader" }}
+                      </h4>
+                    {{ end }}
+                    {{ if index $timeline "description" }}
+                      <div class="mb-2 font-semibold">
+                        {{ index $timeline "description" | markdownify }}
+                      </div>
+                    {{ end }}
+                    {{ if index $timeline "content" }}
+                      <div class="mb-4 text-neutral-700 dark:text-neutral-300">
+                        {{ index $timeline "content" | markdownify }}
+                      </div>
+                    {{ end }}
+                    <a href="{{ .RelPermalink }}" class="inline-flex items-center text-sm font-medium text-primary-700 dark:text-primary-400 hover:underline">
+                      Read more
+                      <span class="ltr:ml-1 rtl:mr-1">→</span>
+                    </a>
+                  </div>
+                </div>
+              </li>
+            {{ end }}
+          {{ end }}
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <footer class="pt-8 max-w-prose print:hidden">
+    {{ partial "author.html" . }}
+    {{ partial "sharing-links.html" . }}
+    {{ partial "article-pagination.html" . }}
+    {{ if .Params.showComments | default (.Site.Params.article.showComments | default false) }}
+      {{ if templates.Exists "partials/comments.html" }}
+        <div class="pt-3">
+          <hr class="border-dotted border-neutral-300 dark:border-neutral-600" />
+          <div class="pt-3">
+            {{ partial "comments.html" . }}
+          </div>
+        </div>
+      {{ else }}
+        {{ warnf "[CONGO] Comments are enabled for %s but no comments partial exists." .File.Path }}
+      {{ end }}
+    {{ end }}
+  </footer>
+</article>
+{{ end }}
