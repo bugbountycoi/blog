@@ -1,0 +1,307 @@
+{{ define "main" }}
+  {{ .Scratch.Set "scope" "list" }}
+  {{ $enableToc := .Params.showTableOfContents | default (site.Params.list.showTableOfContents | default false) }}
+  {{ $showToc := and $enableToc (in .TableOfContents "<ul") }}
+
+  {{/* Hero */}}
+  {{ if site.Params.list.showHero | default false }}
+    {{ $heroStyle := print "hero/" site.Params.list.heroStyle ".html" }}
+    {{ if templates.Exists ( printf "partials/%s" $heroStyle ) }}
+      {{ partial $heroStyle . }}
+    {{ else }}
+      {{ partial "hero/basic.html" . }}
+    {{ end }}
+  {{ end }}
+
+  {{/* Header */}}
+  <header>
+    {{ if .Params.showBreadcrumbs | default (site.Params.list.showBreadcrumbs | default false) }}
+      {{ partial "breadcrumbs.html" . }}
+    {{ end }}
+    <h1 class="mt-5 text-4xl font-extrabold text-neutral-900 dark:text-neutral">{{ .Title }}</h1>
+    <div class="mt-1 mb-2 text-base text-neutral-500 dark:text-neutral-400 print:hidden">
+      {{ partial "article-meta/list.html" (dict "context" . "scope" "single") }}
+    </div>
+  </header>
+
+  {{/* Description (markdown content) */}}
+  {{ $tocMargin := cond $showToc "mt-12" "mt-0" }}
+  {{ $topClass := cond (hasPrefix site.Params.header.layout "fixed") "lg:top-[140px]" "lg:top-10" }}
+  <section class="{{ $tocMargin }} prose flex max-w-full flex-col dark:prose-invert lg:flex-row">
+    {{ if $showToc }}
+      <div class="order-first px-0 lg:order-last lg:max-w-xs lg:ps-8">
+        <div class="toc ps-5 lg:sticky {{ $topClass }}">
+          {{ partial "toc.html" . }}
+        </div>
+      </div>
+    {{ end }}
+    <div class="min-w-0 min-h-0 max-w-prose">
+      {{ .Content }}
+    </div>
+  </section>
+
+  {{/* Sort Controls */}}
+  {{ if gt .Pages 0 }}
+    <div class="mt-8 mb-6 print:hidden">
+      <div class="flex flex-wrap items-center justify-between gap-4 pb-4 border-b border-neutral-200 dark:border-neutral-700">
+        <div class="flex items-center gap-6">
+          <span class="text-sm text-neutral-500 dark:text-neutral-400">
+            <span id="postCount">{{ len .Pages }}</span> {{ if eq (len .Pages) 1 }}post{{ else }}posts{{ end }}
+          </span>
+        </div>
+
+        <div class="flex items-center gap-2">
+          <span class="text-sm text-neutral-500 dark:text-neutral-400">Sort:</span>
+          <div class="flex gap-1 items-center">
+            <button data-sort="date-desc" class="sort-btn active px-3 py-1.5 text-sm text-neutral-700 dark:text-neutral-300 rounded-md transition-colors hover:bg-neutral-100 dark:hover:bg-neutral-800">
+              Newest
+            </button>
+            <button data-sort="date-asc" class="sort-btn px-3 py-1.5 text-sm text-neutral-700 dark:text-neutral-300 rounded-md transition-colors hover:bg-neutral-100 dark:hover:bg-neutral-800">
+              Oldest
+            </button>
+            <span class="text-neutral-300 dark:text-neutral-600">|</span>
+            <button data-sort="title-asc" class="sort-btn px-3 py-1.5 text-sm text-neutral-700 dark:text-neutral-300 rounded-md transition-colors hover:bg-neutral-100 dark:hover:bg-neutral-800">
+              A-Z
+            </button>
+            <button data-sort="title-desc" class="sort-btn px-3 py-1.5 text-sm text-neutral-700 dark:text-neutral-300 rounded-md transition-colors hover:bg-neutral-100 dark:hover:bg-neutral-800">
+              Z-A
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    {{/* Posts List */}}
+    <section id="postsList" class="space-y-6 w-full">
+      {{ $now := now }}
+      {{ $thirtyDaysAgo := $now.AddDate 0 0 -30 }}
+      
+      {{ range .Pages }}
+        {{ $isNew := ge .Date $thirtyDaysAgo }}
+        {{ $isDraft := .Draft }}
+        {{ $tagsStr := delimit .Params.tags "," }}
+        {{ $authorsStr := "" }}
+        {{ if .Params.authors }}
+          {{ $authorsStr = delimit .Params.authors "," }}
+        {{ end }}
+        
+        <article class="post-item {{ if $isNew }}new-post{{ end }} {{ if $isDraft }}draft-post{{ end }}"
+                 data-date="{{ .Date.Format "2006-01-02" }}"
+                 data-title="{{ .Title }}"
+                 data-tags="{{ $tagsStr }}"
+                 data-authors="{{ $authorsStr }}"
+                 data-draft="{{ $isDraft }}">
+          
+          {{/* New Badge */}}
+          {{ if $isNew }}
+            <div class="mb-2">
+              <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-primary-100 text-primary-800 dark:bg-primary-900 dark:text-primary-200">
+                ✨ New
+              </span>
+            </div>
+          {{ end }}
+
+          {{/* Main Post Card */}}
+          <div class="flex flex-col md:flex-row relative overflow-hidden rounded-lg border-2 {{ if $isNew }}border-primary-300 dark:border-primary-700{{ else }}border-neutral-200 dark:border-neutral-700{{ end }} hover:shadow-lg transition-shadow duration-200">
+            
+            {{/* Featured Image - Only show if explicitly provided */}}
+            {{ $featured := "" }}
+            {{ $featuredURL := "" }}
+            {{ $hasExplicitImage := false }}
+            {{ if not .Params.hideFeatureImage }}
+              {{ with .Params.featureimage }}
+                {{ $hasExplicitImage = true }}
+                {{ if or (strings.HasPrefix . "http:") (strings.HasPrefix . "https:") }}
+                  {{ if site.Params.hotlinkFeatureImage }}
+                    {{ $featuredURL = . }}
+                  {{ else }}
+                    {{ $featured = resources.GetRemote . }}
+                  {{ end }}
+                {{ else }}
+                  {{ $featured = resources.Get . }}
+                {{ end }}
+              {{ end }}
+              
+              {{ if not (or $featured $featuredURL) }}
+                {{ $images := .Resources.ByType "image" }}
+                {{ range slice "*feature*" "*cover*" "*thumbnail*" }}
+                  {{ if not $featured }}
+                    {{ $featured = $images.GetMatch . }}
+                    {{ if $featured }}{{ $hasExplicitImage = true }}{{ end }}
+                  {{ end }}
+                {{ end }}
+              {{ end }}
+              
+              {{ if not $featuredURL }}
+                {{ with $featured }}
+                  {{ $featuredURL = .RelPermalink }}
+                  {{ if not (eq .MediaType.SubType "svg") }}
+                    {{ $featuredURL = (.Resize "600x").RelPermalink }}
+                  {{ end }}
+                {{ end }}
+              {{ end }}
+            {{ end }}
+
+            {{ if and $featuredURL $hasExplicitImage }}
+              <div class="flex-none relative overflow-hidden w-full md:w-64 h-32 md:h-40">
+                <img
+                  src="{{ $featuredURL }}"
+                  alt="{{ $.Params.featuredImageAlt | default ($.Title | emojify) }}"
+                  loading="lazy"
+                  decoding="async"
+                  class="absolute inset-0 w-full h-full object-cover">
+              </div>
+            {{ end }}
+
+            {{/* Post Content */}}
+            <div class="flex-1 p-6">
+              <header>
+                <a href="{{ .RelPermalink }}" class="group">
+                  <h2 class="text-2xl font-bold text-neutral-900 dark:text-neutral-100 group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors">
+                    {{ .Title | emojify }}
+                  </h2>
+                </a>
+                
+                {{ if $isDraft }}
+                  <div class="mt-2 inline-block">
+                    <span class="px-2 py-1 text-xs font-semibold rounded bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200">
+                      Draft
+                    </span>
+                  </div>
+                {{ end }}
+              </header>
+
+              {{/* Meta Information */}}
+              <div class="mt-3 flex flex-wrap gap-4 text-sm text-neutral-600 dark:text-neutral-400">
+                <div class="flex items-center gap-2">
+                  <svg class="!w-4 !h-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style="width: 1rem; height: 1rem; min-width: 1rem; min-height: 1rem; max-width: 1rem; max-height: 1rem; flex-shrink: 0; margin-right: 0.5rem;">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                  </svg>
+                  <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "January 2, 2006" }}</time>
+                </div>
+                
+                {{ if .Params.authors }}
+                  <div class="flex items-center gap-2">
+                    <svg class="!w-4 !h-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style="width: 1rem; height: 1rem; min-width: 1rem; min-height: 1rem; max-width: 1rem; max-height: 1rem; flex-shrink: 0; margin-right: 0.5rem;">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                    </svg>
+                    <span>{{ delimit .Params.authors ", " }}</span>
+                  </div>
+                {{ end }}
+              </div>
+
+              {{/* Summary */}}
+              {{ if .Summary }}
+                <div class="mt-4 text-neutral-700 dark:text-neutral-300 line-clamp-3">
+                  {{ .Summary | plainify }}
+                </div>
+              {{ end }}
+
+              {{/* Tags */}}
+              {{ if .Params.tags }}
+                <div class="mt-4 flex flex-wrap">
+                  {{ range .Params.tags }}
+                    <span class="mr-1 mb-2 px-3 py-1.5 text-xs rounded-md bg-neutral-200 dark:bg-neutral-700 text-neutral-700 dark:text-neutral-300">
+                      {{ . }}
+                    </span>
+                  {{ end }}
+                </div>
+              {{ end }}
+
+              {{/* Read More Link */}}
+              <div class="mt-4">
+                <a href="{{ .RelPermalink }}" class="inline-flex items-center text-sm font-medium text-primary-600 dark:text-primary-400 hover:underline" style="display: inline-flex; align-items: center; white-space: nowrap;">
+                  <svg class="mr-1 !w-4 !h-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style="width: 1rem; height: 1rem; min-width: 1rem; min-height: 1rem; max-width: 1rem; max-height: 1rem; flex-shrink: 0; display: inline-block; vertical-align: middle;">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                  </svg>
+                  Read more
+                </a>
+              </div>
+            </div>
+          </div>
+        </article>
+      {{ end }}
+    </section>
+
+    {{/* No Results Message */}}
+    <div id="noResults" class="hidden mt-10 prose dark:prose-invert">
+      <p class="py-8 border-t">
+        <em>No posts match the selected filters.</em>
+      </p>
+    </div>
+
+    {{/* Sorting JavaScript */}}
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        const sortButtons = document.querySelectorAll('.sort-btn');
+        const postsList = document.getElementById('postsList');
+        const postCount = document.getElementById('postCount');
+        const posts = Array.from(document.querySelectorAll('.post-item'));
+        let currentSort = 'date-desc';
+
+        function sortPosts() {
+          // Filter out drafts
+          let visiblePosts = posts.filter(post => {
+            const isDraft = post.dataset.draft === 'true';
+            return !isDraft;
+          });
+
+          // Sort posts
+          visiblePosts.sort((a, b) => {
+            switch(currentSort) {
+              case 'date-desc':
+                return new Date(b.dataset.date) - new Date(a.dataset.date);
+              case 'date-asc':
+                return new Date(a.dataset.date) - new Date(b.dataset.date);
+              case 'title-asc':
+                return a.dataset.title.localeCompare(b.dataset.title);
+              case 'title-desc':
+                return b.dataset.title.localeCompare(a.dataset.title);
+              default:
+                return 0;
+            }
+          });
+
+          // Clear the list and re-append in sorted order
+          posts.forEach(post => {
+            post.style.display = 'none';
+          });
+
+          // Re-append visible posts in sorted order
+          visiblePosts.forEach(post => {
+            post.style.display = 'block';
+            postsList.appendChild(post);
+          });
+
+          // Update post count
+          postCount.textContent = visiblePosts.length;
+        }
+
+        // Sort button click handlers
+        sortButtons.forEach(button => {
+          button.addEventListener('click', function() {
+            // Remove active class from all buttons
+            sortButtons.forEach(btn => {
+              btn.classList.remove('active', 'underline', 'decoration-2', 'underline-offset-4', 'text-primary-600', 'dark:text-primary-400', 'font-semibold');
+            });
+            
+            // Add active class to clicked button
+            this.classList.add('active', 'underline', 'decoration-2', 'underline-offset-4', 'text-primary-600', 'dark:text-primary-400', 'font-semibold');
+            
+            currentSort = this.dataset.sort;
+            sortPosts();
+          });
+        });
+
+        // Initial sort (hide drafts by default)
+        sortPosts();
+      });
+    </script>
+  {{ else }}
+    <section class="mt-10 prose dark:prose-invert">
+      <p class="py-8 border-t">
+        <em>{{ i18n "list.no_articles" | emojify }}</em>
+      </p>
+    </section>
+  {{ end }}
+{{ end }}

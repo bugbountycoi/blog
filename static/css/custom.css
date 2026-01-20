@@ -61,3 +61,122 @@
   color: #666;
   margin-top: 1rem;
 }
+
+/* Posts List Layout Styles */
+.new-post {
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Subtle glow effect for new posts */
+.new-post > div {
+  box-shadow: 0 0 20px rgba(var(--color-primary-500), 0.1);
+}
+
+/* Enhanced hover effect for post cards */
+.post-item > div {
+  transition: all 0.3s ease;
+}
+
+.post-item > div:hover {
+  transform: translateY(-2px);
+}
+
+/* Line clamp utility for summaries */
+.line-clamp-3 {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+}
+
+/* Smooth transitions for sorting/filtering */
+.post-item {
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+/* Draft post styling */
+.draft-post {
+  opacity: 0.85;
+}
+
+/* Filter controls responsive adjustments */
+@media (max-width: 640px) {
+  .flex-wrap > div {
+    width: 100%;
+  }
+}
+
+/* New badge pulse animation */
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.8;
+  }
+}
+
+.new-post .inline-flex {
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* Enhanced tag hover effect */
+.post-item span[class*="rounded-md"] {
+  transition: all 0.2s ease;
+}
+
+.post-item span[class*="rounded-md"]:hover {
+  transform: scale(1.05);
+  cursor: default;
+}
+
+/* Sort/filter control focus states */
+select:focus,
+input[type="checkbox"]:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(var(--color-primary-500), 0.2);
+}
+
+/* Improved mobile layout for post cards */
+@media (max-width: 768px) {
+  .post-item > div {
+    flex-direction: column;
+  }
+  
+  /* Keep images reasonably sized on mobile - only featured images, not SVG icons */
+  .post-item > div > div img {
+    width: 100%;
+    max-height: 128px;
+    object-fit: cover;
+  }
+}
+
+/* Ensure images don't get too tall on any screen - only target img tags in image containers */
+.post-item > div > div img {
+  max-height: 160px;
+  object-fit: cover;
+}
+
+/* Ensure SVG icons stay at their intended size - target all SVGs in post items */
+.post-item svg,
+.post-item a svg,
+.post-item div svg {
+  width: 1rem !important;
+  height: 1rem !important;
+  min-width: 1rem !important;
+  min-height: 1rem !important;
+  max-width: 1rem !important;
+  max-height: 1rem !important;
+  flex-shrink: 0 !important;
+}
