@@ -17,6 +17,7 @@ summary: A list of past meeting topics and presenters.
 ## 2026
 | Month | Speaker/Host | Topic |
 | :-- | :-- | :-- |
+| February | Michael Brennan (Director at Spyware Accountability Initiative) and Daniel Bedoya Arroyo (Digital Security Analyst at SocialTic) | Presentation: Spyware Accountability Initiative |  
 | January | Admin Board | Annual Meeting: Strategy, Board Election, Active Projects |  
 
 ---
