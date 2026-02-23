@@ -58,4 +58,5 @@ The paper also suggests that these values reflect the cost of vulnerability disc
 Even with the limitations above, I want to give credit where it’s due. The analysis is thoughtful and well structured. The dataset is a real contribution. And the paper helps move the conversation toward a more data‑driven understanding of vulnerability economics.
 
 My hope is that future work in this area brings in more context around private programs, researcher behavior, and the changing cost of expertise. That would help us get closer to a full picture of what vulnerabilities actually cost to discover.
- 
+
+Heitor, we appreciate your work and [invite](../about/cfp.md) you to come speak at one of our monthly meetings. 
