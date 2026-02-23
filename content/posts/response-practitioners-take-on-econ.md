@@ -4,7 +4,8 @@ date: 2026-02-09
 draft: false
 authors: [
   “bbcoi”,
-  "Chris Holt"
+  "Chris Holt",
+  "Marc Druzin"
 ]
 tags: [
   “bug bounty”,
@@ -28,7 +29,7 @@ That said, there are a few assumptions baked into the analysis that deserve a cl
 ## Unconsidered or Understated Assumptions
 
 ### Chosen program data is not the whole picture
-The paper relies heavily on public bug bounty programs and some selected private programs. These programs attract a wide range of skill levels and tend to pay less than private or invite‑only programs. High‑skill researchers sometimes avoid public programs entirely because the economics don’t make sense for them. So the dataset ends up reflecting the lower end of the market rather than the full spectrum. Additionally, there are many outlier programs that advertise very large bounty ranges which could skew data, these do not appear to be represented. Why make a selection of public programs without using all of the available public program data?
+The paper relies heavily on public bug bounty programs and some selected private programs. These programs attract a wide range of skill levels and tend to pay less than private or invite‑only programs. High‑skill researchers sometimes avoid public programs entirely because the economics don’t make sense for them. So the dataset ends up reflecting the lower end of the market rather than the full spectrum. Additionally, there are many outlier programs that advertise very large bounty ranges which could skew data, these do not appear to be represented. It would be interesting to understand the rationale for selecting specific public programs rather than using all available public program data.
 
 ### Bounty values rarely change over time
 Most programs set their bounty tables once and then leave them alone for years. They don’t adjust for inflation, the increasing complexity of modern systems, or security enhancement that occurs over time. A payout from 2018 is treated the same as a payout from 2026, even though the cost of living and the cost of expertise have both gone up. That flattens the data in a way that hides real trends.
