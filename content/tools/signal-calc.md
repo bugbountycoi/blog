@@ -3,7 +3,7 @@ title: "Signal Calculator"
 date: 2026-02-23
 authors: [
   "bbcoi",
-  "Chris Holt",
+  "Chris Holt"
   ]
 tags: [
   “tool”
