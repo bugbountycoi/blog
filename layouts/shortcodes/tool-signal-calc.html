@@ -830,14 +830,59 @@
       }
 
       function applyShift(baselineRanges, total) {
-        return baselineRanges.map((r, i) => {
-          const emoji = baseline[i].label.split(" ")[0];
-          const label = `${emoji} ${r.min}–${r.max}%`;
+        // shift every boundary by the total amount
+        const shifted = baselineRanges.map((r, i) => {
           return {
-            label,
+            orig: r,
             min: r.min + total,
             max: r.max + total
           };
+        });
+
+        // pin endpoints to 0/100 before fixing adjacency
+        if (shifted.length) {
+          if (shifted[0].min < 0) {
+            shifted[0].min = 0;
+            if (shifted[0].max <= shifted[0].min) {
+              shifted[0].max = shifted[0].min + 1;
+            }
+          }
+          const last = shifted[shifted.length - 1];
+          if (last.max > 100) {
+            last.max = 100;
+            if (last.max <= last.min) {
+              last.min = last.max - 1;
+            }
+          }
+          if (last.max < 100) {
+            // negative shifts may push the top below 100; pin it
+            last.max = 100;
+            if (last.min >= last.max) {
+              last.min = last.max - 1;
+            }
+          }
+        }
+
+        // ensure ranges are consecutive and at least 1 unit wide
+        for (let i = 1; i < shifted.length; i++) {
+          const prev = shifted[i - 1];
+          const curr = shifted[i];
+          if (curr.min <= prev.max) {
+            curr.min = prev.max + 1;
+            if (curr.max <= curr.min) {
+              curr.max = curr.min + 1;
+            }
+          }
+        }
+
+        // clamp all ranges within 0..100 and add label/emoji
+        return shifted.map((s, i) => {
+          let min = Math.max(0, s.min);
+          let max = Math.min(100, s.max);
+          if (max <= min) max = min + 1;
+          const emoji = baseline[i].label.split(" ")[0];
+          const label = `${emoji} ${min}–${max}%`;
+          return { label, min, max };
         });
       }
 
