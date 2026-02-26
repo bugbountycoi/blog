@@ -93,12 +93,7 @@ Engagement events are things that YOU as the program owner/operator are able to 
 | +4 | Host 2+ invite-only VHE |
 
 —
+
 All of this has been rolled into a calculator widget you can play with.
 
-<!-- Load CSS -->
-<link rel="stylesheet" href="/tools/signal-calc.css">
-
-<!-- Load JS -->
-<script src="/tools/signal-calc.js"></script>
-
-<div id="signal-calc-root"></div>
+{{< tool-signal-calc >}}

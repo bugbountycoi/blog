@@ -83,3 +83,8 @@ menus:
     #  weight: 5
     #  identifier: "code-of-conduct"
     #  url: "/code-of-conduct"
+
+markup:
+  goldmark:
+    renderer:
+      unsafe: true

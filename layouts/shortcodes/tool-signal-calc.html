@@ -1,0 +1,1116 @@
+<div id="signal-calc"></div>
+
+<!--Stylesheet for the Signal Calc tool.-->
+<style>
+    :root {
+      --bg: #f5f5f7;
+      --card-bg: #ffffff;
+      --accent: #4caf50;
+      --accent-soft: #81c784;
+      --danger: #e53935;
+      --text-main: #222;
+      --text-muted: #666;
+      --border-subtle: #e0e0e0;
+      --pill-bg: #f2f2f2;
+      --btn-bg: #e5e5e5;
+      --btn-bg-hover: #d5d5d5;
+      --shadow-soft: 0 2px 8px rgba(0,0,0,0.08);
+      --radius-card: 12px;
+      --radius-pill: 20px;
+      --radius-btn: 6px;
+      --transition-fast: 0.2s ease;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: var(--bg);
+      color: var(--text-main);
+    }
+
+    .signal-calc {
+      max-width: 960px;
+      margin: 24px auto 80px;
+      padding: 0 16px 40px;
+    }
+
+    h1 {
+      margin: 0 0 8px;
+      font-size: 1.6rem;
+      font-weight: 650;
+    }
+
+    p.subtitle {
+      margin: 0 0 20px;
+      color: var(--text-muted);
+      font-size: 0.95rem;
+    }
+
+    .floating-header {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: linear-gradient(to bottom, rgba(245,245,247,0.98), rgba(245,245,247,0.9));
+      backdrop-filter: blur(8px);
+      padding: 10px 12px;
+      margin: 0 -16px 16px;
+      border-bottom: 1px solid rgba(0,0,0,0.06);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .floating-header-left {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .floating-header-title {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .floating-header-main {
+      display: flex;
+      align-items: baseline;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .total-mod-label {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+    }
+
+    .total-mod {
+      font-weight: 700;
+      font-size: 1.1rem;
+      padding: 2px 8px;
+      border-radius: 999px;
+      min-width: 48px;
+      text-align: center;
+    }
+
+    .total-mod.pos {
+      color: #1b5e20;
+      background: #e8f5e9;
+    }
+
+    .total-mod.neg {
+      color: #b71c1c;
+      background: #ffebee;
+    }
+
+    .floating-header-right {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .chip {
+      font-size: 0.8rem;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: #e3f2fd;
+      color: #0d47a1;
+      font-weight: 500;
+    }
+
+    .scroll-top-btn {
+      border: none;
+      background: #eeeeee;
+      border-radius: 999px;
+      padding: 6px 10px;
+      font-size: 0.8rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .scroll-top-btn:hover {
+      background: #e0e0e0;
+    }
+
+    .card {
+      background: var(--card-bg);
+      padding: 16px;
+      border-radius: var(--radius-card);
+      box-shadow: var(--shadow-soft);
+      margin-bottom: 20px;
+    }
+
+    .card h3 {
+      margin-top: 0;
+      margin-bottom: 12px;
+      font-size: 1.1rem;
+      font-weight: 600;
+    }
+
+    .baseline-card h3,
+    .adjusted-card h3 {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .baseline-card h3::before {
+      content: "⚙️";
+      font-size: 1rem;
+    }
+
+    .adjusted-card h3::before {
+      content: "📊";
+      font-size: 1rem;
+    }
+
+    .baseline-row {
+      display: grid;
+      grid-template-columns: 1.4fr auto auto;
+      align-items: center;
+      padding: 10px 0;
+      border-bottom: 1px solid var(--border-subtle);
+      gap: 12px;
+    }
+
+    .baseline-row:last-child {
+      border-bottom: none;
+    }
+
+    .baseline-label {
+      font-weight: 500;
+      font-size: 0.95rem;
+    }
+
+    .baseline-controls {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      justify-content: flex-end;
+    }
+
+    .value-pill {
+      background: var(--pill-bg);
+      padding: 4px 10px;
+      border-radius: var(--radius-pill);
+      font-size: 0.9rem;
+      font-weight: 500;
+      min-width: 40px;
+      text-align: center;
+    }
+
+    .btn-group {
+      display: flex;
+      gap: 4px;
+    }
+
+    .icon-btn {
+      width: 28px;
+      height: 28px;
+      border-radius: var(--radius-btn);
+      border: none;
+      background: var(--btn-bg);
+      cursor: pointer;
+      font-size: 1rem;
+      font-weight: bold;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      transition: background var(--transition-fast), transform var(--transition-fast);
+    }
+
+    .icon-btn:hover:not(:disabled) {
+      background: var(--btn-bg-hover);
+      transform: translateY(-1px);
+    }
+
+    .icon-btn:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+    }
+
+    .scale-row {
+      display: grid;
+      /* label on left, bar fills remaining space */
+      grid-template-columns: auto 1fr;
+      align-items: center;
+      gap: 12px;
+      padding: 8px 0;
+    }
+
+    .scale-bar {
+      background: #f0f0f0;
+      height: 18px;
+      border-radius: 9px;
+      overflow: hidden;
+    }
+
+    .scale-fill {
+      background: linear-gradient(90deg, var(--accent), var(--accent-soft));
+      height: 100%;
+      border-radius: 9px;
+      transition: width 0.25s ease;
+    }
+
+    .scale-values {
+      /* removed: we no longer display separate values
+         they are now part of the label */
+      display: none;
+    }
+
+    .scale-label {
+      font-size: 0.95rem;
+      font-weight: 600;
+      text-align: left;
+      /* background/text will be set dynamically in JavaScript */
+      padding: 2px 6px;
+      border-radius: 4px;
+    }
+
+    .reset-btn {
+      margin-top: 8px;
+      padding: 8px 14px;
+      border-radius: 999px;
+      border: none;
+      cursor: pointer;
+      font-size: 0.9rem;
+      font-weight: 500;
+      background: #424242;
+      color: #fff;
+      transition: background var(--transition-fast), transform var(--transition-fast);
+    }
+
+    .reset-btn.secondary {
+      background: #757575;
+      margin-bottom: 16px;
+    }
+
+    .reset-btn:hover {
+      background: #212121;
+      transform: translateY(-1px);
+    }
+
+    .reset-btn.secondary:hover {
+      background: #616161;
+    }
+
+    .modifiers-card h3 {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .modifiers-card h3::before {
+      content: "🎛️";
+      font-size: 1rem;
+    }
+
+    .modifier-group {
+      margin-bottom: 16px;
+    }
+
+    .modifier-group-title {
+      font-weight: 600;
+      margin-bottom: 6px;
+      font-size: 0.95rem;
+    }
+
+    .modifier-group-desc {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+    }
+
+    .modifier-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .mod-btn {
+      border-radius: 999px;
+      border: 1px solid transparent;
+      padding: 6px 10px;
+      font-size: 0.85rem;
+      cursor: pointer;
+      background: #eeeeee;
+      color: #333;
+      transition: background var(--transition-fast), color var(--transition-fast), border-color var(--transition-fast), transform var(--transition-fast);
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .mod-btn.positive {
+      border-color: rgba(56,142,60,0.4);
+      background: #e8f5e9;
+      color: #1b5e20;
+    }
+
+    .mod-btn.negative {
+      border-color: rgba(211,47,47,0.4);
+      background: #ffebee;
+      color: #b71c1c;
+    }
+
+    /* ACTIVE STATE — POSITIVE MODIFIERS */
+    .mod-btn.active.positive {
+        background: #2e7d32 !important;      /* strong green */
+        color: #ffffff !important;
+        border-color: #1b5e20 !important;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.25),
+                    0 0 0 2px rgba(46,125,50,0.45);
+        transform: translateY(-2px);
+    }
+
+    .mod-btn.active.positive .points {
+        color: #c8e6c9 !important;
+    }
+
+    /* ACTIVE STATE — NEGATIVE MODIFIERS */
+    .mod-btn.active.negative {
+        background: #c62828 !important;      /* strong red */
+        color: #ffffff !important;
+        border-color: #8e0000 !important;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.25),
+                    0 0 0 2px rgba(198,40,40,0.45);
+        transform: translateY(-2px);
+    }
+
+    .mod-btn.active.negative .points {
+        color: #ffcdd2 !important;
+    }
+
+    .mod-btn span.points {
+      font-weight: 600;
+      font-size: 0.8rem;
+      opacity: 0.9;
+    }
+
+    .footer-note {
+      margin-top: 24px;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      text-align: center;
+    }
+
+    @media (max-width: 720px) {
+      .baseline-row {
+        grid-template-columns: 1fr;
+        align-items: flex-start;
+      }
+      .scale-row {
+        grid-template-columns: 1fr;
+        align-items: flex-start;
+      }
+      .scale-values {
+        display: none;
+      }
+      .floating-header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .floating-header-right {
+        align-self: stretch;
+        justify-content: space-between;
+      }
+    }
+  </style>
+
+
+
+
+<!-- JavaScript for the Signal Calc tool. -->
+
+<script>
+    (function () {
+      const root = document.getElementById("signal-calc");
+
+      const baseline = [
+        { label: "🔴 Very Low", min: 0,  max: 20 },
+        { label: "🟠 Low",      min: 21, max: 30 },
+        { label: "🟡 Medium",   min: 31, max: 45 },
+        { label: "🟢 High",     min: 46, max: 60 },
+        { label: "🔵 Very High",min: 61, max: 100 }
+      ];
+
+      let baselineRanges = JSON.parse(JSON.stringify(baseline));
+
+      // modifiers may now be objects with `desc` and `items` properties.
+      // For backwards compatibility the group value can still be an array.
+      const modifiers = {
+        "Program Access": {
+          code: "PA",
+          exclusive: true,
+          desc: "Select only one. What configuration of program types do you offer? (Public, Private, VDP).",
+          items: [
+            { pts: -15, label: "Public + VDP",               code: "PV" },
+            { pts: -10, label: "Public",                     code: "P" },
+            { pts: -7,  label: "VDP",                        code: "V" },
+            { pts: -5,  label: "Public + VDP + Private",     code: "PVI" },
+            { pts: -3,  label: "VDP + Private",              code: "VI" },
+            { pts: +5,  label: "Public + Private",           code: "PI" },
+            { pts: +10, label: "Private",                    code: "I" }
+          ]
+        },
+
+        "Types of Included Assets": {
+          code: "ISA",
+          desc: "Multi-Select. What types of assets are in-scope for your programs?",
+          items: [
+            { pts: -5, label: "Many OSS assets",              code: "M" },
+            { pts: -3, label: "Wildcard domains",             code: "W" },
+            { pts: -2, label: "One/few OSS assets",           code: "O" },
+            { pts: -2, label: "Software assets",              code: "S" },
+            { pts: -2, label: "Software-as-a-Service assets", code: "SA" },
+            { pts: -1, label: "Firmware assets",              code: "F" },
+            { pts: +1, label: "Mobile apps",                  code: "MA" },
+            { pts: +1, label: "IT/Infrastructure",            code: "IT" },
+            { pts: +2, label: "Hardware assets",              code: "H" }
+          ]
+        },
+
+        "Types of Excluded Assets": {
+          code: "OOSA",
+          desc: "Multi-Select. What types of assets does your company have, but are out-of-scope for your programs?",
+          items: [
+            { pts: -5, label: "IT/Infrastructure",     code: "IT" },
+            { pts: -3, label: "Many OSS assets",       code: "M" },
+            { pts: +1, label: "One/few OSS assets",    code: "O" },
+            { pts: +1, label: "Mobile apps",           code: "MA" },
+            { pts: +2, label: "Wildcard domains",      code: "W" },
+            { pts: +2, label: "Software-as-a-Service", code: "SA" },
+            { pts: +2, label: "Physical products",     code: "P" }
+          ]
+        },
+
+        "Total Asset Volume": {
+          code: "TAV",
+          exclusive: true,
+          desc: "Select only one. Approximate number of in-scope targets.",
+          items: [
+            { pts: -8, label: "Extra Large (e.g. 500+ assets)",  code: "XL" },
+            { pts: -4, label: "Large (e.g. 100-500 assets)",     code: "L" },
+            { pts: +1, label: "Standard (e.g. 25-100 assets)",   code: "R" },
+            { pts: +4, label: "Small (e.g. 5-25 assets)",        code: "S" },
+            { pts: +8, label: "Hyper-Focused (e.g. 1-5 assets)", code: "HF" }
+          ]
+        },
+
+        "Engagement Activities": {
+          code: "EA",
+          desc: "Multi-Select. Initiatives to attract researchers and support the community.",
+          items: [
+            { pts: -2, label: "Hacker community sponsorship", code: "HCS" },
+            { pts: -1, label: "Public Show & Tell",           code: "PST" },
+            { pts: +1, label: "1–3 promotions/bonuses",       code: "PR1" },
+            { pts: +1, label: "Public training webinar",      code: "WEB" }
+          ]
+        },
+
+        "Live Hacking Events": {
+          code: "LHE",
+          exclusive: true,
+          desc: "Select only one. In-person event types in one year.",
+          items: [
+            { pts: +5,  label: "One LHE",  code: "L1" },
+            { pts: +8,  label: "2–3 LHE",  code: "L2" },
+            { pts: +12, label: "4+ LHE",   code: "L4" }
+          ]
+        },
+
+        "Public Virtual Hacking Events": {
+          code: "PVHE",
+          exclusive: true,
+          desc: "Select only one. Virtual event types in one year.",
+          items: [
+            { pts: -5,  label: "One public VHE",  code: "PV1" },
+            { pts: -8,  label: "2-3 public VHE",  code: "PV2" },
+            { pts: -12,  label: "4+ public VHE",  code: "PV4" }
+          ]
+        },
+
+        "Invite-only Virtual Hacking Events": {
+          code: "IVHE",
+          exclusive: true,
+          desc: "Select only one. Virtual event types in one year.",
+          items: [
+            { pts: +2,  label: "One invite-only VHE",  code: "IV1" },
+            { pts: +4,  label: "2-3 invite-only VHE",  code: "IV2" },
+            { pts: +5,  label: "4+ invite-only VHE",   code: "IV4" }
+          ]
+        }
+      };
+
+
+      const state = {
+        active: {},
+        total: 0
+      };
+
+      // separator used in URL parameters (tilde chosen as safe char)
+      const SEP = "~";
+
+      function createEl(tag, props = {}, children = []) {
+        const el = document.createElement(tag);
+        for (const [k, v] of Object.entries(props)) {
+          if (k === "text") {
+            el.textContent = v;
+          } else if (k === "class") {
+            el.className = v;
+          } else if (k === "style") {
+            el.setAttribute("style", v);
+          } else if (k === "disabled") {
+            if (v) el.disabled = true;
+          } else {
+            el.setAttribute(k, v);
+          }
+        }
+        if (!Array.isArray(children)) children = [children];
+        children.forEach(c => {
+          if (c) el.appendChild(c);
+        });
+        return el;
+      }
+
+      // Helper to combine group code and item code into a unique full code
+      function getFullCode(groupCode, itemCode) {
+        return groupCode + "_" + itemCode;
+      }
+
+      function buildInitialUI() {
+        const title = createEl("h1", { text: "Signal Estimation" });
+        const subtitle = createEl("p", {
+          class: "subtitle",
+          text: "Adjust the baseline ranges and apply program modifiers to estimate the overall signal strength."
+        });
+        root.appendChild(title);
+        root.appendChild(subtitle);
+
+        const header = createEl("div", { class: "floating-header" });
+
+        const left = createEl("div", { class: "floating-header-left" });
+        const headerTitle = createEl("div", {
+          class: "floating-header-title",
+          text: "Current signal estimate"
+        });
+        const main = createEl("div", { class: "floating-header-main" });
+
+        const totalLabel = createEl("span", {
+          class: "total-mod-label",
+          text: "Total modifier:"
+        });
+        const totalSpan = createEl("span", {
+          class: "total-mod",
+          text: "+0"
+        });
+        totalSpan.classList.add("pos");
+        totalSpan.setAttribute("data-role", "total-mod");
+
+        main.appendChild(totalLabel);
+        main.appendChild(totalSpan);
+
+        left.appendChild(headerTitle);
+        left.appendChild(main);
+
+        const right = createEl("div", { class: "floating-header-right" });
+        const chip = createEl("div", {
+          class: "chip",
+          text: "Baseline + Modifiers → Adjusted Scale"
+        });
+        const scrollBtn = createEl("button", {
+          class: "scroll-top-btn",
+          id: "scroll-top",
+          text: "Back to top"
+        });
+
+        right.appendChild(chip);
+        right.appendChild(scrollBtn);
+
+        header.appendChild(left);
+        header.appendChild(right);
+        root.appendChild(header);
+
+        const baselineCard = createEl("div", { class: "card baseline-card" }, [
+          createEl("h3", { text: "Baseline Ranges" }),
+          createEl("div", { class: "baseline-box" })
+        ]);
+        root.appendChild(baselineCard);
+
+        const resetBaselineBtn = createEl("button", {
+          id: "reset-baseline",
+          class: "reset-btn secondary",
+          text: "Reset Baseline"
+        });
+        root.appendChild(resetBaselineBtn);
+
+        const adjustedCard = createEl("div", { class: "card adjusted-card" }, [
+          createEl("h3", { text: "Adjusted Scale" }),
+          createEl("div", { class: "scale-box" })
+        ]);
+        root.appendChild(adjustedCard);
+
+        const modifiersCard = createEl("div", { class: "card modifiers-card" });
+        const modTitle = createEl("h3", { text: "Program Modifiers" });
+        modifiersCard.appendChild(modTitle);
+
+        Object.entries(modifiers).forEach(([groupName, groupData]) => {
+          const group = createEl("div", { class: "modifier-group" });
+          const groupTitle = createEl("div", {
+            class: "modifier-group-title",
+            text: groupName
+          });
+          group.appendChild(groupTitle);
+
+          // optional description field
+          const desc = groupData && groupData.desc;
+          if (desc) {
+            const descEl = createEl("div", {
+              class: "modifier-group-desc",
+              text: desc
+            });
+            group.appendChild(descEl);
+          }
+
+          const btnRow = createEl("div", { class: "modifier-buttons" });
+          const items = Array.isArray(groupData) ? groupData : groupData.items || [];
+
+          items.forEach((item, idx) => {
+            const fullCode = getFullCode(groupData.code, item.code);
+            const btn = createEl("button", {
+              class: "mod-btn " + (item.pts >= 0 ? "positive" : "negative"),
+              "data-group": groupName,
+              "data-index": idx.toString(),
+              "data-code": fullCode
+            });
+
+            const ptsSpan = createEl("span", {
+              class: "points",
+              text: (item.pts >= 0 ? "+" : "") + item.pts
+            });
+            const labelSpan = createEl("span", { text: item.label });
+
+            btn.appendChild(ptsSpan);
+            btn.appendChild(labelSpan);
+            btnRow.appendChild(btn);
+          });
+
+          group.appendChild(btnRow);
+          modifiersCard.appendChild(group);
+        });
+
+        const resetModsBtn = createEl("button", {
+          id: "reset-modifiers",
+          class: "reset-btn",
+          text: "Reset Modifiers"
+        });
+        modifiersCard.appendChild(resetModsBtn);
+
+        root.appendChild(modifiersCard);
+
+        const footer = createEl("div", {
+          class: "footer-note",
+          text: "Baseline ranges and modifiers are for estimation and exploration only."
+        });
+        root.appendChild(footer);
+      }
+
+      function clampBaseline() {
+        baselineRanges.forEach(r => {
+          r.min = Math.max(0, r.min);
+          r.max = Math.min(100, r.max);
+        });
+
+        baselineRanges[0].min = 0;
+
+        baselineRanges.forEach(r => {
+          if (r.max <= r.min) {
+            r.max = r.min + 1;
+          }
+        });
+
+        for (let i = 1; i < baselineRanges.length; i++) {
+          const prev = baselineRanges[i - 1];
+          const curr = baselineRanges[i];
+
+          if (curr.min <= prev.max) {
+            curr.min = prev.max + 1;
+          }
+
+          if (curr.max <= curr.min) {
+            curr.max = curr.min + 1;
+          }
+        }
+
+        for (let i = baselineRanges.length - 2; i >= 0; i--) {
+          const curr = baselineRanges[i];
+          const next = baselineRanges[i + 1];
+
+          if (curr.max >= next.min) {
+            curr.max = next.min - 1;
+          }
+
+          if (curr.max <= curr.min) {
+            curr.min = curr.max - 1;
+            if (curr.min < 0) curr.min = 0;
+          }
+        }
+
+        baselineRanges[baselineRanges.length - 1].max = 100;
+      }
+
+      function renderBaselineEditor() {
+        const box = root.querySelector(".baseline-box");
+        box.innerHTML = "";
+
+        baselineRanges.forEach((r, i) => {
+          const row = createEl("div", { class: "baseline-row" });
+
+          const label = createEl("div", { class: "baseline-label", text: r.label });
+          row.appendChild(label);
+
+          const minControls = createEl("div", { class: "baseline-controls" }, [
+            createEl("span", { class: "value-pill", text: r.min }),
+            createEl("div", { class: "btn-group" }, [
+              createEl("button", {
+                class: "baseline-btn icon-btn",
+                "data-index": i,
+                "data-bound": "min",
+                "data-dir": "-",
+                text: "–",
+                disabled: i === 0
+              }),
+              createEl("button", {
+                class: "baseline-btn icon-btn",
+                "data-index": i,
+                "data-bound": "min",
+                "data-dir": "+",
+                text: "+",
+                disabled: i === 0
+              })
+            ])
+          ]);
+
+          const maxControls = createEl("div", { class: "baseline-controls" }, [
+            createEl("span", { class: "value-pill", text: r.max }),
+            createEl("div", { class: "btn-group" }, [
+              createEl("button", {
+                class: "baseline-btn icon-btn",
+                "data-index": i,
+                "data-bound": "max",
+                "data-dir": "-",
+                text: "–",
+                disabled: i === baselineRanges.length - 1
+              }),
+              createEl("button", {
+                class: "baseline-btn icon-btn",
+                "data-index": i,
+                "data-bound": "max",
+                "data-dir": "+",
+                text: "+",
+                disabled: i === baselineRanges.length - 1
+              })
+            ])
+          ]);
+
+          row.appendChild(minControls);
+          row.appendChild(maxControls);
+
+          box.appendChild(row);
+        });
+      }
+
+      function applyShift(baselineRanges, total) {
+        return baselineRanges.map((r, i) => {
+          const emoji = baseline[i].label.split(" ")[0];
+          const label = `${emoji} ${r.min}–${r.max}%`;
+          return {
+            label,
+            min: r.min + total,
+            max: r.max + total
+          };
+        });
+      }
+
+      function clampRanges(ranges) {
+        return ranges.map(r => {
+          let min = Math.max(0, r.min);
+          let max = Math.min(100, r.max);
+          if (max < min + 1) max = min + 1;
+          return { ...r, min, max };
+        });
+      }
+
+      function renderScale(ranges, total) {
+        const scaleBox = root.querySelector(".scale-box");
+        scaleBox.innerHTML = "";
+
+        ranges.forEach((r) => {
+          const bar = createEl("div", { class: "scale-row" });
+
+          // pull the emoji (first word) from the original label and show
+          // it before the numeric range so we have a coloured icon indicator
+          const emoji = r.label.split(" ")[0];
+          const label = createEl("div", {
+            class: "scale-label",
+            text: `${emoji} ${r.min}–${r.max}%`
+          });
+          // color the pill based on the emoji
+          const colorMap = {
+            "🔴": "#e53935",
+            "🟠": "#fb8c00",
+            "🟡": "#fdd835",
+            "🟢": "#43a047",
+            "🔵": "#1e88e5"
+          };
+          const fg = "#ffffff";
+          if (colorMap[emoji]) {
+            label.style.backgroundColor = colorMap[emoji];
+            label.style.color = fg;
+          }
+
+          const rawWidth = r.max - r.min;
+          const visualWidth = Math.max(5, rawWidth * 2); // exaggerate by 100%
+          const range = createEl("div", { class: "scale-bar" }, [
+            createEl("div", {
+              class: "scale-fill",
+              style: `width:${visualWidth}%;`
+            })
+          ]);
+
+          bar.appendChild(label);
+          bar.appendChild(range);
+
+          scaleBox.appendChild(bar);
+        });
+
+        const totalSpan = root.querySelector('[data-role="total-mod"]');
+        totalSpan.textContent = (total >= 0 ? "+" : "") + total;
+        totalSpan.className = "total-mod " + (total >= 0 ? "pos" : "neg");
+      }
+
+      function calculateTotal(active) {
+        return Object.values(active).reduce((sum, v) => sum + v, 0);
+      }
+
+      function encodeURL() {
+        const params = new URLSearchParams();
+
+        // --- Encode active modifiers by group ---
+        Object.entries(modifiers).forEach(([groupName, groupData]) => {
+          const groupCode = groupData.code;
+          const items = groupData.items || [];
+          const activeCodes = items
+            .filter(item => state.active[getFullCode(groupCode, item.code)])
+            .map(item => item.code);
+          if (activeCodes.length) {
+            params.set(groupCode, activeCodes.join(SEP));
+          }
+        });
+
+        // --- Encode baseline ranges ---
+        const base = baselineRanges.map(r => `${r.min}-${r.max}`).join(SEP);
+        params.set("base", base);
+
+        // --- Encode adjusted scale (baseline + total modifier) ---
+        const shifted = applyShift(baselineRanges, state.total);
+        const clamped = clampRanges(shifted);
+        const adj = clamped.map(r => `${r.min}-${r.max}`).join(SEP);
+        params.set("adj", adj);
+
+        const newUrl = window.location.pathname + "?" + params.toString();
+        window.history.replaceState({}, "", newUrl);
+      }
+
+
+      function decodeURL() {
+        const params = new URLSearchParams(window.location.search);
+        const baseParam = params.get("base");
+
+        state.active = {};
+
+        // --- Decode modifiers from group parameters ---
+        Object.entries(modifiers).forEach(([groupName, groupData]) => {
+          const groupCode = groupData.code;
+          const items = groupData.items || [];
+          const groupModsParam = params.get(groupCode);
+          if (groupModsParam) {
+            const codes = groupModsParam.split(SEP);
+            items.forEach(item => {
+              if (codes.includes(item.code)) {
+                const fullCode = getFullCode(groupCode, item.code);
+                state.active[fullCode] = item.pts;
+              }
+            });
+          }
+        });
+
+        if (baseParam) {
+          const parts = baseParam.split(SEP);
+          if (parts.length === baselineRanges.length) {
+            const parsed = parts.map(p => {
+              const [minStr, maxStr] = p.split("-");
+              return {
+                min: parseInt(minStr, 10),
+                max: parseInt(maxStr, 10)
+              };
+            });
+            parsed.forEach((p, i) => {
+              if (!isNaN(p.min) && !isNaN(p.max)) {
+                baselineRanges[i].min = p.min;
+                baselineRanges[i].max = p.max;
+              }
+            });
+            clampBaseline();
+          }
+        }
+
+        const adjParam = params.get("adj");
+        if (adjParam) {
+            const parts = adjParam.split(SEP);
+            if (parts.length === baselineRanges.length) {
+                const parsed = parts.map(p => {
+                const [minStr, maxStr] = p.split("-");
+                return {
+                    min: parseInt(minStr, 10),
+                    max: parseInt(maxStr, 10)
+                };
+                });
+
+                // Replace baselineRanges with decoded adjusted ranges
+                parsed.forEach((p, i) => {
+                if (!isNaN(p.min) && !isNaN(p.max)) {
+                    baselineRanges[i].min = p.min;
+                    baselineRanges[i].max = p.max;
+                }
+                });
+
+                clampBaseline();
+            }
+        }
+      }
+
+      function renderModifiers() {
+        const buttons = root.querySelectorAll(".mod-btn");
+        buttons.forEach(btn => {
+          const code = btn.getAttribute("data-code");
+          if (state.active[code]) {
+            btn.classList.add("active");
+          } else {
+            btn.classList.remove("active");
+          }
+        });
+      }
+
+      function resetBaseline() {
+        baselineRanges = JSON.parse(JSON.stringify(baseline));
+        clampBaseline();
+        renderBaselineEditor();
+        update();
+      }
+
+      function resetModifiers() {
+        state.active = {};
+        renderModifiers();
+        update();
+      }
+
+      function update() {
+        state.total = calculateTotal(state.active);
+        const shifted = applyShift(baselineRanges, state.total);
+        const clamped = clampRanges(shifted);
+        renderScale(clamped, state.total);
+        encodeURL();
+      }
+
+      function handleClick(e) {
+        const btn = e.target.closest("button");
+        if (!btn) return;
+
+        if (btn.id === "scroll-top") {
+          window.scrollTo({ top: 0, behavior: "smooth" });
+          return;
+        }
+
+        if (btn.id === "reset-baseline") {
+          resetBaseline();
+          return;
+        }
+
+        if (btn.id === "reset-modifiers") {
+          resetModifiers();
+          return;
+        }
+
+        if (btn.classList.contains("mod-btn")) {
+          const code = btn.getAttribute("data-code");
+          const groupName = btn.getAttribute("data-group");
+          const idx = parseInt(btn.getAttribute("data-index"), 10);
+          const groupData = modifiers[groupName];
+          const groupCode = groupData.code;
+          const item = groupData.items[idx];
+
+          // If already active, just toggle off
+          if (state.active[code]) {
+            delete state.active[code];
+            renderModifiers();
+            update();
+            return;
+          }
+
+          // If group is exclusive, clear all other items in this group
+          if (groupData.exclusive) {
+            groupData.items.forEach(other => {
+              const otherCode = getFullCode(groupCode, other.code);
+              if (state.active[otherCode]) {
+                delete state.active[otherCode];
+              }
+            });
+          }
+
+          // Activate this item
+          state.active[code] = item.pts;
+
+          renderModifiers();
+          update();
+          return;
+        }
+
+
+        if (btn.classList.contains("baseline-btn")) {
+          const i = parseInt(btn.getAttribute("data-index"), 10);
+          const bound = btn.getAttribute("data-bound");
+          const dir = btn.getAttribute("data-dir");
+
+          const delta = dir === "+" ? 1 : -1;
+          baselineRanges[i][bound] += delta;
+
+          clampBaseline();
+          renderBaselineEditor();
+          update();
+          return;
+        }
+      }
+
+      buildInitialUI();
+      decodeURL();
+      clampBaseline();
+      renderBaselineEditor();
+      renderModifiers();
+      update();
+
+      document.addEventListener("click", handleClick);
+    })();
+</script>
+
+
+
