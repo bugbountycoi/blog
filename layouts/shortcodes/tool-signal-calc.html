@@ -5,9 +5,6 @@
     :root {
       --bg: #f5f5f7;
       --card-bg: #ffffff;
-      --accent: #4caf50;
-      --accent-soft: #81c784;
-      --danger: #e53935;
       --text-main: #222;
       --text-muted: #666;
       --border-subtle: #e0e0e0;
@@ -268,30 +265,7 @@
       cursor: not-allowed;
     }
 
-    .scale-row {
-      display: grid;
-      /* label on left, bar fills remaining space */
-      grid-template-columns: auto 1fr;
-      align-items: center;
-      gap: 12px;
-      padding: 8px 0;
-    }
-
-    .scale-bar {
-      background: #f0f0f0;
-      height: 18px;
-      border-radius: 9px;
-      overflow: hidden;
-    }
-
-    .scale-fill {
-      background: linear-gradient(90deg, var(--accent), var(--accent-soft));
-      height: 100%;
-      border-radius: 9px;
-      transition: width 0.25s ease;
-    }
-
-    /* new horizontal zone bar styling */
+    /* horizontal zone bar styling */
     .zone-bar {
       position: relative;
       height: 32px;
@@ -342,30 +316,6 @@
       left: 0;
       transform: translateX(-50%);
       white-space: nowrap;
-    }
-
-    .scale-values {
-      /* removed: we no longer display separate values
-         they are now part of the label */
-      display: none;
-    }
-
-    .scale-label {
-      font-size: 0.95rem;
-      font-weight: 600;
-      text-align: left;
-      /* background/text will be set dynamically in JavaScript */
-      padding: 2px 6px;
-      border-radius: 4px;
-    }
-
-    .scale-row.highlighted {
-      background: rgba(76, 175, 80, 0.15);
-      padding: 12px 8px;
-      border-radius: 6px;
-      border-left: 5px solid var(--accent);
-      box-shadow: 0 0 0 1px rgba(76, 175, 80, 0.3), 0 4px 12px rgba(76, 175, 80, 0.15);
-      transform: translateX(2px);
     }
 
     .reset-btn {
@@ -429,63 +379,95 @@
     }
 
     .mod-btn {
-      border-radius: 999px;
-      border: 1px solid transparent;
-      padding: 6px 10px;
+      border-radius: 6px;
+      border: none;
+      overflow: hidden;
       font-size: 0.85rem;
       cursor: pointer;
-      background: #eeeeee;
-      color: #333;
-      transition: background var(--transition-fast), color var(--transition-fast), border-color var(--transition-fast), transform var(--transition-fast);
+      transition: transform var(--transition-fast), box-shadow var(--transition-fast);
       display: inline-flex;
-      align-items: center;
-      gap: 4px;
+      align-items: stretch;
+      height: 28px;
     }
 
     .mod-btn.positive {
-      border-color: rgba(56,142,60,0.4);
-      background: #e8f5e9;
-      color: #1b5e20;
+      box-shadow: 0 1px 3px rgba(27, 94, 32, 0.2);
     }
 
     .mod-btn.negative {
-      border-color: rgba(211,47,47,0.4);
-      background: #ffebee;
-      color: #b71c1c;
+      box-shadow: 0 1px 3px rgba(183, 28, 28, 0.2);
     }
 
     /* ACTIVE STATE — POSITIVE MODIFIERS */
     .mod-btn.active.positive {
-        background: #2e7d32 !important;      /* strong green */
-        color: #ffffff !important;
-        border-color: #1b5e20 !important;
-        box-shadow: 0 2px 6px rgba(0,0,0,0.25),
-                    0 0 0 2px rgba(46,125,50,0.45);
+        box-shadow: 0 2px 6px rgba(0,0,0,0.25), 0 0 0 2px rgba(46,125,50,0.45) !important;
         transform: translateY(-2px);
-    }
-
-    .mod-btn.active.positive .points {
-        color: #c8e6c9 !important;
     }
 
     /* ACTIVE STATE — NEGATIVE MODIFIERS */
     .mod-btn.active.negative {
-        background: #c62828 !important;      /* strong red */
-        color: #ffffff !important;
-        border-color: #8e0000 !important;
-        box-shadow: 0 2px 6px rgba(0,0,0,0.25),
-                    0 0 0 2px rgba(198,40,40,0.45);
+        box-shadow: 0 2px 6px rgba(0,0,0,0.25), 0 0 0 2px rgba(198,40,40,0.45) !important;
         transform: translateY(-2px);
     }
 
-    .mod-btn.active.negative .points {
-        color: #ffcdd2 !important;
+    .mod-btn span.points {
+      font-weight: 700;
+      font-size: 0.85rem;
+      padding: 0 8px;
+      min-width: 35px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      white-space: nowrap;
     }
 
-    .mod-btn span.points {
-      font-weight: 600;
-      font-size: 0.8rem;
-      opacity: 0.9;
+    .mod-btn.positive .points {
+      background: #1b5e20;
+      color: #ffffff;
+    }
+
+    .mod-btn.negative .points {
+      background: #b71c1c;
+      color: #ffffff;
+    }
+
+    .mod-btn.active.positive .points {
+      background: #0d3818 !important;
+      color: #ffffff !important;
+    }
+
+    .mod-btn.active.negative .points {
+      background: #7d1212 !important;
+      color: #ffffff !important;
+    }
+
+    /* Label text on the right side */
+    .mod-btn span:not(.points) {
+      padding: 0 10px;
+      display: flex;
+      align-items: center;
+      flex: 1;
+      white-space: nowrap;
+    }
+
+    .mod-btn.positive span:not(.points) {
+      background: #e8f5e9;
+      color: #1b5e20;
+    }
+
+    .mod-btn.negative span:not(.points) {
+      background: #ffebee;
+      color: #b71c1c;
+    }
+
+    .mod-btn.active.positive span:not(.points) {
+      background: #2e7d32 !important;
+      color: #ffffff !important;
+    }
+
+    .mod-btn.active.negative span:not(.points) {
+      background: #c62828 !important;
+      color: #ffffff !important;
     }
 
     .footer-note {
@@ -499,13 +481,6 @@
       .baseline-row {
         grid-template-columns: 1fr;
         align-items: flex-start;
-      }
-      .scale-row {
-        grid-template-columns: 1fr;
-        align-items: flex-start;
-      }
-      .scale-values {
-        display: none;
       }
       .floating-header {
         flex-direction: column;
@@ -532,7 +507,6 @@
         return;
       }
       try {
-        console.log("signal-calc script starting");
 
       // Centralized string configuration for easy editing
       const strings = {
@@ -646,9 +620,9 @@
           code: "ISA",
           desc: "Multi-Select. What types of assets are in-scope for your programs?",
           items: [
-            { pts: -5, label: "Many OSS assets",              code: "M",  tooltip: "Many open-source assets in-scope can reduce signal quality because of free sast tools available to researchers." },
+            { pts: -5, label: "OSS assets (many)",              code: "M",  tooltip: "Many open-source assets in-scope can reduce signal quality because of free sast tools available to researchers." },
             { pts: -3, label: "Wildcard domains",             code: "W",  tooltip: "'Free-and-open' or unbounded scope is very attractive to researchers." },
-            { pts: -2, label: "One/few OSS assets",           code: "O",  tooltip: "Open-source assets are often less signal-rich than proprietary assets." },
+            { pts: -2, label: "OSS assets (one/few)",           code: "O",  tooltip: "Open-source assets are often less signal-rich than proprietary assets." },
             { pts: -2, label: "Software assets",              code: "S",  tooltip: "Disassembly tools are becoming more accessible to researchers, but the skills to develop exploits are lagging behind." },
             { pts: -2, label: "Software-as-a-Service assets", code: "SA", tooltip: "SaaS products are the primary target for researchers because they are often more accessible and easier to exploit." },
             { pts: -1, label: "Firmware assets",              code: "F",  tooltip: "Firmware assets are often harder to analyze properly and exploit." },
@@ -663,8 +637,8 @@
           desc: "Multi-Select. What types of assets does your company have, but are out-of-scope for your programs? Do NOT select these if your company does not have these asset types at all. Instead, only select if you have these asset types but have explicitly excluded them from your programs.",
           items: [
             { pts: -5, label: "IT/Infrastructure",     code: "IT", tooltip: "Submissions on these assets are likely to come in anyway, excluding them increases noise." },
-            { pts: -3, label: "Many OSS assets",       code: "M",  tooltip: "Submissions on these assets are likely to come in anyway, excluding them increases noise." },
-            { pts: +1, label: "One/few OSS assets",    code: "O",  tooltip: "Limited company OSS contributions are less likely to generate noise." },
+            { pts: -3, label: "OSS assets (many)",       code: "M",  tooltip: "Submissions on these assets are likely to come in anyway, excluding them increases noise." },
+            { pts: +1, label: "OSS assets (one/few)",    code: "O",  tooltip: "Limited company OSS contributions are less likely to generate noise." },
             { pts: +1, label: "Mobile apps",           code: "MA", tooltip: "Mobile apps are unlikely to receive out of scope submissions." },
             { pts: +2, label: "Wildcard domains",      code: "W",  tooltip: "Excluding wildcard domains introduces blind spots where your program may miss potential vulnerabilities." },
             { pts: +2, label: "Software-as-a-Service", code: "SA", tooltip: "Excluding SaaS assets may reduce noise but can also miss important vulnerabilities." },
@@ -702,8 +676,8 @@
           desc: "Select only one. In-person event types planned each year. Select 'one' if you have hosted any number of events in the past but do not have any upcoming events.",
           items: [
             { pts: +5,  label: "One LHE",  code: "L1", tooltip: "One live hacking event in a year increases visibility and engagement." },
-            { pts: +8,  label: "2–3 LHE",  code: "L2", tooltip: "Multiple LHEs in a year significantly increases visibility and engagement. Be cautious about repeated scope at events." },
-            { pts: +12, label: "4+ LHE",   code: "L4", tooltip: "Many events in a year greatly reduces the baseline volume your program will expect. Resaerchers will be working behind the scenes to prepare for the next event and will hold onto vulnerabilities anticipating event scope." }
+            { pts: +8,  label: "2–3 LHEs",  code: "L2", tooltip: "Multiple LHEs in a year significantly increases visibility and engagement. Be cautious about repeated scope at events." },
+            { pts: +12, label: "4+ LHEs",   code: "L4", tooltip: "Many events in a year greatly reduces the baseline volume your program will expect. Resaerchers will be working behind the scenes to prepare for the next event and will hold onto vulnerabilities anticipating event scope." }
           ]
         },
 
@@ -712,8 +686,8 @@
           exclusive: true,
           desc: "Select only one. Virtual event types in one year. Select 'one' if you have hosted any number of events in the past but do not have any upcoming events.",
           items: [
-          { pts: -8,  label: "4+ public VHE",  code: "PV4", tooltip: "Many events in a year is not advised." },
-          { pts: -6,  label: "2-3 public VHE",  code: "PV2", tooltip: "Multiple opportuntities to access new researchers brings a continual learning curve of noise." },
+          { pts: -8,  label: "4+ public VHEs",  code: "PV4", tooltip: "Many events in a year is not advised." },
+          { pts: -6,  label: "2-3 public VHEs",  code: "PV2", tooltip: "Multiple opportuntities to access new researchers brings a continual learning curve of noise." },
           { pts: -3,  label: "One public VHE",  code: "PV1", tooltip: "One public VHE in a year increases visibility and engagement." }
           ]
         },
@@ -724,8 +698,8 @@
           desc: "Select only one. Virtual event types in one year. Select 'one' if you have hosted any number of events in the past but do not have any upcoming events.",
           items: [
             { pts: +2,  label: "One invite-only VHE",  code: "IV1", tooltip: "One invite-only VHE in a year directly engages your community and will bring higher signal." },
-            { pts: +4,  label: "2-3 invite-only VHE",  code: "IV2", tooltip: "Multiple invite-only VHEs can be leveraged to raise signal by targeting specific researcher groups or products." },
-            { pts: +5,  label: "4+ invite-only VHE",   code: "IV4", tooltip: "Many invite-only VHEs in a year greatly reduces the baseline volume your program will expect." }
+            { pts: +4,  label: "2-3 invite-only VHEs",  code: "IV2", tooltip: "Multiple invite-only VHEs can be leveraged to raise signal by targeting specific researcher groups or products." },
+            { pts: +5,  label: "4+ invite-only VHEs",   code: "IV4", tooltip: "Many invite-only VHEs in a year greatly reduces the baseline volume your program will expect." }
           ]
         }
       };
@@ -765,6 +739,46 @@
       // Helper to combine group code and item code into a unique full code
       function getFullCode(groupCode, itemCode) {
         return groupCode + "_" + itemCode;
+      }
+
+      // Helper to get user signal from input, returns null if empty/invalid
+      function getUserSignal() {
+        const signalInput = root.querySelector("#signal-input");
+        if (!signalInput || !signalInput.value) return null;
+        const value = parseInt(signalInput.value, 10);
+        if (isNaN(value)) return null;
+        return Math.max(0, Math.min(100, value));
+      }
+
+      // Helper to clamp an integer value to a range
+      function clampInteger(value, min = 0, max = 100) {
+        let numValue = parseInt(value, 10);
+        if (isNaN(numValue)) return min;
+        return Math.max(min, Math.min(max, numValue));
+      }
+
+      // Helper to find which zone index a signal value falls into
+      function findZoneIndex(signal, ranges) {
+        for (let i = 0; i < ranges.length; i++) {
+          if (signal >= ranges[i].min && signal <= ranges[i].max) {
+            return i;
+          }
+        }
+        return 0;
+      }
+
+      // Helper to create the chip input element
+      function createChipInputElement() {
+        const chipInput = createEl("input", {
+          type: "text",
+          class: "chip chip-input",
+          id: "signal-chip",
+          placeholder: strings.signalPlaceholder,
+          maxlength: "3"
+        });
+        chipInput.addEventListener("keydown", handleChipKeydown);
+        chipInput.addEventListener("click", (e) => e.stopPropagation());
+        return chipInput;
       }
 
       function getMinLowerBound(i) {
@@ -1038,6 +1052,65 @@
         return true;
       }
 
+      // State for tracking baseline button hold intervals
+      let baselineHoldState = {
+        holdTimer: null,
+        repeatInterval: null,
+        isHolding: false
+      };
+
+      // Apply a baseline button action and update UI
+      function applyBaselineButtonAction(btn) {
+        const i = parseInt(btn.getAttribute("data-index"), 10);
+        const bound = btn.getAttribute("data-bound");
+        const dir = btn.getAttribute("data-dir");
+        const delta = dir === "+" ? 1 : -1;
+        
+        applyDirectionalBaselineDelta(i, bound, delta);
+        state.baselineModified = true;
+        renderBaselineEditor();
+        update();
+      }
+
+      // Setup baseline button hold/repeat functionality
+      function setupBaselineButtonHold(btn) {
+        let holdTimeout;
+        let repeatInt;
+
+        btn.addEventListener("mousedown", () => {
+          baselineHoldState.isHolding = true;
+          
+          // First immediate action on click
+          applyBaselineButtonAction(btn);
+          
+          // Wait 500ms before starting continuous repeat
+          holdTimeout = setTimeout(() => {
+            if (!baselineHoldState.isHolding) return;
+            
+            // Repeat every 100ms
+            repeatInt = setInterval(() => {
+              if (!baselineHoldState.isHolding) {
+                clearInterval(repeatInt);
+                return;
+              }
+              applyBaselineButtonAction(btn);
+            }, 100);
+          }, 500);
+        });
+
+        btn.addEventListener("mouseup", () => {
+          baselineHoldState.isHolding = false;
+          if (holdTimeout) clearTimeout(holdTimeout);
+          if (repeatInt) clearInterval(repeatInt);
+        });
+
+        btn.addEventListener("mouseleave", () => {
+          baselineHoldState.isHolding = false;
+          if (holdTimeout) clearTimeout(holdTimeout);
+          if (repeatInt) clearInterval(repeatInt);
+        });
+      }
+
       function renderBaselineEditor() {
         const box = root.querySelector(".baseline-box");
         box.innerHTML = "";
@@ -1097,13 +1170,18 @@
 
           box.appendChild(row);
         });
+
+        // Setup hold/repeat functionality on all baseline buttons
+        const baselineButtons = box.querySelectorAll(".baseline-btn");
+        baselineButtons.forEach(btn => {
+          setupBaselineButtonHold(btn);
+        });
       }
 
       function applyShift(baselineRanges, total) {
         // shift every boundary by the total amount
         const shifted = baselineRanges.map((r, i) => {
           return {
-            orig: r,
             min: r.min + total,
             max: r.max + total
           };
@@ -1156,15 +1234,6 @@
         });
       }
 
-      function clampRanges(ranges) {
-        return ranges.map(r => {
-          let min = Math.max(0, r.min);
-          let max = Math.min(100, r.max);
-          if (max < min + 1) max = min + 1;
-          return { ...r, min, max };
-        });
-      }
-
       // helper chooses color for each zone index
       function getZoneColor(idx) {
         const colors = ["#e53935","#fb8c00","#fdd835","#43a047","#1e88e5"];
@@ -1175,15 +1244,7 @@
         const scaleBox = root.querySelector(".scale-box");
         scaleBox.innerHTML = "";
         
-        const signalInput = root.querySelector("#signal-input");
-        let userSignal = signalInput && signalInput.value ? parseInt(signalInput.value, 10) : null;
-        
-        // Ensure userSignal is valid and within bounds
-        if (userSignal !== null && !isNaN(userSignal)) {
-          userSignal = Math.max(0, Math.min(100, userSignal));
-        } else {
-          userSignal = null;
-        }
+        const userSignal = getUserSignal();
 
         // build single horizontal bar with segments
         const bar = createEl("div", { class: "zone-bar" });
@@ -1244,9 +1305,8 @@
 
         // --- Only encode adjusted range if baseline has been modified ---
         if (state.baselineModified) {
-          const shifted = applyShift(baselineRanges, state.total);
-          const clamped = clampRanges(shifted);
-          const adj = clamped.map(r => `${r.min}-${r.max}`).join(SEP);
+          const ranges = applyShift(baselineRanges, state.total);
+          const adj = ranges.map(r => `${r.min}-${r.max}`).join(SEP);
           params.set("adj", adj);
         }
 
@@ -1356,9 +1416,8 @@
 
       function update() {
         state.total = calculateTotal(state.active);
-        const shifted = applyShift(baselineRanges, state.total);
-        const clamped = clampRanges(shifted);
-        renderScale(clamped, state.total);
+        const ranges = applyShift(baselineRanges, state.total);
+        renderScale(ranges, state.total);
         encodeURL();
         updateResetButtons();
         updateSignalChip();
@@ -1368,22 +1427,13 @@
         const chip = root.querySelector("#signal-chip");
         if (!chip) return;
         
-        const signalInput = root.querySelector("#signal-input");
-        const userSignal = signalInput && signalInput.value ? parseInt(signalInput.value, 10) : null;
+        const userSignal = getUserSignal();
         
         if (userSignal === null || isNaN(userSignal)) {
           // Convert to input mode
           if (chip.tagName !== 'INPUT') {
-            const chipInput = createEl("input", {
-              type: "text",
-              class: "chip chip-input",
-              id: "signal-chip",
-              placeholder: strings.signalPlaceholder,
-              maxlength: "3"
-            });
+            const chipInput = createChipInputElement();
             chip.parentNode.replaceChild(chipInput, chip);
-            chipInput.addEventListener("keydown", handleChipKeydown);
-            chipInput.addEventListener("click", (e) => e.stopPropagation());
           }
           return;
         }
@@ -1391,19 +1441,8 @@
         // Convert to display mode
         if (chip.tagName === 'INPUT') {
           // Calculate adjusted ranges
-          const total = state.total;
-          const shifted = applyShift(baselineRanges, total);
-          const clamped = clampRanges(shifted);
-          
-          // Find which zone the signal falls into
-          let zoneIndex = 0;
-          for (let i = 0; i < clamped.length; i++) {
-            if (userSignal >= clamped[i].min && userSignal <= clamped[i].max) {
-              zoneIndex = i;
-              break;
-            }
-          }
-          
+          const ranges = applyShift(baselineRanges, state.total);
+          const zoneIndex = findZoneIndex(userSignal, ranges);
           const zoneColor = getZoneColor(zoneIndex);
           
           const chipDisplay = createEl("div", {
@@ -1426,18 +1465,8 @@
           });
         } else {
           // Update existing display
-          const total = state.total;
-          const shifted = applyShift(baselineRanges, total);
-          const clamped = clampRanges(shifted);
-          
-          let zoneIndex = 0;
-          for (let i = 0; i < clamped.length; i++) {
-            if (userSignal >= clamped[i].min && userSignal <= clamped[i].max) {
-              zoneIndex = i;
-              break;
-            }
-          }
-          
+          const ranges = applyShift(baselineRanges, state.total);
+          const zoneIndex = findZoneIndex(userSignal, ranges);
           const zoneColor = getZoneColor(zoneIndex);
           chip.textContent = `${userSignal}%`;
           chip.style.background = zoneColor;
@@ -1454,14 +1483,7 @@
           if (value === "") return;
           
           // Parse and validate
-          let numValue = parseInt(value, 10);
-          if (isNaN(numValue)) {
-            numValue = 0;
-          } else if (numValue < 0) {
-            numValue = 0;
-          } else if (numValue > 100) {
-            numValue = 100;
-          }
+          const numValue = clampInteger(value, 0, 100);
           
           // Update main signal input
           const mainInput = root.querySelector("#signal-input");
@@ -1480,49 +1502,26 @@
         
         // Allow empty value
         if (value === "") {
-          const total = state.total;
-          const shifted = applyShift(baselineRanges, total);
-          const clamped = clampRanges(shifted);
-          renderScale(clamped, total);
+          const ranges = applyShift(baselineRanges, state.total);
+          renderScale(ranges, state.total);
           updateSignalChip();
           return;
         }
         
-        // Parse as integer
-        let numValue = parseInt(value, 10);
-        
-        // Validate and clamp between 0-100
-        if (isNaN(numValue)) {
-          numValue = 0;
-        } else if (numValue < 0) {
-          numValue = 0;
-        } else if (numValue > 100) {
-          numValue = 100;
-        }
+        // Parse and validate
+        const numValue = clampInteger(value, 0, 100);
         
         // Update input with sanitized value
         signalInput.value = numValue;
         
-        const total = state.total;
-        const shifted = applyShift(baselineRanges, total);
-        const clamped = clampRanges(shifted);
-        renderScale(clamped, total);
+        const ranges = applyShift(baselineRanges, state.total);
+        renderScale(ranges, state.total);
         updateSignalChip();
       }
 
       function generateReport() {
-        const total = state.total;
-        const shifted = applyShift(baselineRanges, total);
-        const clamped = clampRanges(shifted);
-        
-        // Get signal value
-        const signalInput = root.querySelector("#signal-input");
-        let userSignal = signalInput && signalInput.value ? parseInt(signalInput.value, 10) : null;
-        if (userSignal !== null && !isNaN(userSignal)) {
-          userSignal = Math.max(0, Math.min(100, userSignal));
-        } else {
-          userSignal = null;
-        }
+        const ranges = applyShift(baselineRanges, state.total);
+        const userSignal = getUserSignal();
         
         // Get selected modifiers
         const selectedMods = {};
@@ -1717,9 +1716,9 @@
 `;
         
         // Add zone segments
-        clamped.forEach((r, i) => {
+        ranges.forEach((r, i) => {
           const width = r.max - r.min;
-          const isLast = i === clamped.length - 1;
+          const isLast = i === ranges.length - 1;
           html += `<div class="zone-segment-report" style="flex-basis:${width}%;${isLast ? 'flex-grow:1;' : ''}background:${getZoneColor(i)};"></div>`;
         });
         
@@ -1732,9 +1731,9 @@
     </div>
     <div class="zone-label-report">
 `;
-        clamped.forEach((r, i) => {
+        ranges.forEach((r, i) => {
           const width = r.max - r.min;
-          const isLast = i === clamped.length - 1;
+          const isLast = i === ranges.length - 1;
           html += `<span class="zone-range" style="flex-basis:${width}%;${isLast ? 'flex-grow:1;' : ''}">${r.min}–${r.max}%</span>`;
         });
         html += `
@@ -1852,21 +1851,6 @@
           update();
           return;
         }
-
-
-        if (btn.classList.contains("baseline-btn")) {
-          const i = parseInt(btn.getAttribute("data-index"), 10);
-          const bound = btn.getAttribute("data-bound");
-          const dir = btn.getAttribute("data-dir");
-
-          const delta = dir === "+" ? 1 : -1;
-          applyDirectionalBaselineDelta(i, bound, delta);
-          state.baselineModified = true;
-
-          renderBaselineEditor();
-          update();
-          return;
-        }
       }
 
       buildInitialUI();
@@ -1888,7 +1872,6 @@
       }
 
       document.addEventListener("click", handleClick);
-      console.log("signal-calc script finished initialization");
     } catch (err) {
       console.error("signal-calc caught error", err);
       if (root) {
@@ -1898,6 +1881,3 @@
     }
     })();
 </script>
-
-
-
