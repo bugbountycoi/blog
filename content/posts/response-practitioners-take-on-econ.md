@@ -21,7 +21,7 @@ summary: "A response to a paper on vulnerability economics, highlighting overloo
 
 # Response: A Practitioner’s Take on “Economic Taxonomy of Vulnerabilities”
 
-I recently read Heitor Gouvêa’s paper, [*Economic Taxonomy of Vulnerabilities*](https://blog.lesis.lat/2026/02/08/vulnerability-price-en.html), and I’m genuinely glad someone is putting real effort into analyzing bug bounty economics with actual data. The structured approach is solid, the explanations are clear, and publishing the dataset is a huge plus. We need more transparency in this space.
+I recently read Heitor Gouvêa’s paper, [*Economic Taxonomy of Vulnerabilities*](https://blog.lesis.lat/research/2026/02/08/vulnerability-price-en.html), and I’m genuinely glad someone is putting real effort into analyzing bug bounty economics with actual data. The structured approach is solid, the explanations are clear, and publishing the dataset is a huge plus. We need more transparency in this space.
 
 That said, there are a few assumptions baked into the analysis that deserve a closer look. They don’t invalidate the work, but they do shape the conclusions in ways that matter if you’re trying to understand the real economics of vulnerability discovery.
 
