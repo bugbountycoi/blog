@@ -60,6 +60,12 @@
       margin: 0 -16px 16px;
       border-bottom: 1px solid rgba(0,0,0,0.06);
       display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .floating-header-row {
+      display: flex;
       align-items: center;
       justify-content: space-between;
       gap: 12px;
@@ -112,26 +118,43 @@
 
     .floating-header-right {
       display: flex;
-      gap: 8px;
+      gap: 6px;
       align-items: center;
+      flex-wrap: wrap;
+    }
+
+    /* Unified styling for all header buttons and chips */
+    .chip,
+    .scroll-top-btn {
+      font-size: 0.78rem;
+      padding: 6px 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(0, 0, 0, 0.12);
+      outline: none;
+      cursor: pointer;
+      font-weight: 500;
+      transition: all 0.15s ease;
+      white-space: nowrap;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      line-height: 1;
     }
 
     .chip {
-      font-size: 0.8rem;
-      padding: 4px 10px;
-      border-radius: 999px;
       background: #e3f2fd;
       color: #0d47a1;
-      font-weight: 500;
-      border: none;
-      outline: none;
-      cursor: pointer;
+      border-color: #90caf9;
+    }
+
+    .chip:hover {
+      background: #bbdefb;
+      border-color: #64b5f6;
     }
 
     .chip-input {
-      min-width: 120px;
+      min-width: 100px;
       text-align: center;
-      border: 1px solid #90caf9;
     }
 
     .chip-input::placeholder {
@@ -140,19 +163,18 @@
     }
 
     .scroll-top-btn {
-      border: none;
-      background: #eeeeee;
-      border-radius: 999px;
-      padding: 6px 10px;
-      font-size: 0.8rem;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      gap: 4px;
+      background: #f5f5f5;
+      color: var(--text-main);
+      border-color: #d0d0d0;
     }
 
     .scroll-top-btn:hover {
-      background: #e0e0e0;
+      background: #e8e8e8;
+      border-color: #b8b8b8;
+    }
+
+    .scroll-top-btn:active {
+      transform: scale(0.97);
     }
 
     .card {
@@ -170,8 +192,7 @@
       font-weight: 600;
     }
 
-    .baseline-card h3,
-    .adjusted-card h3 {
+    .baseline-card h3 {
       display: flex;
       align-items: center;
       gap: 6px;
@@ -179,11 +200,6 @@
 
     .baseline-card h3::before {
       content: "⚙️";
-      font-size: 1rem;
-    }
-
-    .adjusted-card h3::before {
-      content: "📊";
       font-size: 1rem;
     }
 
@@ -278,12 +294,13 @@
     /* new horizontal zone bar styling */
     .zone-bar {
       position: relative;
-      height: 24px;
+      height: 32px;
       display: flex;
-      border-radius: 12px;
+      border-radius: 16px;
       overflow: hidden;
       background: #e0e0e0;
-      margin-bottom: 6px;
+      margin: 4px 0;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
     }
 
     .zone-segment {
@@ -310,8 +327,8 @@
     .zone-labels {
       position: relative;
       width: 100%;
-      height: 1.2rem;
-      font-size: 0.75rem;
+      height: 1.1rem;
+      font-size: 0.7rem;
       color: var(--text-muted);
       margin-top: 2px;
     }
@@ -346,35 +363,6 @@
       border-left: 5px solid var(--accent);
       box-shadow: 0 0 0 1px rgba(76, 175, 80, 0.3), 0 4px 12px rgba(76, 175, 80, 0.15);
       transform: translateX(2px);
-    }
-
-    .signal-input-row {
-      display: grid;
-      grid-template-columns: auto 1fr;
-      align-items: center;
-      gap: 12px;
-      padding: 12px 0;
-      margin-bottom: 12px;
-      border-bottom: 1px solid var(--border-subtle);
-    }
-
-    .signal-input-label {
-      font-weight: 600;
-      font-size: 0.95rem;
-    }
-
-    .signal-input-field {
-      padding: 8px 12px;
-      border: 1px solid var(--border-subtle);
-      border-radius: var(--radius-btn);
-      font-size: 0.95rem;
-      font-family: inherit;
-    }
-
-    .signal-input-field:focus {
-      outline: none;
-      border-color: var(--accent);
-      box-shadow: 0 0 0 2px rgba(76, 175, 80, 0.2);
     }
 
     .reset-btn {
@@ -766,35 +754,28 @@
 
         right.appendChild(chipInput);
         right.appendChild(copyUrlBtn);
+        right.appendChild(scrollBtn);
         right.appendChild(resetBaselineBtn);
         right.appendChild(resetModsBtn);
-        right.appendChild(scrollBtn);
+        
+        // Create top row with left and right sections
+        const topRow = createEl("div", { class: "floating-header-row" });
+        topRow.appendChild(left);
+        topRow.appendChild(right);
 
-        header.appendChild(left);
-        header.appendChild(right);
+        // Create zone display row
+        const zoneRow = createEl("div", { class: "scale-box" });
+
+        header.appendChild(topRow);
+        header.appendChild(zoneRow);
         root.appendChild(header);
 
-        const adjustedCard = createEl("div", { class: "card adjusted-card" });
-        adjustedCard.appendChild(createEl("h3", { text: "Target Signal Zones" }));
-        adjustedCard.appendChild(createEl("div", { class: "scale-box" }));
-        
-        const signalInputRow = createEl("div", { class: "signal-input-row" });
-        signalInputRow.appendChild(createEl("label", {
-          class: "signal-input-label",
-          text: "Your Signal %"
-        }));
+        // Hidden signal input (value managed by chip in header)
         const signalInput = createEl("input", {
-          type: "number",
-          class: "signal-input-field",
-          id: "signal-input",
-          min: "0",
-          max: "100",
-          placeholder: "Enter 0-100"
+          type: "hidden",
+          id: "signal-input"
         });
-        signalInputRow.appendChild(signalInput);
-        adjustedCard.appendChild(signalInputRow);
-        
-        root.appendChild(adjustedCard);
+        root.appendChild(signalInput);
 
         const baselineCard = createEl("div", { class: "card baseline-card" }, [
           createEl("h3", { text: "Baseline Ranges" }),
@@ -1067,21 +1048,15 @@
           });
           bar.appendChild(seg);
 
-          // boundary label positioned under segment start
+          // label showing full range, centered under segment
+          const centerPos = r.min + (width / 2);
           const lbl = createEl("div", {
             class: "zone-label",
-            text: r.min + "%",
-            style: `left:${r.min}%;`
+            text: `${r.min}–${r.max}%`,
+            style: `left:${centerPos}%;`
           });
           labels.appendChild(lbl);
         });
-        // final 100% label at the far right
-        const endLbl = createEl("div", {
-          class: "zone-label",
-          text: "100%",
-          style: `left:100%;`
-        });
-        labels.appendChild(endLbl);
 
         scaleBox.appendChild(bar);
         scaleBox.appendChild(labels);
@@ -1236,6 +1211,7 @@
         renderScale(clamped, state.total);
         encodeURL();
         updateResetButtons();
+        updateSignalChip();
       }
 
       function updateSignalChip() {
