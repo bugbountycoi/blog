@@ -313,6 +313,9 @@
       top: 0;
       left: 0;
       transform: translateX(-50%);
+      height: 100%;
+      display: flex;
+      align-items: center;
       font-size: 1.2rem;
       line-height: 1;
       color: #000;
@@ -559,6 +562,16 @@
           ]
         },
 
+        "Default Scope": {
+          code: "DS",
+          exclusive: true,
+          desc: "Select only one. What is the default scope configuration for your programs?",
+          items: [
+            { pts: -5, label: "In-Scop by Default", code: "D", tooltip: "All assets are considered in-scope unless explicitly excluded. Extremely popular among researchers when selecting a program making it very beginner-friendly." },
+            { pts: +5, label: "Out-of-Scope by Default", code: "O", tooltip: "Requiring assets to be explicitly added in-scope leads to clearer expectations, more dedicated researchers, and lower drive-by submissions." }
+          ]
+        },
+
         "Types of Included Assets": {
           code: "ISA",
           desc: "Multi-Select. What types of assets are in-scope for your programs?",
@@ -577,15 +590,15 @@
 
         "Types of Excluded Assets": {
           code: "OOSA",
-          desc: "Multi-Select. What types of assets does your company have, but are out-of-scope for your programs?",
+          desc: "Multi-Select. What types of assets does your company have, but are out-of-scope for your programs? Do NOT select these if your company does not have these asset types at all. Instead, only select if you have these asset types but have explicitly excluded them from your programs.",
           items: [
-            { pts: -5, label: "IT/Infrastructure",     code: "IT", tooltip: "" },
-            { pts: -3, label: "Many OSS assets",       code: "M",  tooltip: "" },
-            { pts: +1, label: "One/few OSS assets",    code: "O",  tooltip: "" },
-            { pts: +1, label: "Mobile apps",           code: "MA", tooltip: "" },
-            { pts: +2, label: "Wildcard domains",      code: "W",  tooltip: "" },
-            { pts: +2, label: "Software-as-a-Service", code: "SA", tooltip: "" },
-            { pts: +2, label: "Physical products",     code: "P",  tooltip: "" }
+            { pts: -5, label: "IT/Infrastructure",     code: "IT", tooltip: "Submissions on these assets are likely to come in anyway, excluding them increases noise." },
+            { pts: -3, label: "Many OSS assets",       code: "M",  tooltip: "Submissions on these assets are likely to come in anyway, excluding them increases noise." },
+            { pts: +1, label: "One/few OSS assets",    code: "O",  tooltip: "Limited company OSS contributions are less likely to generate noise." },
+            { pts: +1, label: "Mobile apps",           code: "MA", tooltip: "Mobile apps are unlikely to receive out of scope submissions." },
+            { pts: +2, label: "Wildcard domains",      code: "W",  tooltip: "Excluding wildcard domains introduces blind spots where your program may miss potential vulnerabilities." },
+            { pts: +2, label: "Software-as-a-Service", code: "SA", tooltip: "Excluding SaaS assets may reduce noise but can also miss important vulnerabilities." },
+            { pts: +2, label: "Physical products",     code: "P",  tooltip: "Physical products are unlikely to receive out of scope submissions." }
           ]
         },
 
@@ -594,11 +607,11 @@
           exclusive: true,
           desc: "Select only one. Approximate number of in-scope targets.",
           items: [
-            { pts: -8, label: "Extra Large (e.g. 500+ assets)",  code: "XL", tooltip: "An immense number of targets increases submission volume and risks lower signal." },
-            { pts: -4, label: "Large (e.g. 100-500 assets)",     code: "L",  tooltip: "Large program scale offers much more room for noise to occur." },
+            { pts: -7, label: "Extra Large (e.g. 500+ assets)",  code: "XL", tooltip: "An immense number of targets increases submission volume and risks lower signal." },
+            { pts: -3, label: "Large (e.g. 100-500 assets)",     code: "L",  tooltip: "Large program scale offers much more room for noise to occur." },
             { pts: +1, label: "Standard (e.g. 25-100 assets)",   code: "R",  tooltip: "A moderate number of assets." },
-            { pts: +4, label: "Small (e.g. 5-25 assets)",        code: "S",  tooltip: "Scope is easy to maintain but will be unapproachable by most researchers." },
-            { pts: +8, label: "Hyper-Focused (e.g. 1-5 assets)", code: "HF", tooltip: "Extremely tight scope generally produces higher signal and much lower volume." }
+            { pts: +3, label: "Small (e.g. 5-25 assets)",        code: "S",  tooltip: "Scope is easy to maintain but will be unapproachable by most researchers." },
+            { pts: +6, label: "Hyper-Focused (e.g. 1-5 assets)", code: "HF", tooltip: "Extremely tight scope generally produces higher signal and much lower volume." }
           ]
         },
 
@@ -616,7 +629,7 @@
         "Live Hacking Events": {
           code: "LHE",
           exclusive: true,
-          desc: "Select only one. In-person event types in one year.",
+          desc: "Select only one. In-person event types planned each year. Select 'one' if you have hosted any number of events in the past but do not have any upcoming events.",
           items: [
             { pts: +5,  label: "One LHE",  code: "L1", tooltip: "One live hacking event in a year increases visibility and engagement." },
             { pts: +8,  label: "2–3 LHE",  code: "L2", tooltip: "Multiple LHEs in a year significantly increases visibility and engagement. Be cautious about repeated scope at events." },
@@ -627,18 +640,18 @@
         "Public Virtual Hacking Events": {
           code: "PVHE",
           exclusive: true,
-          desc: "Select only one. Virtual event types in one year.",
+          desc: "Select only one. Virtual event types in one year. Select 'one' if you have hosted any number of events in the past but do not have any upcoming events.",
           items: [
-            { pts: -5,  label: "One public VHE",  code: "PV1", tooltip: "One public VHE in a year increases visibility and engagement." },
-            { pts: -8,  label: "2-3 public VHE",  code: "PV2", tooltip: "Multiple opportuntities to access new researchers brings a continual learning curve of noise." },
-            { pts: -12,  label: "4+ public VHE",  code: "PV4", tooltip: "Many events in a year is not advised." }
+          { pts: -8,  label: "4+ public VHE",  code: "PV4", tooltip: "Many events in a year is not advised." },
+          { pts: -6,  label: "2-3 public VHE",  code: "PV2", tooltip: "Multiple opportuntities to access new researchers brings a continual learning curve of noise." },
+          { pts: -3,  label: "One public VHE",  code: "PV1", tooltip: "One public VHE in a year increases visibility and engagement." }
           ]
         },
 
         "Invite-only Virtual Hacking Events": {
           code: "IVHE",
           exclusive: true,
-          desc: "Select only one. Virtual event types in one year.",
+          desc: "Select only one. Virtual event types in one year. Select 'one' if you have hosted any number of events in the past but do not have any upcoming events.",
           items: [
             { pts: +2,  label: "One invite-only VHE",  code: "IV1", tooltip: "One invite-only VHE in a year directly engages your community and will bring higher signal." },
             { pts: +4,  label: "2-3 invite-only VHE",  code: "IV2", tooltip: "Multiple invite-only VHEs can be leveraged to raise signal by targeting specific researcher groups or products." },
@@ -698,7 +711,7 @@
         const left = createEl("div", { class: "floating-header-left" });
         const headerTitle = createEl("div", {
           class: "floating-header-title",
-          text: "Current signal estimate"
+          text: "Performance Estimate"
         });
         const main = createEl("div", { class: "floating-header-main" });
 
@@ -751,9 +764,16 @@
           id: "scroll-top",
           text: "Back to top"
         });
+        
+        const reportBtn = createEl("button", {
+          class: "scroll-top-btn",
+          id: "report-btn",
+          text: "📄 Report"
+        });
 
         right.appendChild(chipInput);
         right.appendChild(copyUrlBtn);
+        right.appendChild(reportBtn);
         right.appendChild(scrollBtn);
         right.appendChild(resetBaselineBtn);
         right.appendChild(resetModsBtn);
@@ -1360,9 +1380,287 @@
         updateSignalChip();
       }
 
+      function generateReport() {
+        const total = state.total;
+        const shifted = applyShift(baselineRanges, total);
+        const clamped = clampRanges(shifted);
+        
+        // Get signal value
+        const signalInput = root.querySelector("#signal-input");
+        let userSignal = signalInput && signalInput.value ? parseInt(signalInput.value, 10) : null;
+        if (userSignal !== null && !isNaN(userSignal)) {
+          userSignal = Math.max(0, Math.min(100, userSignal));
+        } else {
+          userSignal = null;
+        }
+        
+        // Get selected modifiers
+        const selectedMods = {};
+        Object.entries(modifiers).forEach(([groupName, groupData]) => {
+          const items = groupData.items || [];
+          const selected = items.filter(item => {
+            const fullCode = getFullCode(groupData.code, item.code);
+            return state.active[fullCode];
+          });
+          if (selected.length > 0) {
+            selectedMods[groupName] = selected;
+          }
+        });
+        
+        // Build HTML report
+        const now = new Date().toLocaleDateString('en-US', { 
+          year: 'numeric', 
+          month: 'long', 
+          day: 'numeric' 
+        });
+        
+        let html = `
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bug Bounty Signal Estimation Report</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: white;
+      color: #222;
+      line-height: 1.6;
+      padding: 40px;
+    }
+    h1 { font-size: 2rem; margin-bottom: 8px; color: #0d47a1; }
+    .date { color: #666; margin-bottom: 30px; font-size: 0.95rem; }
+    h2 {
+      font-size: 1.3rem;
+      margin-top: 30px;
+      margin-bottom: 15px;
+      color: #1565c0;
+      border-bottom: 2px solid #e0e0e0;
+      padding-bottom: 8px;
+    }
+    .zone-visualization {
+      margin: 20px 0;
+      padding: 20px;
+      background: #f5f5f5;
+      border-radius: 8px;
+    }
+    .zone-bar-report {
+      position: relative;
+      height: 40px;
+      display: flex;
+      border-radius: 12px;
+      overflow: hidden;
+      background: #e0e0e0;
+      margin-bottom: 12px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    .zone-indicator-report {
+      position: absolute;
+      top: 0;
+      left: 0;
+      transform: translateX(-50%);
+      height: 100%;
+      display: flex;
+      align-items: center;
+      font-size: 1.5rem;
+      line-height: 1;
+      color: #000;
+      -webkit-text-stroke: 1px #fff;
+      text-stroke: 1px #fff;
+      text-shadow: 0 0 1px rgba(0,0,0,0.5);
+      opacity: 0.9;
+      pointer-events: none;
+    }
+    .zone-segment-report {
+      height: 100%;
+      flex-shrink: 0;
+    }
+    .zone-label-report {
+      display: flex;
+      align-items: flex-start;
+      font-size: 0.8rem;
+      color: #666;
+      margin-top: 4px;
+      gap: 0;
+    }
+    .zone-range {
+      font-weight: 500;
+      text-align: center;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      padding: 0 2px;
+      line-height: 1.2;
+    }
+    .modifiers-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 15px 0;
+      background: white;
+      border: 1px solid #ddd;
+    }
+    .modifiers-table th {
+      background: #e3f2fd;
+      padding: 12px;
+      text-align: left;
+      font-weight: 600;
+      border-bottom: 2px solid #90caf9;
+    }
+    .modifiers-table td {
+      padding: 12px;
+      border-bottom: 1px solid #eee;
+    }
+    .modifiers-table tr:hover {
+      background: #f9f9f9;
+    }
+    .group-name {
+      font-weight: 600;
+      color: #0d47a1;
+      background: #f0f4ff;
+      padding: 10px 12px;
+      margin: 15px 0 10px 0;
+      border-left: 4px solid #0d47a1;
+    }
+    .modifier-item {
+      padding: 8px 12px;
+      margin: 4px 0;
+      background: white;
+      border-left: 2px solid #90caf9;
+    }
+    .modifier-label {
+      font-weight: 500;
+      color: #222;
+    }
+    .modifier-points {
+      color: #666;
+      font-size: 0.9rem;
+      margin-top: 2px;
+    }
+    .total-section {
+      background: #f0f4ff;
+      padding: 15px;
+      border-radius: 6px;
+      margin: 20px 0;
+      border-left: 4px solid #0d47a1;
+    }
+    .total-label { color: #666; font-size: 0.95rem; }
+    .total-value {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: #1b5e20;
+      margin-top: 4px;
+    }
+    .total-value.negative { color: #b71c1c; }
+    .url-section {
+      background: #fff3e0;
+      padding: 15px;
+      border-radius: 6px;
+      margin: 20px 0;
+      border-left: 4px solid #f57c00;
+      font-family: monospace;
+      word-break: break-all;
+      font-size: 0.85rem;
+    }
+    .footer {
+      margin-top: 40px;
+      padding-top: 20px;
+      border-top: 1px solid #eee;
+      color: #999;
+      font-size: 0.85rem;
+    }
+    @media print {
+      body { padding: 0; }
+      h1, h2 { page-break-after: avoid; }
+      .zone-visualization, .modifiers-table { page-break-inside: avoid; }
+    }
+  </style>
+</head>
+<body>
+  <h1>Bug Bounty Program - Signal Estimation Report</h1>
+  <div class="date">Generated on ${now}</div>
+  
+  <h2>Target Signal Zones</h2>
+  <div class="zone-visualization">
+    <div class="zone-bar-report">
+`;
+        
+        // Add zone segments
+        clamped.forEach((r, i) => {
+          const width = r.max - r.min;
+          const isLast = i === clamped.length - 1;
+          html += `<div class="zone-segment-report" style="flex-basis:${width}%;${isLast ? 'flex-grow:1;' : ''}background:${getZoneColor(i)};"></div>`;
+        });
+        
+        // Add signal indicator if value exists
+        if (userSignal !== null) {
+          html += `<div class="zone-indicator-report" style="left:${userSignal}%;">★</div>`;
+        }
+        
+        html += `
+    </div>
+    <div class="zone-label-report">
+`;
+        clamped.forEach((r, i) => {
+          const width = r.max - r.min;
+          const isLast = i === clamped.length - 1;
+          html += `<span class="zone-range" style="flex-basis:${width}%;${isLast ? 'flex-grow:1;' : ''}">${r.min}–${r.max}%</span>`;
+        });
+        html += `
+    </div>
+  </div>
+  
+  <div class="total-section">
+    <div class="total-label">Total Modifier Impact</div>
+    <div class="total-value ${state.total < 0 ? 'negative' : ''}">${state.total >= 0 ? '+' : ''}${state.total}%</div>
+  </div>
+`;
+        
+        // Add selected modifiers
+        if (Object.keys(selectedMods).length > 0) {
+          html += `<h2>Selected Program Modifiers</h2>`;
+          Object.entries(selectedMods).forEach(([groupName, items]) => {
+            html += `<div class="group-name">${groupName}</div>`;
+            items.forEach(item => {
+              html += `
+              <div class="modifier-item">
+                <div class="modifier-label">${item.label}</div>
+                <div class="modifier-points">${item.pts >= 0 ? '+' : ''}${item.pts} points${item.tooltip ? ` — ${item.tooltip}` : ''}</div>
+              </div>
+`;
+            });
+          });
+        } else {
+          html += `<h2>Selected Program Modifiers</h2><p>No modifiers selected.</p>`;
+        }
+        
+        html += `
+  <h2>Calculator Access</h2>
+  <div class="url-section"><strong>URL:</strong><br>${window.location.href}</div>
+  
+  <div class="footer">
+    <p>This report was generated by the Bug Bounty Consortium of Interest (BBCOI) Signal Estimation Calculator.</p>
+    <p>For more information and to explore different scenarios, visit the calculator directly using the URL above.</p>
+  </div>
+</body>
+</html>
+`;
+        
+        // Open in new tab
+        const reportWindow = window.open('', '_blank');
+        reportWindow.document.write(html);
+        reportWindow.document.close();
+      }
+
       function handleClick(e) {
         const btn = e.target.closest("button");
         if (!btn) return;
+
+        if (btn.id === "report-btn") {
+          generateReport();
+          return;
+        }
 
         if (btn.id === "scroll-top") {
           window.scrollTo({ top: 0, behavior: "smooth" });
