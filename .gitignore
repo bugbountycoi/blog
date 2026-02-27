@@ -19,3 +19,4 @@ hugo.linux
 CNAME
 content/.DS_Store
 .DS_Store
+layouts/.DS_Store

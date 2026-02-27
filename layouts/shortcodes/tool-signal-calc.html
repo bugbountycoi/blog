@@ -261,6 +261,55 @@
       transition: width 0.25s ease;
     }
 
+    /* new horizontal zone bar styling */
+    .zone-bar {
+      position: relative;
+      height: 24px;
+      display: flex;
+      border-radius: 12px;
+      overflow: hidden;
+      background: #e0e0e0;
+      margin-bottom: 6px;
+    }
+
+    .zone-segment {
+      height: 100%;
+      flex-shrink: 0;
+    }
+
+    .zone-indicator {
+      position: absolute;
+      top: 0;
+      left: 0;
+      transform: translateX(-50%);
+      font-size: 1.2rem;
+      line-height: 1;
+      color: #000;
+      /* add black outline/stroke and slight shadow for visibility on colored backgrounds */
+      -webkit-text-stroke: 1px #fff;
+      text-stroke: 1px #fff; /* non-webkit fallback */
+      text-shadow: 0 0 1px rgba(0,0,0,0.5);
+      opacity: 0.9;
+      pointer-events: none;
+    }
+
+    .zone-labels {
+      position: relative;
+      width: 100%;
+      height: 1.2rem;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    .zone-labels .zone-label {
+      position: absolute;
+      top: 0;
+      left: 0;
+      transform: translateX(-50%);
+      white-space: nowrap;
+    }
+
     .scale-values {
       /* removed: we no longer display separate values
          they are now part of the label */
@@ -471,7 +520,14 @@
 
 <script>
     (function () {
+      // wrap everything in try/catch so runtime errors are visible
       const root = document.getElementById("signal-calc");
+      if (!root) {
+        console.error("signal-calc root element not found");
+        return;
+      }
+      try {
+        console.log("signal-calc script starting");
 
       const baseline = [
         { label: "🔴 Very Low", min: 0,  max: 20 },
@@ -664,7 +720,8 @@
         const right = createEl("div", { class: "floating-header-right" });
         const chip = createEl("div", {
           class: "chip",
-          text: "Baseline + Modifiers → Target Signal Zones"
+          id: "signal-chip",
+          text: "Enter signal score"
         });
         
         const copyUrlBtn = createEl("button", {
@@ -961,57 +1018,64 @@
         });
       }
 
+      // helper chooses color for each zone index
+      function getZoneColor(idx) {
+        const colors = ["#e53935","#fb8c00","#fdd835","#43a047","#1e88e5"];
+        return colors[idx] || colors[colors.length-1];
+      }
+
       function renderScale(ranges, total) {
         const scaleBox = root.querySelector(".scale-box");
         scaleBox.innerHTML = "";
         
         const signalInput = root.querySelector("#signal-input");
-        const userSignal = signalInput && signalInput.value ? parseFloat(signalInput.value) : null;
+        let userSignal = signalInput && signalInput.value ? parseInt(signalInput.value, 10) : null;
+        
+        // Ensure userSignal is valid and within bounds
+        if (userSignal !== null && !isNaN(userSignal)) {
+          userSignal = Math.max(0, Math.min(100, userSignal));
+        } else {
+          userSignal = null;
+        }
 
-        ranges.forEach((r) => {
-          let rowClass = "scale-row";
-          
-          if (userSignal !== null && userSignal >= r.min && userSignal <= r.max) {
-            rowClass += " highlighted";
-          }
-          
-          const bar = createEl("div", { class: rowClass });
+        // build single horizontal bar with segments
+        const bar = createEl("div", { class: "zone-bar" });
+        const labels = createEl("div", { class: "zone-labels" });
 
-          // pull the emoji (first word) from the original label and show
-          // it before the numeric range so we have a coloured icon indicator
-          const emoji = r.label.split(" ")[0];
-          const label = createEl("div", {
-            class: "scale-label",
-            text: `${emoji} ${r.min}–${r.max}%`
+        ranges.forEach((r, i) => {
+          const width = r.max - r.min;
+          const isLast = i === ranges.length - 1;
+          const seg = createEl("div", {
+            class: "zone-segment",
+            style: `flex-basis:${width}%;${isLast ? 'flex-grow:1;' : ''}background:${getZoneColor(i)};`
           });
-          // color the pill based on the emoji
-          const colorMap = {
-            "🔴": "#e53935",
-            "🟠": "#fb8c00",
-            "🟡": "#fdd835",
-            "🟢": "#43a047",
-            "🔵": "#1e88e5"
-          };
-          const fg = "#ffffff";
-          if (colorMap[emoji]) {
-            label.style.backgroundColor = colorMap[emoji];
-            label.style.color = fg;
-          }
+          bar.appendChild(seg);
 
-          const rawWidth = r.max - r.min;
-          const visualWidth = Math.max(5, rawWidth * 2); // exaggerate by 100%
-          const range = createEl("div", { class: "scale-bar" }, [
-            createEl("div", {
-              class: "scale-fill",
-              style: `width:${visualWidth}%;`
-            })
-          ]);
-
-          bar.appendChild(label);
-          bar.appendChild(range);
-
-          scaleBox.appendChild(bar);
+          // boundary label positioned under segment start
+          const lbl = createEl("div", {
+            class: "zone-label",
+            text: r.min + "%",
+            style: `left:${r.min}%;`
+          });
+          labels.appendChild(lbl);
         });
+        // final 100% label at the far right
+        const endLbl = createEl("div", {
+          class: "zone-label",
+          text: "100%",
+          style: `left:100%;`
+        });
+        labels.appendChild(endLbl);
+
+        scaleBox.appendChild(bar);
+        scaleBox.appendChild(labels);
+
+        if (userSignal !== null) {
+          const ind = createEl("div", { class: "zone-indicator", text: "★" });
+          const pos = Math.max(0, Math.min(100, userSignal));
+          ind.style.left = pos + "%";
+          bar.appendChild(ind);
+        }
 
         const totalSpan = root.querySelector('[data-role="total-mod"]');
         totalSpan.textContent = (total >= 0 ? "+" : "") + total;
@@ -1046,7 +1110,12 @@
         }
 
         const newUrl = window.location.pathname + "?" + params.toString();
-        window.history.replaceState({}, "", newUrl);
+        try {
+          window.history.replaceState({}, "", newUrl);
+        } catch (e) {
+          // history manipulation may fail in some environments (e.g. file:// or jsdom)
+          console.warn("encodeURL: replaceState failed", e);
+        }
       }
 
 
@@ -1130,11 +1199,77 @@
         encodeURL();
       }
 
+      function updateSignalChip() {
+        const chip = root.querySelector("#signal-chip");
+        if (!chip) return;
+        
+        const signalInput = root.querySelector("#signal-input");
+        const userSignal = signalInput && signalInput.value ? parseInt(signalInput.value, 10) : null;
+        
+        if (userSignal === null || isNaN(userSignal)) {
+          chip.textContent = "Enter signal score";
+          chip.style.background = "#e3f2fd";
+          chip.style.color = "#0d47a1";
+          return;
+        }
+        
+        // Calculate adjusted ranges
+        const total = state.total;
+        const shifted = applyShift(baselineRanges, total);
+        const clamped = clampRanges(shifted);
+        
+        // Find which zone the signal falls into
+        let zoneIndex = 0;
+        for (let i = 0; i < clamped.length; i++) {
+          if (userSignal >= clamped[i].min && userSignal <= clamped[i].max) {
+            zoneIndex = i;
+            break;
+          }
+        }
+        
+        const zoneColor = getZoneColor(zoneIndex);
+        
+        chip.textContent = `${userSignal}%`;
+        chip.style.background = zoneColor;
+        chip.style.color = "#fff";
+      }
+
       function handleSignalInput(e) {
+        const signalInput = root.querySelector("#signal-input");
+        if (!signalInput) return;
+        
+        let value = signalInput.value.trim();
+        
+        // Allow empty value
+        if (value === "") {
+          const total = state.total;
+          const shifted = applyShift(baselineRanges, total);
+          const clamped = clampRanges(shifted);
+          renderScale(clamped, total);
+          updateSignalChip();
+          return;
+        }
+        
+        // Parse as integer
+        let numValue = parseInt(value, 10);
+        
+        // Validate and clamp between 0-100
+        if (isNaN(numValue)) {
+          numValue = 0;
+        } else if (numValue < 0) {
+          numValue = 0;
+        } else if (numValue > 100) {
+          numValue = 100;
+        }
+        
+        // Update input with sanitized value
+        signalInput.value = numValue;
+        
         const total = state.total;
         const shifted = applyShift(baselineRanges, total);
         const clamped = clampRanges(shifted);
         renderScale(clamped, total);
+        updateSignalChip();
       }
 
       function handleClick(e) {
@@ -1232,6 +1367,14 @@
       }
 
       document.addEventListener("click", handleClick);
+      console.log("signal-calc script finished initialization");
+    } catch (err) {
+      console.error("signal-calc caught error", err);
+      if (root) {
+        root.innerHTML = '<div style="color:red;font-weight:bold;">Error initializing signal calculator: ' +
+          (err.message || err.toString()) + '</div>';
+      }
+    }
     })();
 </script>
 
