@@ -592,7 +592,8 @@
 
       const state = {
         active: {},
-        total: 0
+        total: 0,
+        baselineModified: false
       };
 
       // separator used in URL parameters (tilde chosen as safe char)
@@ -665,6 +666,25 @@
           class: "chip",
           text: "Baseline + Modifiers → Target Signal Zones"
         });
+        
+        const copyUrlBtn = createEl("button", {
+          class: "scroll-top-btn",
+          id: "copy-url-btn",
+          text: "Copy URL"
+        });
+        
+        const resetBaselineBtn = createEl("button", {
+          class: "scroll-top-btn",
+          id: "reset-baseline",
+          text: "Reset Baseline"
+        });
+        
+        const resetModsBtn = createEl("button", {
+          class: "scroll-top-btn",
+          id: "reset-modifiers",
+          text: "Reset Modifiers"
+        });
+        
         const scrollBtn = createEl("button", {
           class: "scroll-top-btn",
           id: "scroll-top",
@@ -672,27 +692,18 @@
         });
 
         right.appendChild(chip);
+        right.appendChild(copyUrlBtn);
+        right.appendChild(resetBaselineBtn);
+        right.appendChild(resetModsBtn);
         right.appendChild(scrollBtn);
 
         header.appendChild(left);
         header.appendChild(right);
         root.appendChild(header);
 
-        const baselineCard = createEl("div", { class: "card baseline-card" }, [
-          createEl("h3", { text: "Baseline Ranges" }),
-          createEl("div", { class: "baseline-box" })
-        ]);
-        root.appendChild(baselineCard);
-
-        const resetBaselineBtn = createEl("button", {
-          id: "reset-baseline",
-          class: "reset-btn secondary",
-          text: "Reset Baseline"
-        });
-        root.appendChild(resetBaselineBtn);
-
         const adjustedCard = createEl("div", { class: "card adjusted-card" });
         adjustedCard.appendChild(createEl("h3", { text: "Target Signal Zones" }));
+        adjustedCard.appendChild(createEl("div", { class: "scale-box" }));
         
         const signalInputRow = createEl("div", { class: "signal-input-row" });
         signalInputRow.appendChild(createEl("label", {
@@ -710,8 +721,13 @@
         signalInputRow.appendChild(signalInput);
         adjustedCard.appendChild(signalInputRow);
         
-        adjustedCard.appendChild(createEl("div", { class: "scale-box" }));
         root.appendChild(adjustedCard);
+
+        const baselineCard = createEl("div", { class: "card baseline-card" }, [
+          createEl("h3", { text: "Baseline Ranges" }),
+          createEl("div", { class: "baseline-box" })
+        ]);
+        root.appendChild(baselineCard);
 
         const modifiersCard = createEl("div", { class: "card modifiers-card" });
         const modTitle = createEl("h3", { text: "Program Modifiers" });
@@ -765,14 +781,6 @@
           group.appendChild(btnRow);
           modifiersCard.appendChild(group);
         });
-
-        const resetModsBtn = createEl("button", {
-          id: "reset-modifiers",
-          class: "reset-btn",
-          text: "Reset Modifiers"
-        });
-        modifiersCard.appendChild(resetModsBtn);
-
         root.appendChild(modifiersCard);
 
         const footer = createEl("div", {
@@ -1029,15 +1037,13 @@
           }
         });
 
-        // --- Encode baseline ranges ---
-        const base = baselineRanges.map(r => `${r.min}-${r.max}`).join(SEP);
-        params.set("base", base);
-
-        // --- Encode adjusted scale (baseline + total modifier) ---
-        const shifted = applyShift(baselineRanges, state.total);
-        const clamped = clampRanges(shifted);
-        const adj = clamped.map(r => `${r.min}-${r.max}`).join(SEP);
-        params.set("adj", adj);
+        // --- Only encode adjusted range if baseline has been modified ---
+        if (state.baselineModified) {
+          const shifted = applyShift(baselineRanges, state.total);
+          const clamped = clampRanges(shifted);
+          const adj = clamped.map(r => `${r.min}-${r.max}`).join(SEP);
+          params.set("adj", adj);
+        }
 
         const newUrl = window.location.pathname + "?" + params.toString();
         window.history.replaceState({}, "", newUrl);
@@ -1046,7 +1052,6 @@
 
       function decodeURL() {
         const params = new URLSearchParams(window.location.search);
-        const baseParam = params.get("base");
 
         state.active = {};
 
@@ -1065,26 +1070,6 @@
             });
           }
         });
-
-        if (baseParam) {
-          const parts = baseParam.split(SEP);
-          if (parts.length === baselineRanges.length) {
-            const parsed = parts.map(p => {
-              const [minStr, maxStr] = p.split("-");
-              return {
-                min: parseInt(minStr, 10),
-                max: parseInt(maxStr, 10)
-              };
-            });
-            parsed.forEach((p, i) => {
-              if (!isNaN(p.min) && !isNaN(p.max)) {
-                baselineRanges[i].min = p.min;
-                baselineRanges[i].max = p.max;
-              }
-            });
-            clampBaseline();
-          }
-        }
 
         const adjParam = params.get("adj");
         if (adjParam) {
@@ -1125,6 +1110,7 @@
 
       function resetBaseline() {
         baselineRanges = JSON.parse(JSON.stringify(baseline));
+        state.baselineModified = false;
         clampBaseline();
         renderBaselineEditor();
         update();
@@ -1157,6 +1143,18 @@
 
         if (btn.id === "scroll-top") {
           window.scrollTo({ top: 0, behavior: "smooth" });
+          return;
+        }
+
+        if (btn.id === "copy-url-btn") {
+          const url = window.location.href;
+          navigator.clipboard.writeText(url).then(() => {
+            const originalText = btn.textContent;
+            btn.textContent = "Copied!";
+            setTimeout(() => {
+              btn.textContent = originalText;
+            }, 2000);
+          });
           return;
         }
 
@@ -1212,6 +1210,7 @@
 
           const delta = dir === "+" ? 1 : -1;
           baselineRanges[i][bound] += delta;
+          state.baselineModified = true;
 
           clampBaseline();
           renderBaselineEditor();
