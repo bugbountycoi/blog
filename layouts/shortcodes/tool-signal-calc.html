@@ -535,11 +535,41 @@
         console.log("signal-calc script starting");
 
       const baseline = [
-        { label: "🔴 Very Low", min: 0,  max: 20 },
-        { label: "🟠 Low",      min: 21, max: 30 },
-        { label: "🟡 Medium",   min: 31, max: 45 },
-        { label: "🟢 High",     min: 46, max: 60 },
-        { label: "🔵 Very High",min: 61, max: 100 }
+        {
+          label: "🔴 Very Low",
+          min: 0,
+          max: 20,
+          minBounds: { lower: 0, upper: 0 },
+          maxBounds: { lower: 1, upper: 92 }
+        },
+        {
+          label: "🟠 Low",
+          min: 21,
+          max: 30,
+          minBounds: { lower: 2, upper: 93 },
+          maxBounds: { lower: 3, upper: 94 }
+        },
+        {
+          label: "🟡 Medium",
+          min: 31,
+          max: 45,
+          minBounds: { lower: 4, upper: 95 },
+          maxBounds: { lower: 5, upper: 96 }
+        },
+        {
+          label: "🟢 High",
+          min: 46,
+          max: 60,
+          minBounds: { lower: 6, upper: 97},
+          maxBounds: { lower: 7, upper: 98 }
+        },
+        {
+          label: "🔵 Very High",
+          min: 61,
+          max: 100,
+          minBounds: { lower: 8, upper: 99 },
+          maxBounds: { lower: 100, upper: 100 }
+        }
       ];
 
       let baselineRanges = JSON.parse(JSON.stringify(baseline));
@@ -695,6 +725,26 @@
       // Helper to combine group code and item code into a unique full code
       function getFullCode(groupCode, itemCode) {
         return groupCode + "_" + itemCode;
+      }
+
+      function getMinLowerBound(i) {
+        const value = baseline[i]?.minBounds?.lower;
+        return Number.isFinite(value) ? value : 0;
+      }
+
+      function getMinUpperBound(i) {
+        const value = baseline[i]?.minBounds?.upper;
+        return Number.isFinite(value) ? value : 100;
+      }
+
+      function getMaxLowerBound(i) {
+        const value = baseline[i]?.maxBounds?.lower;
+        return Number.isFinite(value) ? value : 0;
+      }
+
+      function getMaxUpperBound(i) {
+        const value = baseline[i]?.maxBounds?.upper;
+        return Number.isFinite(value) ? value : 100;
       }
 
       function buildInitialUI() {
@@ -865,12 +915,12 @@
       }
 
       function clampBaseline() {
-        baselineRanges.forEach(r => {
-          r.min = Math.max(0, r.min);
-          r.max = Math.min(100, r.max);
+        baselineRanges.forEach((r, i) => {
+          r.min = Math.min(getMinUpperBound(i), Math.max(getMinLowerBound(i), r.min));
+          r.max = Math.min(getMaxUpperBound(i), Math.max(getMaxLowerBound(i), r.max));
         });
 
-        baselineRanges[0].min = 0;
+        baselineRanges[0].min = getMinLowerBound(0);
 
         baselineRanges.forEach(r => {
           if (r.max <= r.min) {
@@ -889,6 +939,9 @@
           if (curr.max <= curr.min) {
             curr.max = curr.min + 1;
           }
+
+          curr.min = Math.min(getMinUpperBound(i), Math.max(getMinLowerBound(i), curr.min));
+          curr.max = Math.min(getMaxUpperBound(i), Math.max(getMaxLowerBound(i), curr.max));
         }
 
         for (let i = baselineRanges.length - 2; i >= 0; i--) {
@@ -901,11 +954,48 @@
 
           if (curr.max <= curr.min) {
             curr.min = curr.max - 1;
-            if (curr.min < 0) curr.min = 0;
+            if (curr.min < getMinLowerBound(i)) curr.min = getMinLowerBound(i);
+          }
+
+          curr.min = Math.min(getMinUpperBound(i), Math.max(getMinLowerBound(i), curr.min));
+          curr.max = Math.min(getMaxUpperBound(i), Math.max(getMaxLowerBound(i), curr.max));
+        }
+
+        baselineRanges[baselineRanges.length - 1].max = getMaxUpperBound(baselineRanges.length - 1);
+      }
+
+      function applyDirectionalBaselineDelta(index, bound, delta) {
+        baselineRanges[index][bound] += delta;
+
+        if (delta > 0) {
+          // Moving upward: push higher ranges up when collisions occur.
+          for (let i = index + 1; i < baselineRanges.length; i++) {
+            const prev = baselineRanges[i - 1];
+            const curr = baselineRanges[i];
+
+            if (curr.min <= prev.max) {
+              const shift = (prev.max + 1) - curr.min;
+              curr.min += shift;
+              curr.max += shift;
+            }
+          }
+
+        } else if (delta < 0) {
+          // Moving downward: push lower ranges down when collisions occur.
+          for (let i = index - 1; i >= 0; i--) {
+            const curr = baselineRanges[i];
+            const next = baselineRanges[i + 1];
+
+            if (curr.max >= next.min) {
+              const shift = (curr.max - next.min) + 1;
+              curr.min -= shift;
+              curr.max -= shift;
+            }
           }
         }
 
-        baselineRanges[baselineRanges.length - 1].max = 100;
+        clampBaseline();
+        return true;
       }
 
       function renderBaselineEditor() {
@@ -927,7 +1017,7 @@
                 "data-bound": "min",
                 "data-dir": "-",
                 text: "–",
-                disabled: i === 0
+                disabled: r.min <= getMinLowerBound(i)
               }),
               createEl("button", {
                 class: "baseline-btn icon-btn",
@@ -935,7 +1025,7 @@
                 "data-bound": "min",
                 "data-dir": "+",
                 text: "+",
-                disabled: i === 0
+                disabled: r.min >= getMinUpperBound(i)
               })
             ])
           ]);
@@ -949,7 +1039,7 @@
                 "data-bound": "max",
                 "data-dir": "-",
                 text: "–",
-                disabled: i === baselineRanges.length - 1
+                disabled: r.max <= getMaxLowerBound(i)
               }),
               createEl("button", {
                 class: "baseline-btn icon-btn",
@@ -957,7 +1047,7 @@
                 "data-bound": "max",
                 "data-dir": "+",
                 text: "+",
-                disabled: i === baselineRanges.length - 1
+                disabled: r.max >= getMaxUpperBound(i)
               })
             ])
           ]);
@@ -1420,7 +1510,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Bug Bounty Signal Estimation Report</title>
+  <title>Bug Bounty COI Program Performance Report</title>
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
@@ -1578,7 +1668,7 @@
   </style>
 </head>
 <body>
-  <h1>Bug Bounty Program - Signal Estimation Report</h1>
+  <h1>Bug Bounty COI Program Performance Report</h1>
   <div class="date">Generated on ${now}</div>
   
   <h2>Target Signal Zones</h2>
@@ -1730,10 +1820,9 @@
           const dir = btn.getAttribute("data-dir");
 
           const delta = dir === "+" ? 1 : -1;
-          baselineRanges[i][bound] += delta;
+          applyDirectionalBaselineDelta(i, bound, delta);
           state.baselineModified = true;
 
-          clampBaseline();
           renderBaselineEditor();
           update();
           return;
