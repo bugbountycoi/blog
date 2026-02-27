@@ -123,6 +123,20 @@
       background: #e3f2fd;
       color: #0d47a1;
       font-weight: 500;
+      border: none;
+      outline: none;
+      cursor: pointer;
+    }
+
+    .chip-input {
+      min-width: 120px;
+      text-align: center;
+      border: 1px solid #90caf9;
+    }
+
+    .chip-input::placeholder {
+      color: #0d47a1;
+      opacity: 0.7;
     }
 
     .scroll-top-btn {
@@ -718,16 +732,18 @@
         left.appendChild(main);
 
         const right = createEl("div", { class: "floating-header-right" });
-        const chip = createEl("div", {
-          class: "chip",
+        const chipInput = createEl("input", {
+          type: "text",
+          class: "chip chip-input",
           id: "signal-chip",
-          text: "Enter signal score"
+          placeholder: "Enter signal %",
+          maxlength: "3"
         });
         
         const copyUrlBtn = createEl("button", {
           class: "scroll-top-btn",
           id: "copy-url-btn",
-          text: "Copy URL"
+          text: "📋 Copy URL"
         });
         
         const resetBaselineBtn = createEl("button", {
@@ -748,7 +764,7 @@
           text: "Back to top"
         });
 
-        right.appendChild(chip);
+        right.appendChild(chipInput);
         right.appendChild(copyUrlBtn);
         right.appendChild(resetBaselineBtn);
         right.appendChild(resetModsBtn);
@@ -1191,12 +1207,35 @@
         update();
       }
 
+      function updateResetButtons() {
+        const resetBaselineBtn = root.querySelector("#reset-baseline");
+        const resetModsBtn = root.querySelector("#reset-modifiers");
+        
+        if (resetBaselineBtn) {
+          if (state.baselineModified) {
+            resetBaselineBtn.textContent = "↻ Reset Baseline";
+          } else {
+            resetBaselineBtn.textContent = "Reset Baseline";
+          }
+        }
+        
+        if (resetModsBtn) {
+          const hasActiveModifiers = Object.keys(state.active).length > 0;
+          if (hasActiveModifiers) {
+            resetModsBtn.textContent = "↻ Reset Modifiers";
+          } else {
+            resetModsBtn.textContent = "Reset Modifiers";
+          }
+        }
+      }
+
       function update() {
         state.total = calculateTotal(state.active);
         const shifted = applyShift(baselineRanges, state.total);
         const clamped = clampRanges(shifted);
         renderScale(clamped, state.total);
         encodeURL();
+        updateResetButtons();
       }
 
       function updateSignalChip() {
@@ -1207,31 +1246,104 @@
         const userSignal = signalInput && signalInput.value ? parseInt(signalInput.value, 10) : null;
         
         if (userSignal === null || isNaN(userSignal)) {
-          chip.textContent = "Enter signal score";
-          chip.style.background = "#e3f2fd";
-          chip.style.color = "#0d47a1";
+          // Convert to input mode
+          if (chip.tagName !== 'INPUT') {
+            const chipInput = createEl("input", {
+              type: "text",
+              class: "chip chip-input",
+              id: "signal-chip",
+              placeholder: "Enter signal %",
+              maxlength: "3"
+            });
+            chip.parentNode.replaceChild(chipInput, chip);
+            chipInput.addEventListener("keydown", handleChipKeydown);
+            chipInput.addEventListener("click", (e) => e.stopPropagation());
+          }
           return;
         }
         
-        // Calculate adjusted ranges
-        const total = state.total;
-        const shifted = applyShift(baselineRanges, total);
-        const clamped = clampRanges(shifted);
-        
-        // Find which zone the signal falls into
-        let zoneIndex = 0;
-        for (let i = 0; i < clamped.length; i++) {
-          if (userSignal >= clamped[i].min && userSignal <= clamped[i].max) {
-            zoneIndex = i;
-            break;
+        // Convert to display mode
+        if (chip.tagName === 'INPUT') {
+          // Calculate adjusted ranges
+          const total = state.total;
+          const shifted = applyShift(baselineRanges, total);
+          const clamped = clampRanges(shifted);
+          
+          // Find which zone the signal falls into
+          let zoneIndex = 0;
+          for (let i = 0; i < clamped.length; i++) {
+            if (userSignal >= clamped[i].min && userSignal <= clamped[i].max) {
+              zoneIndex = i;
+              break;
+            }
+          }
+          
+          const zoneColor = getZoneColor(zoneIndex);
+          
+          const chipDisplay = createEl("div", {
+            class: "chip",
+            id: "signal-chip",
+            text: `${userSignal}%`
+          });
+          chipDisplay.style.background = zoneColor;
+          chipDisplay.style.color = "#fff";
+          chipDisplay.style.cursor = "pointer";
+          chip.parentNode.replaceChild(chipDisplay, chip);
+          
+          // Add click to make editable again
+          chipDisplay.addEventListener("click", () => {
+            const mainInput = root.querySelector("#signal-input");
+            if (mainInput) {
+              mainInput.value = "";
+              mainInput.dispatchEvent(new Event("input"));
+            }
+          });
+        } else {
+          // Update existing display
+          const total = state.total;
+          const shifted = applyShift(baselineRanges, total);
+          const clamped = clampRanges(shifted);
+          
+          let zoneIndex = 0;
+          for (let i = 0; i < clamped.length; i++) {
+            if (userSignal >= clamped[i].min && userSignal <= clamped[i].max) {
+              zoneIndex = i;
+              break;
+            }
+          }
+          
+          const zoneColor = getZoneColor(zoneIndex);
+          chip.textContent = `${userSignal}%`;
+          chip.style.background = zoneColor;
+          chip.style.color = "#fff";
+        }
+      }
+
+      function handleChipKeydown(e) {
+        if (e.key === "Enter") {
+          const chipInput = root.querySelector("#signal-chip");
+          if (!chipInput || chipInput.tagName !== 'INPUT') return;
+          
+          let value = chipInput.value.trim();
+          if (value === "") return;
+          
+          // Parse and validate
+          let numValue = parseInt(value, 10);
+          if (isNaN(numValue)) {
+            numValue = 0;
+          } else if (numValue < 0) {
+            numValue = 0;
+          } else if (numValue > 100) {
+            numValue = 100;
+          }
+          
+          // Update main signal input
+          const mainInput = root.querySelector("#signal-input");
+          if (mainInput) {
+            mainInput.value = numValue;
+            mainInput.dispatchEvent(new Event("input"));
           }
         }
-        
-        const zoneColor = getZoneColor(zoneIndex);
-        
-        chip.textContent = `${userSignal}%`;
-        chip.style.background = zoneColor;
-        chip.style.color = "#fff";
       }
 
       function handleSignalInput(e) {
@@ -1285,7 +1397,7 @@
           const url = window.location.href;
           navigator.clipboard.writeText(url).then(() => {
             const originalText = btn.textContent;
-            btn.textContent = "Copied!";
+            btn.textContent = "✓ Copied!";
             setTimeout(() => {
               btn.textContent = originalText;
             }, 2000);
@@ -1364,6 +1476,12 @@
       const signalInput = root.querySelector("#signal-input");
       if (signalInput) {
         signalInput.addEventListener("input", handleSignalInput);
+      }
+
+      const chipInput = root.querySelector("#signal-chip");
+      if (chipInput && chipInput.tagName === 'INPUT') {
+        chipInput.addEventListener("keydown", handleChipKeydown);
+        chipInput.addEventListener("click", (e) => e.stopPropagation());
       }
 
       document.addEventListener("click", handleClick);
