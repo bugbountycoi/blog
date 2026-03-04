@@ -17,3 +17,6 @@ hugo.linux
 .idea
 
 CNAME
+content/.DS_Store
+.DS_Store
+layouts/.DS_Store
