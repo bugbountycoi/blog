@@ -608,7 +608,7 @@
           exclusive: true,
           desc: "Select only one. What is the default scope configuration for your programs?",
           items: [
-            { pts: -5, label: "In-Scop by Default", code: "D", tooltip: "All assets are considered in-scope unless explicitly excluded. Extremely popular among researchers when selecting a program making it very beginner-friendly." },
+            { pts: -5, label: "In-Scop by Default",      code: "D", tooltip: "All assets are considered in-scope unless explicitly excluded. Extremely popular among researchers when selecting a program making it very beginner-friendly." },
             { pts: +5, label: "Out-of-Scope by Default", code: "O", tooltip: "Requiring assets to be explicitly added in-scope leads to clearer expectations, more dedicated researchers, and lower drive-by submissions." }
           ]
         },
@@ -617,9 +617,9 @@
           code: "ISA",
           desc: "Multi-Select. What types of assets are in-scope for your programs?",
           items: [
-            { pts: -5, label: "OSS assets (many)",              code: "M",  tooltip: "Many open-source assets in-scope can reduce signal quality because of free sast tools available to researchers." },
+            { pts: -5, label: "OSS assets (many)",            code: "M",  tooltip: "Many open-source assets in-scope can reduce signal quality because of free sast tools available to researchers." },
             { pts: -3, label: "Wildcard domains",             code: "W",  tooltip: "'Free-and-open' or unbounded scope is very attractive to researchers." },
-            { pts: -2, label: "OSS assets (one/few)",           code: "O",  tooltip: "Open-source assets are often less signal-rich than proprietary assets." },
+            { pts: -2, label: "OSS assets (one/few)",         code: "O",  tooltip: "Open-source assets are often less signal-rich than proprietary assets." },
             { pts: -2, label: "Software assets",              code: "S",  tooltip: "Disassembly tools are becoming more accessible to researchers, but the skills to develop exploits are lagging behind." },
             { pts: -2, label: "Software-as-a-Service assets", code: "SA", tooltip: "SaaS products are the primary target for researchers because they are often more accessible and easier to exploit." },
             { pts: -1, label: "Firmware assets",              code: "F",  tooltip: "Firmware assets are often harder to analyze properly and exploit." },
@@ -634,8 +634,8 @@
           desc: "Multi-Select. What types of assets does your company have, but are out-of-scope for your programs? Do NOT select these if your company does not have these asset types at all. Instead, only select if you have these asset types but have explicitly excluded them from your programs.",
           items: [
             { pts: -5, label: "IT/Infrastructure",     code: "IT", tooltip: "Submissions on these assets are likely to come in anyway, excluding them increases noise." },
-            { pts: -3, label: "OSS assets (many)",       code: "M",  tooltip: "Submissions on these assets are likely to come in anyway, excluding them increases noise." },
-            { pts: +1, label: "OSS assets (one/few)",    code: "O",  tooltip: "Limited company OSS contributions are less likely to generate noise." },
+            { pts: -3, label: "OSS assets (many)",     code: "M",  tooltip: "Submissions on these assets are likely to come in anyway, excluding them increases noise." },
+            { pts: +1, label: "OSS assets (one/few)",  code: "O",  tooltip: "Limited company OSS contributions are less likely to generate noise." },
             { pts: +1, label: "Mobile apps",           code: "MA", tooltip: "Mobile apps are unlikely to receive out of scope submissions." },
             { pts: +2, label: "Wildcard domains",      code: "W",  tooltip: "Excluding wildcard domains introduces blind spots where your program may miss potential vulnerabilities." },
             { pts: +2, label: "Software-as-a-Service", code: "SA", tooltip: "Excluding SaaS assets may reduce noise but can also miss important vulnerabilities." },
@@ -658,12 +658,14 @@
 
         "Engagement Activities": {
           code: "EA",
-          desc: "Multi-Select. Initiatives to attract researchers and support the community.",
+          desc: "Multi-Select. Initiatives to attract researchers and support the community each year.",
           items: [
             { pts: -2, label: "Hacker community sponsorship", code: "HCS", tooltip: "Sponsoring hacker communities increases visibility and engagement; This can help build a strong, active community around your bug bounty program." },
             { pts: -1, label: "Public Show & Tell",           code: "PST", tooltip: "Publicly showcasing program features and progress builds trust and awareness, drawing new researchers to your program and provides guidance on what you find valuable." },
+            { pts: +1, label: "Public training webinar",      code: "WEB", tooltip: "Hosting webinars helps educate researchers about your products and improve report quality." },
             { pts: +1, label: "1–3 promotions/bonuses",       code: "PR1", tooltip: "Offering rewards or promotions encourages participation in specific in-scope areas directly driving signal." },
-            { pts: +1, label: "Public training webinar",      code: "WEB", tooltip: "Hosting webinars helps educate researchers about your products and improve report quality." }
+            { pts: +3, label: "4-5 promotions/bonuses",       code: "PR4", tooltip: "More frequent rewards or promotions further encourages participation and engagement." },
+            { pts: +6, label: "6+ promotions/bonuses",        code: "PR6", tooltip: "Too-regular promotions is likely to cause researchers to hold vulnerabilities, waiting for the next applicable promotion." }
           ]
         },
 
@@ -672,7 +674,7 @@
           exclusive: true,
           desc: "Select only one. In-person event types planned each year. Select 'one' if you have hosted any number of events in the past but do not have any upcoming events.",
           items: [
-            { pts: +5,  label: "One LHE",  code: "L1", tooltip: "One live hacking event in a year increases visibility and engagement." },
+            { pts: +5,  label: "One LHE",   code: "L1", tooltip: "One live hacking event in a year increases visibility and engagement." },
             { pts: +8,  label: "2–3 LHEs",  code: "L2", tooltip: "Multiple LHEs in a year significantly increases visibility and engagement. Be cautious about repeated scope at events." },
             { pts: +12, label: "4+ LHEs",   code: "L4", tooltip: "Many events in a year greatly reduces the baseline volume your program will expect. Resaerchers will be working behind the scenes to prepare for the next event and will hold onto vulnerabilities anticipating event scope." }
           ]
@@ -683,9 +685,9 @@
           exclusive: true,
           desc: "Select only one. Virtual event types in one year. Select 'one' if you have hosted any number of events in the past but do not have any upcoming events.",
           items: [
-          { pts: -8,  label: "4+ public VHEs",  code: "PV4", tooltip: "Many events in a year is not advised." },
-          { pts: -6,  label: "2-3 public VHEs",  code: "PV2", tooltip: "Multiple opportuntities to access new researchers brings a continual learning curve of noise." },
-          { pts: -3,  label: "One public VHE",  code: "PV1", tooltip: "One public VHE in a year increases visibility and engagement." }
+          { pts: -3,  label: "One public VHE",  code: "PV1", tooltip: "One public VHE in a year increases visibility and engagement." },
+          { pts: -6,  label: "2-3 public VHEs", code: "PV2", tooltip: "Multiple opportuntities to access new researchers brings a continual learning curve of noise." },
+          { pts: -8,  label: "4+ public VHEs",  code: "PV4", tooltip: "Many events in a year is not advised." }
           ]
         },
 
@@ -695,8 +697,8 @@
           desc: "Select only one. Virtual event types in one year. Select 'one' if you have hosted any number of events in the past but do not have any upcoming events.",
           items: [
             { pts: +2,  label: "One invite-only VHE",  code: "IV1", tooltip: "One invite-only VHE in a year directly engages your community and will bring higher signal." },
-            { pts: +4,  label: "2-3 invite-only VHEs",  code: "IV2", tooltip: "Multiple invite-only VHEs can be leveraged to raise signal by targeting specific researcher groups or products." },
-            { pts: +5,  label: "4+ invite-only VHEs",   code: "IV4", tooltip: "Many invite-only VHEs in a year greatly reduces the baseline volume your program will expect." }
+            { pts: +4,  label: "2-3 invite-only VHEs", code: "IV2", tooltip: "Multiple invite-only VHEs can be leveraged to raise signal by targeting specific researcher groups or products." },
+            { pts: +5,  label: "4+ invite-only VHEs",  code: "IV4", tooltip: "Many invite-only VHEs in a year greatly reduces the baseline volume your program will expect." }
           ]
         }
       };
