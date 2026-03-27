@@ -1,7 +1,7 @@
 ---
 title: "Non-Disclosure Agreement"
 date: 2025-08-01
-authors: [
+author: [
   "bbcoi"
 ]
 tags: [

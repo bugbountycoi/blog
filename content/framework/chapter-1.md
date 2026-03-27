@@ -1,7 +1,7 @@
 ---
 title: "Chapter 1: What is a Bug Bounty Program?"
 date: 2021-05-04
-authors: [
+author: [
     "Deana Shick", 
     "Johnathan Kuskos", 
     "Kathleen Trimble-Noble"

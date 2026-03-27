@@ -1,7 +1,7 @@
 ---
 title: "Test of all the tests"
 date: 2024-08-16
-authors: [
+author: [
   "Lady_N"
 ]
 tags: [

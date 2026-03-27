@@ -1,7 +1,7 @@
 ---
 title: "Membership Pledge"
 date: 2025-07-01
-authors: [
+author: [
   "bbcoi"
 ]
 tags: [

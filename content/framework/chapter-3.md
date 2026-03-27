@@ -1,7 +1,7 @@
 ---
 title: "Chapter 3: Charter Your Program & Set Strategic Objectives"
 date: 2021-07-28
-authors: [
+author: [
     "Anil Dewan",
     "Annika Erickson",
     "Kathleen Trimble-Noble",

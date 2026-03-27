@@ -1,7 +1,7 @@
 ---
 title: "Call a Duck a Duck, not a Bug Bounty"
 date: 2020-09-28
-authors: [
+author: [
   "bbcoi"
 ]
 tags: [

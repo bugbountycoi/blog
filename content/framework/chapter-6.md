@@ -1,7 +1,7 @@
 ---
 title: "Chapter 6: Handling Disputes"
 date: 2024-07-22
-authors: [
+author: [
   "Logan MacLaren",
   "Chris Holt",
   "Adam Bacchus"

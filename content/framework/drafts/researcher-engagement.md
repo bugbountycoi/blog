@@ -3,7 +3,7 @@ title: "Researcher Engagement and Communication"
 date: 2025-05-30
 chapter: 3
 version: "1.0"
-authors: ["BBCOI"]
+author: ["BBCOI"]
 draft: true
 weight: 30
 summary: "Best practices for engaging with security researchers, including communication guidelines, recognition programs, and building a positive research community."

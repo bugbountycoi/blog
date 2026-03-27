@@ -2,7 +2,7 @@
 title: "Response: A Practitioner’s Take on Economic Taxonomy of Vulnerabilities"
 date: 2026-02-09
 draft: false
-authors: [
+author: [
   “bbcoi”,
   "Chris Holt",
   "Marc Druzin"
