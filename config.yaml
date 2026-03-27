@@ -35,17 +35,24 @@ params:
   ananke:
     # TODO: don't think I did this right
     social:
+      networks:
+        kofi:
+          slug: "kofi"
+          label: "Ko-fi"
+          profile: "https://ko-fi.com/%s"
+          icon: "kofi"
       follow:
+        new_window_icon: true  # Optional: adds external link icon
         networks:
           - github
           - linkedin
-        new_window_icon: true  # Optional: adds external link icon
+          - kofi
       github:
         profilelink: "https://github.com/bugbountycoi"
-        icon: "github"
       linkedin:
         profilelink: "https://www.linkedin.com/company/bb-coi"
-        icon: "linkedin"
+      kofi:
+        profilelink: "https://ko-fi.com/bugbountycoi"
 
 
 
