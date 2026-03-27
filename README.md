@@ -1,3 +1,5 @@
+[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/Q5Q21PKNZV)
+
 # Bug Bounty COI Website
 
 [![Deploy site](https://github.com/bugbountycoi/blog/actions/workflows/deploy.yml/badge.svg?branch=main)](https://github.com/bugbountycoi/blog/actions/workflows/deploy.yml)
