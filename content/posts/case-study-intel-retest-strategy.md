@@ -1,7 +1,7 @@
 ---
 title: "Case Study: How Intel is Challenging the Norms of Bug Bounty Retesting"
 date: 2024-08-16
-authors: [
+author: [
   "Chris Holt"
 ]
 tags: [

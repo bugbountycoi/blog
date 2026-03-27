@@ -1,7 +1,7 @@
 ---
 title: "Chapter 5: All Things Payment"
 date: 2024-05-13
-authors: [
+author: [
   "Logan MacLaren",
   "Deana Shick",
   "Christopher Robinson",

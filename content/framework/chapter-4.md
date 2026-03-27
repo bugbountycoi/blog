@@ -1,7 +1,7 @@
 ---
 title: "Chapter 4: Scope and Budget"
 date: 2021-09-07
-authors: [
+author: [
   "Anil Dewan",
   "Annika Erickson",
   "Kathleen Trimble-Noble",

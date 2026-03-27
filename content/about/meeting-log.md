@@ -1,7 +1,7 @@
 ---
 title: "Meeting Log"
 date: 2020-01-01
-authors: [
+author: [
   "bbcoi"
 ]
 tags: [

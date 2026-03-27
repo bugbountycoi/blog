@@ -1,7 +1,7 @@
 ---
 title: "Chapter 2: Is a Bug Bounty Program Right for You?"
 date: 2021-06-23
-authors: [
+author: [
   "Sean Poris",
   "Johnathan Kuskos",
   "Josh Dembling",

@@ -3,7 +3,7 @@ title: "Legal and Compliance Considerations"
 date: 2025-05-30
 chapter: 5
 version: "1.0"
-authors: ["BBCOI"]
+author: ["BBCOI"]
 draft: true
 weight: 50
 summary: "Essential legal and compliance guidelines for bug bounty programs, including safe harbor provisions, disclosure policies, and regulatory considerations."

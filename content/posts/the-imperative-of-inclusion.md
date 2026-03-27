@@ -1,7 +1,7 @@
 ---
 title: "The Imperative of Inclusion"
 date: 2020-09-08
-authors: [
+author: [
   "bbcoi"
 ]
 tags: [
