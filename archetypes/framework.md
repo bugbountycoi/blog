@@ -3,7 +3,9 @@ title: "{{ replace .Name "-" " " | title }}"
 date: {{ .Date }}
 chapter: 1  # Change this to the appropriate chapter number
 version: "1.0"
-authors: ["Your Name"]
+author: [
+   "Your Name"
+   ]
 draft: true
 weight: 100  # Lower numbers appear first in the TOC
 summary: "A brief summary of this chapter"
