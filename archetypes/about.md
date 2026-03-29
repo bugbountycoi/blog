@@ -2,7 +2,6 @@
 title: "{{ replace .Name "=" " " | title }}"
 date: {{ .Date }}
 author: [
-  "bbcoi"
 ]
 tags: [
   "about", "policy"
