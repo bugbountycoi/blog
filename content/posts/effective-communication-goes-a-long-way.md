@@ -2,7 +2,6 @@
 title: "Effective Communication Goes a Long Way"
 date: 2020-12-10
 author: [
-  "bbcoi"
 ]
 tags: [
   "communication",
