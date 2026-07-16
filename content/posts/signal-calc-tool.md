@@ -20,7 +20,7 @@ You could summarize the performance (not value) of a VDP or BBP through one sing
 {{< katex >}}
 $$\frac{\text{Valid Reports}}{\text{Valid + Invalid Reports}}$$
 
-The next obviuous thing to ask is: 
+The next obvious thing to ask is: 
 > What is the right signal ratio for my program?
 
 That is one of the most common questions and typically very hard to answer. When you have a happy program performance, you know, and when it’s sad, you know; but judging in the middle is a lot harder to do.
@@ -79,7 +79,7 @@ Your program is generating more noise than signal relative to expectations. This
 - Consider implementing pre-submission guidance or researcher education
 
 #### Orange & Yellow Zones
-The combined **Orange + Yellow** band represents the "growth zone" for most bug bounty programs. This is where the majority of well-established, moderately active programs tend to land. This zone is stable, sustainable, and offers plenty of upside with targeted improvements. Programs in this range are actively processing legitimate security reports but also receiving a meaningful volume of low-quality or invalid submissions. This is not a failure state—it's normal. 
+The combined **Orange + Yellow** band represents the "growth zone" for most bug bounty programs. This is where the majority of well-established, moderately active programs tend to land. This zone is stable, sustainable, and offers plenty of upside with targeted improvements. Programs in this range are actively processing legitimate security reports but also receiving a meaningful volume of low-quality or invalid submissions. This is not a failure state, it's normal. 
 
 Your program is discoverable and interesting to the community, attracting consistent researcher attention. Your team is spending significant effort triaging noise and educating researchers on scope and quality. There's room to improve through clearer guidance, better scoping, or increased engagement.
 
@@ -87,7 +87,7 @@ Things to focus on:
 1. Reduce ambiguity about what's in scope with clearer scope documentation.
 2. Host webinars and resources to help hackers understand your tech stack.
 3. Sponsor events, run challenges, or host CTF-style competitions to build rapport with your researcher base.
-4. Close the loop with researchers—fast rejection with clear reasoning improves submission quality over time.
+4. Close the loop with researchers. Fast rejection with clear reasoning improves submission quality over time.
 
 #### Green Zone
 Your program is performing well for its type. Focus on:
@@ -102,7 +102,7 @@ You're achieving exceptional signal ratio and your program is performing incredi
 - Maintaining your current practices
 - Introduce experiments with your engaged researcher population
 - Inject chaos into the program
-- Challenge researhers directly with specific objectives or team vs team type activities
+- Challenge researchers directly with specific objectives or team vs team type activities
 
 
 ## Important Caveats and Guidance
@@ -111,7 +111,7 @@ You're achieving exceptional signal ratio and your program is performing incredi
 
 While signal ratio is a useful as single metric for **program health**, it doesn't tell the whole story. A program with 70% signal but only 10 reports per year may not be as valuable as one with 40% signal and 500 reports per year. Always consider signal alongside volume, severity distribution, and business impact. 
 
--> This is the first metric you should look at and presesnt, but always be prepared with a much deeper explanation (through other data) about what is going well, what is going poorly, and how to improve it.
+-> This is the first metric you should look at and present, but always be prepared with a much deeper explanation (through other data) about what is going well, what is going poorly, and how to improve it.
 
 ### This Tool Provides Guidance, Not Rules
 The provided baseline scale and modifiers are based on observed patterns across many programs, but your specific situation may warrant different targets. Use this as a starting point for discussion and goal-setting, not as an absolute judgment of program success or failure. 
