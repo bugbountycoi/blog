@@ -1,0 +1,67 @@
+{{ $api := .Get "api" | default "https://membership.bugbountycoi.org/api/applications" }}
+<div class="bbcoi-join-form" data-membership-api="{{ $api }}">
+  <form class="bbcoi-membership-form" novalidate>
+    <div class="bbcoi-form-grid">
+      <label>
+        <span>Full name</span>
+        <input type="text" name="fullName" autocomplete="name" required>
+      </label>
+      <label>
+        <span>Work email</span>
+        <input type="email" name="email" autocomplete="email" required>
+      </label>
+      <label>
+        <span>Company</span>
+        <input type="text" name="company" autocomplete="organization" required>
+      </label>
+      <label>
+        <span>Role or title</span>
+        <input type="text" name="roleTitle" autocomplete="organization-title">
+      </label>
+      <label>
+        <span>Time zone</span>
+        <input type="text" name="timezone" placeholder="America/New_York">
+      </label>
+      <label>
+        <span>Location</span>
+        <input type="text" name="location" placeholder="City, State / Country">
+      </label>
+      <label>
+        <span>LinkedIn or professional profile</span>
+        <input type="url" name="linkedinUrl" placeholder="https://">
+      </label>
+      <label>
+        <span>Referred by</span>
+        <input type="text" name="referredBy">
+      </label>
+    </div>
+
+    <label class="bbcoi-full-width">
+      <span>Why do you want to join the Bug Bounty COI?</span>
+      <textarea name="whyJoin" rows="5" required></textarea>
+    </label>
+
+    <label class="bbcoi-full-width">
+      <span>What would you like to contribute to or get from the group?</span>
+      <textarea name="expectations" rows="4"></textarea>
+    </label>
+
+    <label class="bbcoi-checkbox">
+      <input type="checkbox" name="consentToContact" value="yes" required>
+      <span>I agree to be contacted about my application.</span>
+    </label>
+
+    <label class="bbcoi-checkbox">
+      <input type="checkbox" name="consentToNda" value="yes" required>
+      <span>I understand that approved applicants will need to sign the BBCOI NDA before joining.</span>
+    </label>
+
+    <input type="hidden" name="websiteSource" value="bugbountycoi.org">
+
+    <div class="bbcoi-form-actions">
+      <button type="submit">Submit application</button>
+      <p class="bbcoi-form-status" aria-live="polite"></p>
+    </div>
+  </form>
+</div>
+<script src="{{ "js/join-form.js" | relURL }}" defer></script>

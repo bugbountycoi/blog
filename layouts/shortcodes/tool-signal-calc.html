@@ -1,0 +1,1880 @@
+<div id="signal-calc"></div>
+
+<!--Stylesheet for the Signal Calc tool.-->
+<style>
+    :root {
+      --bg: #f5f5f7;
+      --card-bg: #ffffff;
+      --text-main: #222;
+      --text-muted: #666;
+      --border-subtle: #e0e0e0;
+      --pill-bg: #f2f2f2;
+      --btn-bg: #e5e5e5;
+      --btn-bg-hover: #d5d5d5;
+      --shadow-soft: 0 2px 8px rgba(0,0,0,0.08);
+      --radius-card: 12px;
+      --radius-pill: 20px;
+      --radius-btn: 6px;
+      --transition-fast: 0.2s ease;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: var(--bg);
+      color: var(--text-main);
+    }
+
+    .signal-calc {
+      max-width: 960px;
+      margin: 24px auto 80px;
+      padding: 0 16px 40px;
+    }
+
+    h1 {
+      margin: 0 0 8px;
+      font-size: 1.6rem;
+      font-weight: 650;
+    }
+
+    p.subtitle {
+      margin: 0 0 20px;
+      color: var(--text-muted);
+      font-size: 0.95rem;
+    }
+
+    .floating-header {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: linear-gradient(to bottom, rgba(245,245,247,0.98), rgba(245,245,247,0.9));
+      backdrop-filter: blur(8px);
+      padding: 10px 12px;
+      margin: 0 -16px 16px;
+      border-bottom: 1px solid rgba(0,0,0,0.06);
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .floating-header-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .floating-header-left {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .floating-header-title {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .floating-header-main {
+      display: flex;
+      align-items: baseline;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .total-mod-label {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+    }
+
+    .total-mod {
+      font-weight: 700;
+      font-size: 1.1rem;
+      padding: 2px 8px;
+      border-radius: 999px;
+      min-width: 48px;
+      text-align: center;
+    }
+
+    .total-mod.pos {
+      color: #1b5e20;
+      background: #e8f5e9;
+    }
+
+    .total-mod.neg {
+      color: #b71c1c;
+      background: #ffebee;
+    }
+
+    .floating-header-right {
+      display: flex;
+      gap: 6px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    /* Unified styling for all header buttons and chips */
+    .chip,
+    .scroll-top-btn {
+      font-size: 0.78rem;
+      padding: 6px 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(0, 0, 0, 0.12);
+      outline: none;
+      cursor: pointer;
+      font-weight: 500;
+      transition: all 0.15s ease;
+      white-space: nowrap;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      line-height: 1;
+    }
+
+    .chip {
+      background: #e3f2fd;
+      color: #0d47a1;
+      border-color: #90caf9;
+    }
+
+    .chip:hover {
+      background: #bbdefb;
+      border-color: #64b5f6;
+    }
+
+    .chip-input {
+      min-width: 100px;
+      text-align: center;
+    }
+
+    .chip-input::placeholder {
+      color: #0d47a1;
+      opacity: 0.7;
+    }
+
+    .scroll-top-btn {
+      background: #f5f5f5;
+      color: var(--text-main);
+      border-color: #d0d0d0;
+    }
+
+    .scroll-top-btn:hover {
+      background: #e8e8e8;
+      border-color: #b8b8b8;
+    }
+
+    .scroll-top-btn:active {
+      transform: scale(0.97);
+    }
+
+    .card {
+      background: var(--card-bg);
+      padding: 16px;
+      border-radius: var(--radius-card);
+      box-shadow: var(--shadow-soft);
+      margin-bottom: 20px;
+    }
+
+    .card h3 {
+      margin-top: 0;
+      margin-bottom: 12px;
+      font-size: 1.1rem;
+      font-weight: 600;
+    }
+
+    .baseline-card h3 {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .baseline-card h3::before {
+      content: "⚙️";
+      font-size: 1rem;
+    }
+
+    .baseline-row {
+      display: grid;
+      grid-template-columns: 1.4fr auto auto;
+      align-items: center;
+      padding: 10px 0;
+      border-bottom: 1px solid var(--border-subtle);
+      gap: 12px;
+    }
+
+    .baseline-row:last-child {
+      border-bottom: none;
+    }
+
+    .baseline-label {
+      font-weight: 500;
+      font-size: 0.95rem;
+    }
+
+    .baseline-controls {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      justify-content: flex-end;
+    }
+
+    .value-pill {
+      background: var(--pill-bg);
+      padding: 4px 10px;
+      border-radius: var(--radius-pill);
+      font-size: 0.9rem;
+      font-weight: 500;
+      min-width: 40px;
+      text-align: center;
+    }
+
+    .btn-group {
+      display: flex;
+      gap: 4px;
+    }
+
+    .icon-btn {
+      width: 28px;
+      height: 28px;
+      border-radius: var(--radius-btn);
+      border: none;
+      background: var(--btn-bg);
+      cursor: pointer;
+      font-size: 1rem;
+      font-weight: bold;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      transition: background var(--transition-fast), transform var(--transition-fast);
+    }
+
+    .icon-btn:hover:not(:disabled) {
+      background: var(--btn-bg-hover);
+      transform: translateY(-1px);
+    }
+
+    .icon-btn:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+    }
+
+    /* horizontal zone bar styling */
+    .zone-bar {
+      position: relative;
+      height: 32px;
+      display: flex;
+      border-radius: 16px;
+      overflow: hidden;
+      background: #e0e0e0;
+      margin: 4px 0;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+
+    .zone-segment {
+      height: 100%;
+      flex-shrink: 0;
+    }
+
+    .zone-indicator {
+      position: absolute;
+      top: 0;
+      left: 0;
+      transform: translateX(-50%);
+      height: 100%;
+      display: flex;
+      align-items: center;
+      font-size: 1.2rem;
+      line-height: 1;
+      color: #000;
+      /* add black outline/stroke and slight shadow for visibility on colored backgrounds */
+      -webkit-text-stroke: 1px #fff;
+      text-stroke: 1px #fff; /* non-webkit fallback */
+      text-shadow: 0 0 1px rgba(0,0,0,0.5);
+      opacity: 0.9;
+      pointer-events: none;
+    }
+
+    .zone-labels {
+      position: relative;
+      width: 100%;
+      height: 1.1rem;
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    .zone-labels .zone-label {
+      position: absolute;
+      top: 0;
+      left: 0;
+      transform: translateX(-50%);
+      white-space: nowrap;
+    }
+
+    .reset-btn {
+      margin-top: 8px;
+      padding: 8px 14px;
+      border-radius: 999px;
+      border: none;
+      cursor: pointer;
+      font-size: 0.9rem;
+      font-weight: 500;
+      background: #424242;
+      color: #fff;
+      transition: background var(--transition-fast), transform var(--transition-fast);
+    }
+
+    .reset-btn.secondary {
+      background: #757575;
+      margin-bottom: 16px;
+    }
+
+    .reset-btn:hover {
+      background: #212121;
+      transform: translateY(-1px);
+    }
+
+    .reset-btn.secondary:hover {
+      background: #616161;
+    }
+
+    .modifiers-card h3 {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .modifiers-card h3::before {
+      content: "🎛️";
+      font-size: 1rem;
+    }
+
+    .modifier-group {
+      margin-bottom: 16px;
+    }
+
+    .modifier-group-title {
+      font-weight: 600;
+      margin-bottom: 6px;
+      font-size: 0.95rem;
+    }
+
+    .modifier-group-desc {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+    }
+
+    .modifier-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .mod-btn {
+      border-radius: 6px;
+      border: none;
+      overflow: hidden;
+      font-size: 0.85rem;
+      cursor: pointer;
+      transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+      display: inline-flex;
+      align-items: stretch;
+      height: 28px;
+    }
+
+    .mod-btn.positive {
+      box-shadow: 0 1px 3px rgba(27, 94, 32, 0.2);
+    }
+
+    .mod-btn.negative {
+      box-shadow: 0 1px 3px rgba(183, 28, 28, 0.2);
+    }
+
+    /* ACTIVE STATE — POSITIVE MODIFIERS */
+    .mod-btn.active.positive {
+        box-shadow: 0 2px 6px rgba(0,0,0,0.25), 0 0 0 2px rgba(46,125,50,0.45) !important;
+        transform: translateY(-2px);
+    }
+
+    /* ACTIVE STATE — NEGATIVE MODIFIERS */
+    .mod-btn.active.negative {
+        box-shadow: 0 2px 6px rgba(0,0,0,0.25), 0 0 0 2px rgba(198,40,40,0.45) !important;
+        transform: translateY(-2px);
+    }
+
+    .mod-btn span.points {
+      font-weight: 700;
+      font-size: 0.85rem;
+      padding: 0 8px;
+      min-width: 35px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      white-space: nowrap;
+    }
+
+    .mod-btn.positive .points {
+      background: #1b5e20;
+      color: #ffffff;
+    }
+
+    .mod-btn.negative .points {
+      background: #b71c1c;
+      color: #ffffff;
+    }
+
+    .mod-btn.active.positive .points {
+      background: #0d3818 !important;
+      color: #ffffff !important;
+    }
+
+    .mod-btn.active.negative .points {
+      background: #7d1212 !important;
+      color: #ffffff !important;
+    }
+
+    /* Label text on the right side */
+    .mod-btn span:not(.points) {
+      padding: 0 10px;
+      display: flex;
+      align-items: center;
+      flex: 1;
+      white-space: nowrap;
+    }
+
+    .mod-btn.positive span:not(.points) {
+      background: #e8f5e9;
+      color: #1b5e20;
+    }
+
+    .mod-btn.negative span:not(.points) {
+      background: #ffebee;
+      color: #b71c1c;
+    }
+
+    .mod-btn.active.positive span:not(.points) {
+      background: #2e7d32 !important;
+      color: #ffffff !important;
+    }
+
+    .mod-btn.active.negative span:not(.points) {
+      background: #c62828 !important;
+      color: #ffffff !important;
+    }
+
+    .footer-note {
+      margin-top: 24px;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      text-align: center;
+    }
+
+    @media (max-width: 720px) {
+      .baseline-row {
+        grid-template-columns: 1fr;
+        align-items: flex-start;
+      }
+      .floating-header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .floating-header-right {
+        align-self: stretch;
+        justify-content: space-between;
+      }
+    }
+  </style>
+
+<!-- JavaScript for the Signal Calc tool. -->
+
+<script>
+    (function () {
+      // wrap everything in try/catch so runtime errors are visible
+      const root = document.getElementById("signal-calc");
+      if (!root) {
+        console.error("signal-calc root element not found");
+        return;
+      }
+      try {
+
+      // Centralized string configuration for easy editing
+      const strings = {
+        // Main UI
+        title: "Performance Estimation Using Signal",
+        subtitle: "Adjust the baseline ranges (only if desired) and apply program modifiers to accurately describe your program configuration. Enter your actual signal value (rounded to the nearest whole number) for visual feedback. Share the program configuration results with a simple link, or save a report for offline use such as a slide deck or email.",
+        headerTitle: "Performance Estimate",
+        totalModifierLabel: "Total modifier:",
+        signalPlaceholder: "Enter signal %",
+
+        // Buttons
+        copyUrlBtn: "📋 Copy URL",
+        copyUrlSuccess: "✓ Copied!",
+        resetBaselineBtn: "Reset Baseline",
+        resetBaselineIcon: "↻ Reset Baseline",
+        resetModifiersBtn: "Reset Modifiers",
+        resetModifiersIcon: "↻ Reset Modifiers",
+        backToTopBtn: "Back to top",
+        reportBtn: "📄 Get Report",
+
+        // Sections
+        baselineRangesTitle: "Baseline Ranges",
+        programModifiersTitle: "Program Configuration Modifiers",
+        footerNote: "Baseline ranges and modifiers are for estimation and exploration only.",
+
+        // Report
+        reportTitle: "Bug Bounty COI Program Performance Report",
+        reportDatePrefix: "Generated on",
+        reportZonesHeading: "Target Signal Zones",
+        reportTotalLabel: "Total Modifier Impact",
+        reportModifiersHeading: "Selected Program Modifiers",
+        reportNoModifiers: "No modifiers selected.",
+        reportAccessHeading: "Calculator Access",
+        reportUrlLabel: "URL:",
+        reportFooterPara1: "This report was generated by the Bug Bounty Community of Interest (BBCOI) Signal Range Calculator.",
+        reportFooterPara2: "For more information and to explore different scenarios, visit the calculator directly using the URL above.",
+
+        // Error
+        errorPrefix: "Error initializing signal calculator:"
+      };
+
+      const baseline = [
+        {
+          label: "🔴 Very Low",
+          min: 0,
+          max: 20,
+          minBounds: { lower: 0, upper: 0 },
+          maxBounds: { lower: 1, upper: 92 }
+        },
+        {
+          label: "🟠 Low",
+          min: 21,
+          max: 30,
+          minBounds: { lower: 2, upper: 93 },
+          maxBounds: { lower: 3, upper: 94 }
+        },
+        {
+          label: "🟡 Medium",
+          min: 31,
+          max: 45,
+          minBounds: { lower: 4, upper: 95 },
+          maxBounds: { lower: 5, upper: 96 }
+        },
+        {
+          label: "🟢 High",
+          min: 46,
+          max: 60,
+          minBounds: { lower: 6, upper: 97},
+          maxBounds: { lower: 7, upper: 98 }
+        },
+        {
+          label: "🔵 Very High",
+          min: 61,
+          max: 100,
+          minBounds: { lower: 8, upper: 99 },
+          maxBounds: { lower: 100, upper: 100 }
+        }
+      ];
+
+      let baselineRanges = JSON.parse(JSON.stringify(baseline));
+
+      // modifiers may now be objects with `desc` and `items` properties.
+      // For backwards compatibility the group value can still be an array.
+      const modifiers = {
+        "Program Access": {
+          code: "PA",
+          exclusive: true,
+          desc: "Select only one. What configuration of program types do you offer? (Public, Private, VDP). If you have a combination of programs, select that modifier when considering all your program data combined.",
+          items: [
+            { pts: -15, label: "Public + VDP",           code: "PV",  tooltip: "Offering bounty and non-bounty public programs will create extra noise from confusion for where to submit reports. This combination is not advised." },
+            { pts: -10, label: "VDP",                    code: "V",   tooltip: "VDPs have less risk to researchers because they do not offer rewards, leading to (typically) lower quality submissions." },
+            { pts: -7,  label: "Public",                 code: "P",   tooltip: "Public programs are less signal-rich than private programs." },
+            { pts: -5,  label: "Public + VDP + Private", code: "PVI", tooltip: "Private programs can help offset public/vdp program noise. This combination is not advised." },
+            { pts: -3,  label: "VDP + Private",          code: "VI",  tooltip: "Alternative to Public+Private; lower signal occurs because VDPs do not offer rewards and therefore no risk to the researcher." },
+            { pts: +5,  label: "Public + Private",       code: "PI",  tooltip: "Most common arrangement for companies with multiple programs." },
+            { pts: +10, label: "Private",                code: "I",   tooltip: "Private programs are often the most single-rich, as they typically attract more experienced researchers and higher-quality reports." }
+          ]
+        },
+
+        "Default Scope": {
+          code: "DS",
+          exclusive: true,
+          desc: "Select only one. What is the default scope configuration for your programs?",
+          items: [
+            { pts: -5, label: "In-Scop by Default",      code: "D", tooltip: "All assets are considered in-scope unless explicitly excluded. Extremely popular among researchers when selecting a program making it very beginner-friendly." },
+            { pts: +5, label: "Out-of-Scope by Default", code: "O", tooltip: "Requiring assets to be explicitly added in-scope leads to clearer expectations, more dedicated researchers, and lower drive-by submissions." }
+          ]
+        },
+
+        "Types of Included Assets": {
+          code: "ISA",
+          desc: "Multi-Select. What types of assets are in-scope for your programs?",
+          items: [
+            { pts: -5, label: "OSS assets (many)",            code: "M",  tooltip: "Many open-source assets in-scope can reduce signal quality because of free sast tools available to researchers." },
+            { pts: -3, label: "Wildcard domains",             code: "W",  tooltip: "'Free-and-open' or unbounded scope is very attractive to researchers." },
+            { pts: -2, label: "OSS assets (one/few)",         code: "O",  tooltip: "Open-source assets are often less signal-rich than proprietary assets." },
+            { pts: -2, label: "Software assets",              code: "S",  tooltip: "Disassembly tools are becoming more accessible to researchers, but the skills to develop exploits are lagging behind." },
+            { pts: -2, label: "Software-as-a-Service assets", code: "SA", tooltip: "SaaS products are the primary target for researchers because they are often more accessible and easier to exploit." },
+            { pts: -1, label: "Firmware assets",              code: "F",  tooltip: "Firmware assets are often harder to analyze properly and exploit." },
+            { pts: +1, label: "Mobile apps",                  code: "MA", tooltip: "Mobile apps are often a combination of SaaS/API structures." },
+            { pts: +1, label: "IT/Infrastructure",            code: "IT", tooltip: "IT/Infrastructure assets are often found to have misconfigurations that are exploitable." },
+            { pts: +2, label: "Hardware assets",              code: "H",  tooltip: "Hardware assets are often harder to exploit and require more specialized knowledge." }
+          ]
+        },
+
+        "Types of Excluded Assets": {
+          code: "OOSA",
+          desc: "Multi-Select. What types of assets does your company have, but are out-of-scope for your programs? Do NOT select these if your company does not have these asset types at all. Instead, only select if you have these asset types but have explicitly excluded them from your programs.",
+          items: [
+            { pts: -5, label: "IT/Infrastructure",     code: "IT", tooltip: "Submissions on these assets are likely to come in anyway, excluding them increases noise." },
+            { pts: -3, label: "OSS assets (many)",     code: "M",  tooltip: "Submissions on these assets are likely to come in anyway, excluding them increases noise." },
+            { pts: +1, label: "OSS assets (one/few)",  code: "O",  tooltip: "Limited company OSS contributions are less likely to generate noise." },
+            { pts: +1, label: "Mobile apps",           code: "MA", tooltip: "Mobile apps are unlikely to receive out of scope submissions." },
+            { pts: +2, label: "Wildcard domains",      code: "W",  tooltip: "Excluding wildcard domains introduces blind spots where your program may miss potential vulnerabilities." },
+            { pts: +2, label: "Software-as-a-Service", code: "SA", tooltip: "Excluding SaaS assets may reduce noise but can also miss important vulnerabilities." },
+            { pts: +2, label: "Physical products",     code: "P",  tooltip: "Physical products are unlikely to receive out of scope submissions." }
+          ]
+        },
+
+        "Total Asset Volume": {
+          code: "TAV",
+          exclusive: true,
+          desc: "Select only one. Approximate number of in-scope targets.",
+          items: [
+            { pts: -7, label: "Extra Large (e.g. 500+ assets)",  code: "XL", tooltip: "An immense number of targets increases submission volume and risks lower signal." },
+            { pts: -3, label: "Large (e.g. 100-500 assets)",     code: "L",  tooltip: "Large program scale offers much more room for noise to occur." },
+            { pts: +1, label: "Standard (e.g. 25-100 assets)",   code: "R",  tooltip: "A moderate number of assets." },
+            { pts: +3, label: "Small (e.g. 5-25 assets)",        code: "S",  tooltip: "Scope is easy to maintain but will be unapproachable by most researchers." },
+            { pts: +6, label: "Hyper-Focused (e.g. 1-5 assets)", code: "HF", tooltip: "Extremely tight scope generally produces higher signal and much lower volume." }
+          ]
+        },
+
+        "Engagement Activities": {
+          code: "EA",
+          desc: "Multi-Select. Initiatives to attract researchers and support the community each year.",
+          items: [
+            { pts: -2, label: "Hacker community sponsorship", code: "HCS", tooltip: "Sponsoring hacker communities increases visibility and engagement; This can help build a strong, active community around your bug bounty program." },
+            { pts: -1, label: "Public Show & Tell",           code: "PST", tooltip: "Publicly showcasing program features and progress builds trust and awareness, drawing new researchers to your program and provides guidance on what you find valuable." },
+            { pts: +1, label: "Public training webinar",      code: "WEB", tooltip: "Hosting webinars helps educate researchers about your products and improve report quality." },
+            { pts: +1, label: "1–3 promotions/bonuses",       code: "PR1", tooltip: "Offering rewards or promotions encourages participation in specific in-scope areas directly driving signal." },
+            { pts: +3, label: "4-5 promotions/bonuses",       code: "PR4", tooltip: "More frequent rewards or promotions further encourages participation and engagement." },
+            { pts: +6, label: "6+ promotions/bonuses",        code: "PR6", tooltip: "Too-regular promotions is likely to cause researchers to hold vulnerabilities, waiting for the next applicable promotion." }
+          ]
+        },
+
+        "Live Hacking Events": {
+          code: "LHE",
+          exclusive: true,
+          desc: "Select only one. In-person event types planned each year. Select 'one' if you have hosted any number of events in the past but do not have any upcoming events.",
+          items: [
+            { pts: +5,  label: "One LHE",   code: "L1", tooltip: "One live hacking event in a year increases visibility and engagement." },
+            { pts: +8,  label: "2–3 LHEs",  code: "L2", tooltip: "Multiple LHEs in a year significantly increases visibility and engagement. Be cautious about repeated scope at events." },
+            { pts: +12, label: "4+ LHEs",   code: "L4", tooltip: "Many events in a year greatly reduces the baseline volume your program will expect. Resaerchers will be working behind the scenes to prepare for the next event and will hold onto vulnerabilities anticipating event scope." }
+          ]
+        },
+
+        "Public Virtual Hacking Events": {
+          code: "PVHE",
+          exclusive: true,
+          desc: "Select only one. Virtual event types in one year. Select 'one' if you have hosted any number of events in the past but do not have any upcoming events.",
+          items: [
+          { pts: -3,  label: "One public VHE",  code: "PV1", tooltip: "One public VHE in a year increases visibility and engagement." },
+          { pts: -6,  label: "2-3 public VHEs", code: "PV2", tooltip: "Multiple opportuntities to access new researchers brings a continual learning curve of noise." },
+          { pts: -8,  label: "4+ public VHEs",  code: "PV4", tooltip: "Many events in a year is not advised." }
+          ]
+        },
+
+        "Invite-only Virtual Hacking Events": {
+          code: "IVHE",
+          exclusive: true,
+          desc: "Select only one. Virtual event types in one year. Select 'one' if you have hosted any number of events in the past but do not have any upcoming events.",
+          items: [
+            { pts: +2,  label: "One invite-only VHE",  code: "IV1", tooltip: "One invite-only VHE in a year directly engages your community and will bring higher signal." },
+            { pts: +4,  label: "2-3 invite-only VHEs", code: "IV2", tooltip: "Multiple invite-only VHEs can be leveraged to raise signal by targeting specific researcher groups or products." },
+            { pts: +5,  label: "4+ invite-only VHEs",  code: "IV4", tooltip: "Many invite-only VHEs in a year greatly reduces the baseline volume your program will expect." }
+          ]
+        }
+      };
+
+      const state = {
+        active: {},
+        total: 0,
+        baselineModified: false
+      };
+
+      // separator used in URL parameters (tilde chosen as safe char)
+      const SEP = "~";
+
+      function createEl(tag, props = {}, children = []) {
+        const el = document.createElement(tag);
+        for (const [k, v] of Object.entries(props)) {
+          if (k === "text") {
+            el.textContent = v;
+          } else if (k === "class") {
+            el.className = v;
+          } else if (k === "style") {
+            el.setAttribute("style", v);
+          } else if (k === "disabled") {
+            if (v) el.disabled = true;
+          } else {
+            el.setAttribute(k, v);
+          }
+        }
+        if (!Array.isArray(children)) children = [children];
+        children.forEach(c => {
+          if (c) el.appendChild(c);
+        });
+        return el;
+      }
+
+      // Helper to combine group code and item code into a unique full code
+      function getFullCode(groupCode, itemCode) {
+        return groupCode + "_" + itemCode;
+      }
+
+      // Helper to get user signal from input, returns null if empty/invalid
+      function getUserSignal() {
+        const signalInput = root.querySelector("#signal-input");
+        if (!signalInput || !signalInput.value) return null;
+        const value = parseInt(signalInput.value, 10);
+        if (isNaN(value)) return null;
+        return Math.max(0, Math.min(100, value));
+      }
+
+      // Helper to clamp an integer value to a range
+      function clampInteger(value, min = 0, max = 100) {
+        let numValue = parseInt(value, 10);
+        if (isNaN(numValue)) return min;
+        return Math.max(min, Math.min(max, numValue));
+      }
+
+      // Helper to find which zone index a signal value falls into
+      function findZoneIndex(signal, ranges) {
+        for (let i = 0; i < ranges.length; i++) {
+          if (signal >= ranges[i].min && signal <= ranges[i].max) {
+            return i;
+          }
+        }
+        return 0;
+      }
+
+      // Helper to create the chip input element
+      function createChipInputElement() {
+        const chipInput = createEl("input", {
+          type: "text",
+          class: "chip chip-input",
+          id: "signal-chip",
+          placeholder: strings.signalPlaceholder,
+          maxlength: "3"
+        });
+        chipInput.addEventListener("keydown", handleChipKeydown);
+        chipInput.addEventListener("click", (e) => e.stopPropagation());
+        return chipInput;
+      }
+
+      function getMinLowerBound(i) {
+        const value = baseline[i]?.minBounds?.lower;
+        return Number.isFinite(value) ? value : 0;
+      }
+
+      function getMinUpperBound(i) {
+        const value = baseline[i]?.minBounds?.upper;
+        return Number.isFinite(value) ? value : 100;
+      }
+
+      function getMaxLowerBound(i) {
+        const value = baseline[i]?.maxBounds?.lower;
+        return Number.isFinite(value) ? value : 0;
+      }
+
+      function getMaxUpperBound(i) {
+        const value = baseline[i]?.maxBounds?.upper;
+        return Number.isFinite(value) ? value : 100;
+      }
+
+      function buildInitialUI() {
+        const title = createEl("h1", { text: strings.title });
+        const subtitle = createEl("p", {
+          class: "subtitle",
+          text: strings.subtitle
+        });
+        root.appendChild(title);
+        root.appendChild(subtitle);
+
+        const header = createEl("div", { class: "floating-header" });
+
+        const left = createEl("div", { class: "floating-header-left" });
+        const headerTitle = createEl("div", {
+          class: "floating-header-title",
+          text: strings.headerTitle
+        });
+        const main = createEl("div", { class: "floating-header-main" });
+
+        const totalLabel = createEl("span", {
+          class: "total-mod-label",
+          text: strings.totalModifierLabel
+        });
+        const totalSpan = createEl("span", {
+          class: "total-mod",
+          text: "+0"
+        });
+        totalSpan.classList.add("pos");
+        totalSpan.setAttribute("data-role", "total-mod");
+
+        main.appendChild(totalLabel);
+        main.appendChild(totalSpan);
+
+        left.appendChild(headerTitle);
+        left.appendChild(main);
+
+        const right = createEl("div", { class: "floating-header-right" });
+        const chipInput = createEl("input", {
+          type: "text",
+          class: "chip chip-input",
+          id: "signal-chip",
+          placeholder: strings.signalPlaceholder,
+          maxlength: "3"
+        });
+
+        const copyUrlBtn = createEl("button", {
+          class: "scroll-top-btn",
+          id: "copy-url-btn",
+          text: strings.copyUrlBtn
+        });
+
+        const resetBaselineBtn = createEl("button", {
+          class: "scroll-top-btn",
+          id: "reset-baseline",
+          text: strings.resetBaselineBtn
+        });
+
+        const resetModsBtn = createEl("button", {
+          class: "scroll-top-btn",
+          id: "reset-modifiers",
+          text: strings.resetModifiersBtn
+        });
+
+        const scrollBtn = createEl("button", {
+          class: "scroll-top-btn",
+          id: "scroll-top",
+          text: strings.backToTopBtn
+        });
+
+        const reportBtn = createEl("button", {
+          class: "scroll-top-btn",
+          id: "report-btn",
+          text: strings.reportBtn
+        });
+
+        right.appendChild(chipInput);
+        right.appendChild(copyUrlBtn);
+        right.appendChild(reportBtn);
+        right.appendChild(scrollBtn);
+        right.appendChild(resetBaselineBtn);
+        right.appendChild(resetModsBtn);
+
+        // Create top row with left and right sections
+        const topRow = createEl("div", { class: "floating-header-row" });
+        topRow.appendChild(left);
+        topRow.appendChild(right);
+
+        // Create zone display row
+        const zoneRow = createEl("div", { class: "scale-box" });
+
+        header.appendChild(topRow);
+        header.appendChild(zoneRow);
+        root.appendChild(header);
+
+        // Hidden signal input (value managed by chip in header)
+        const signalInput = createEl("input", {
+          type: "hidden",
+          id: "signal-input"
+        });
+        root.appendChild(signalInput);
+
+        const baselineCard = createEl("div", { class: "card baseline-card" }, [
+          createEl("h3", { text: strings.baselineRangesTitle }),
+          createEl("div", { class: "baseline-box" })
+        ]);
+        root.appendChild(baselineCard);
+
+        const modifiersCard = createEl("div", { class: "card modifiers-card" });
+        const modTitle = createEl("h3", { text: strings.programModifiersTitle });
+        modifiersCard.appendChild(modTitle);
+
+        Object.entries(modifiers).forEach(([groupName, groupData]) => {
+          const group = createEl("div", { class: "modifier-group" });
+          const groupTitle = createEl("div", {
+            class: "modifier-group-title",
+            text: groupName
+          });
+          group.appendChild(groupTitle);
+
+          // optional description field
+          const desc = groupData && groupData.desc;
+          if (desc) {
+            const descEl = createEl("div", {
+              class: "modifier-group-desc",
+              text: desc
+            });
+            group.appendChild(descEl);
+          }
+
+          const btnRow = createEl("div", { class: "modifier-buttons" });
+          const items = Array.isArray(groupData) ? groupData : groupData.items || [];
+
+          items.forEach((item, idx) => {
+            const fullCode = getFullCode(groupData.code, item.code);
+            const props = {
+              class: "mod-btn " + (item.pts >= 0 ? "positive" : "negative"),
+              "data-group": groupName,
+              "data-index": idx.toString(),
+              "data-code": fullCode
+            };
+            if (item.tooltip) {
+              props.title = item.tooltip;
+            }
+            const btn = createEl("button", props);
+
+            const ptsSpan = createEl("span", {
+              class: "points",
+              text: (item.pts >= 0 ? "+" : "") + item.pts
+            });
+            const labelSpan = createEl("span", { text: item.label });
+
+            btn.appendChild(ptsSpan);
+            btn.appendChild(labelSpan);
+            btnRow.appendChild(btn);
+          });
+
+          group.appendChild(btnRow);
+          modifiersCard.appendChild(group);
+        });
+        root.appendChild(modifiersCard);
+
+        const footer = createEl("div", {
+          class: "footer-note",
+          text: strings.footerNote
+        });
+        root.appendChild(footer);
+      }
+
+      function clampBaseline() {
+        baselineRanges.forEach((r, i) => {
+          r.min = Math.min(getMinUpperBound(i), Math.max(getMinLowerBound(i), r.min));
+          r.max = Math.min(getMaxUpperBound(i), Math.max(getMaxLowerBound(i), r.max));
+        });
+
+        baselineRanges[0].min = getMinLowerBound(0);
+
+        baselineRanges.forEach(r => {
+          if (r.max <= r.min) {
+            r.max = r.min + 1;
+          }
+        });
+
+        for (let i = 1; i < baselineRanges.length; i++) {
+          const prev = baselineRanges[i - 1];
+          const curr = baselineRanges[i];
+
+          if (curr.min <= prev.max) {
+            curr.min = prev.max + 1;
+          }
+
+          if (curr.max <= curr.min) {
+            curr.max = curr.min + 1;
+          }
+
+          curr.min = Math.min(getMinUpperBound(i), Math.max(getMinLowerBound(i), curr.min));
+          curr.max = Math.min(getMaxUpperBound(i), Math.max(getMaxLowerBound(i), curr.max));
+        }
+
+        for (let i = baselineRanges.length - 2; i >= 0; i--) {
+          const curr = baselineRanges[i];
+          const next = baselineRanges[i + 1];
+
+          if (curr.max >= next.min) {
+            curr.max = next.min - 1;
+          }
+
+          if (curr.max <= curr.min) {
+            curr.min = curr.max - 1;
+            if (curr.min < getMinLowerBound(i)) curr.min = getMinLowerBound(i);
+          }
+
+          curr.min = Math.min(getMinUpperBound(i), Math.max(getMinLowerBound(i), curr.min));
+          curr.max = Math.min(getMaxUpperBound(i), Math.max(getMaxLowerBound(i), curr.max));
+        }
+
+        baselineRanges[baselineRanges.length - 1].max = getMaxUpperBound(baselineRanges.length - 1);
+      }
+
+      function applyDirectionalBaselineDelta(index, bound, delta) {
+        baselineRanges[index][bound] += delta;
+
+        if (delta > 0) {
+          // Moving upward: push higher ranges up when collisions occur.
+          for (let i = index + 1; i < baselineRanges.length; i++) {
+            const prev = baselineRanges[i - 1];
+            const curr = baselineRanges[i];
+
+            if (curr.min <= prev.max) {
+              const shift = (prev.max + 1) - curr.min;
+              curr.min += shift;
+              curr.max += shift;
+            }
+          }
+
+        } else if (delta < 0) {
+          // Moving downward: push lower ranges down when collisions occur.
+          for (let i = index - 1; i >= 0; i--) {
+            const curr = baselineRanges[i];
+            const next = baselineRanges[i + 1];
+
+            if (curr.max >= next.min) {
+              const shift = (curr.max - next.min) + 1;
+              curr.min -= shift;
+              curr.max -= shift;
+            }
+          }
+        }
+
+        clampBaseline();
+        return true;
+      }
+
+      // State for tracking baseline button hold intervals
+      let baselineHoldState = {
+        holdTimer: null,
+        repeatInterval: null,
+        isHolding: false
+      };
+
+      // Apply a baseline button action and update UI
+      function applyBaselineButtonAction(btn) {
+        const i = parseInt(btn.getAttribute("data-index"), 10);
+        const bound = btn.getAttribute("data-bound");
+        const dir = btn.getAttribute("data-dir");
+        const delta = dir === "+" ? 1 : -1;
+
+        applyDirectionalBaselineDelta(i, bound, delta);
+        state.baselineModified = true;
+        renderBaselineEditor();
+        update();
+      }
+
+      // Setup baseline button hold/repeat functionality
+      function setupBaselineButtonHold(btn) {
+        let holdTimeout;
+        let repeatInt;
+
+        btn.addEventListener("mousedown", () => {
+          baselineHoldState.isHolding = true;
+
+          // First immediate action on click
+          applyBaselineButtonAction(btn);
+
+          // Wait 500ms before starting continuous repeat
+          holdTimeout = setTimeout(() => {
+            if (!baselineHoldState.isHolding) return;
+
+            // Repeat every 100ms
+            repeatInt = setInterval(() => {
+              if (!baselineHoldState.isHolding) {
+                clearInterval(repeatInt);
+                return;
+              }
+              applyBaselineButtonAction(btn);
+            }, 100);
+          }, 500);
+        });
+
+        btn.addEventListener("mouseup", () => {
+          baselineHoldState.isHolding = false;
+          if (holdTimeout) clearTimeout(holdTimeout);
+          if (repeatInt) clearInterval(repeatInt);
+        });
+
+        btn.addEventListener("mouseleave", () => {
+          baselineHoldState.isHolding = false;
+          if (holdTimeout) clearTimeout(holdTimeout);
+          if (repeatInt) clearInterval(repeatInt);
+        });
+      }
+
+      function renderBaselineEditor() {
+        const box = root.querySelector(".baseline-box");
+        box.innerHTML = "";
+
+        baselineRanges.forEach((r, i) => {
+          const row = createEl("div", { class: "baseline-row" });
+
+          const label = createEl("div", { class: "baseline-label", text: r.label });
+          row.appendChild(label);
+
+          const minControls = createEl("div", { class: "baseline-controls" }, [
+            createEl("span", { class: "value-pill", text: r.min }),
+            createEl("div", { class: "btn-group" }, [
+              createEl("button", {
+                class: "baseline-btn icon-btn",
+                "data-index": i,
+                "data-bound": "min",
+                "data-dir": "-",
+                text: "–",
+                disabled: r.min <= getMinLowerBound(i)
+              }),
+              createEl("button", {
+                class: "baseline-btn icon-btn",
+                "data-index": i,
+                "data-bound": "min",
+                "data-dir": "+",
+                text: "+",
+                disabled: r.min >= getMinUpperBound(i)
+              })
+            ])
+          ]);
+
+          const maxControls = createEl("div", { class: "baseline-controls" }, [
+            createEl("span", { class: "value-pill", text: r.max }),
+            createEl("div", { class: "btn-group" }, [
+              createEl("button", {
+                class: "baseline-btn icon-btn",
+                "data-index": i,
+                "data-bound": "max",
+                "data-dir": "-",
+                text: "–",
+                disabled: r.max <= getMaxLowerBound(i)
+              }),
+              createEl("button", {
+                class: "baseline-btn icon-btn",
+                "data-index": i,
+                "data-bound": "max",
+                "data-dir": "+",
+                text: "+",
+                disabled: r.max >= getMaxUpperBound(i)
+              })
+            ])
+          ]);
+
+          row.appendChild(minControls);
+          row.appendChild(maxControls);
+
+          box.appendChild(row);
+        });
+
+        // Setup hold/repeat functionality on all baseline buttons
+        const baselineButtons = box.querySelectorAll(".baseline-btn");
+        baselineButtons.forEach(btn => {
+          setupBaselineButtonHold(btn);
+        });
+      }
+
+      function applyShift(baselineRanges, total) {
+        // shift every boundary by the total amount
+        const shifted = baselineRanges.map((r, i) => {
+          return {
+            min: r.min + total,
+            max: r.max + total
+          };
+        });
+
+        // pin endpoints to 0/100 before fixing adjacency
+        if (shifted.length) {
+          if (shifted[0].min < 0) {
+            shifted[0].min = 0;
+            if (shifted[0].max <= shifted[0].min) {
+              shifted[0].max = shifted[0].min + 1;
+            }
+          }
+          const last = shifted[shifted.length - 1];
+          if (last.max > 100) {
+            last.max = 100;
+            if (last.max <= last.min) {
+              last.min = last.max - 1;
+            }
+          }
+          if (last.max < 100) {
+            // negative shifts may push the top below 100; pin it
+            last.max = 100;
+            if (last.min >= last.max) {
+              last.min = last.max - 1;
+            }
+          }
+        }
+
+        // ensure ranges are consecutive and at least 1 unit wide
+        for (let i = 1; i < shifted.length; i++) {
+          const prev = shifted[i - 1];
+          const curr = shifted[i];
+          if (curr.min <= prev.max) {
+            curr.min = prev.max + 1;
+            if (curr.max <= curr.min) {
+              curr.max = curr.min + 1;
+            }
+          }
+        }
+
+        // clamp all ranges within 0..100 and add label/emoji
+        return shifted.map((s, i) => {
+          let min = Math.max(0, s.min);
+          let max = Math.min(100, s.max);
+          if (max <= min) max = min + 1;
+          const emoji = baseline[i].label.split(" ")[0];
+          const label = `${emoji} ${min}–${max}%`;
+          return { label, min, max };
+        });
+      }
+
+      // helper chooses color for each zone index
+      function getZoneColor(idx) {
+        const colors = ["#e53935","#fb8c00","#fdd835","#43a047","#1e88e5"];
+        return colors[idx] || colors[colors.length-1];
+      }
+
+      function renderScale(ranges, total) {
+        const scaleBox = root.querySelector(".scale-box");
+        scaleBox.innerHTML = "";
+
+        const userSignal = getUserSignal();
+
+        // build single horizontal bar with segments
+        const bar = createEl("div", { class: "zone-bar" });
+        const labels = createEl("div", { class: "zone-labels" });
+
+        ranges.forEach((r, i) => {
+          const width = r.max - r.min;
+          const isLast = i === ranges.length - 1;
+          const seg = createEl("div", {
+            class: "zone-segment",
+            style: `flex-basis:${width}%;${isLast ? 'flex-grow:1;' : ''}background:${getZoneColor(i)};`
+          });
+          bar.appendChild(seg);
+
+          // label showing full range, centered under segment
+          const centerPos = r.min + (width / 2);
+          const lbl = createEl("div", {
+            class: "zone-label",
+            text: `${r.min}–${r.max}%`,
+            style: `left:${centerPos}%;`
+          });
+          labels.appendChild(lbl);
+        });
+
+        scaleBox.appendChild(bar);
+        scaleBox.appendChild(labels);
+
+        if (userSignal !== null) {
+          const ind = createEl("div", { class: "zone-indicator", text: "★" });
+          const pos = Math.max(0, Math.min(100, userSignal));
+          ind.style.left = pos + "%";
+          bar.appendChild(ind);
+        }
+
+        const totalSpan = root.querySelector('[data-role="total-mod"]');
+        totalSpan.textContent = (total >= 0 ? "+" : "") + total;
+        totalSpan.className = "total-mod " + (total >= 0 ? "pos" : "neg");
+      }
+
+      function calculateTotal(active) {
+        return Object.values(active).reduce((sum, v) => sum + v, 0);
+      }
+
+      function encodeURL() {
+        const params = new URLSearchParams();
+
+        // --- Encode active modifiers by group ---
+        Object.entries(modifiers).forEach(([groupName, groupData]) => {
+          const groupCode = groupData.code;
+          const items = groupData.items || [];
+          const activeCodes = items
+            .filter(item => state.active[getFullCode(groupCode, item.code)])
+            .map(item => item.code);
+          if (activeCodes.length) {
+            params.set(groupCode, activeCodes.join(SEP));
+          }
+        });
+
+        // --- Only encode adjusted range if baseline has been modified ---
+        if (state.baselineModified) {
+          const ranges = applyShift(baselineRanges, state.total);
+          const adj = ranges.map(r => `${r.min}-${r.max}`).join(SEP);
+          params.set("adj", adj);
+        }
+
+        const newUrl = window.location.pathname + "?" + params.toString();
+        try {
+          window.history.replaceState({}, "", newUrl);
+        } catch (e) {
+          // history manipulation may fail in some environments (e.g. file:// or jsdom)
+          console.warn("encodeURL: replaceState failed", e);
+        }
+      }
+
+      function decodeURL() {
+        const params = new URLSearchParams(window.location.search);
+
+        state.active = {};
+
+        // --- Decode modifiers from group parameters ---
+        Object.entries(modifiers).forEach(([groupName, groupData]) => {
+          const groupCode = groupData.code;
+          const items = groupData.items || [];
+          const groupModsParam = params.get(groupCode);
+          if (groupModsParam) {
+            const codes = groupModsParam.split(SEP);
+            items.forEach(item => {
+              if (codes.includes(item.code)) {
+                const fullCode = getFullCode(groupCode, item.code);
+                state.active[fullCode] = item.pts;
+              }
+            });
+          }
+        });
+
+        const adjParam = params.get("adj");
+        if (adjParam) {
+            const parts = adjParam.split(SEP);
+            if (parts.length === baselineRanges.length) {
+                const parsed = parts.map(p => {
+                const [minStr, maxStr] = p.split("-");
+                return {
+                    min: parseInt(minStr, 10),
+                    max: parseInt(maxStr, 10)
+                };
+                });
+
+                // Replace baselineRanges with decoded adjusted ranges
+                parsed.forEach((p, i) => {
+                if (!isNaN(p.min) && !isNaN(p.max)) {
+                    baselineRanges[i].min = p.min;
+                    baselineRanges[i].max = p.max;
+                }
+                });
+
+                clampBaseline();
+            }
+        }
+      }
+
+      function renderModifiers() {
+        const buttons = root.querySelectorAll(".mod-btn");
+        buttons.forEach(btn => {
+          const code = btn.getAttribute("data-code");
+          if (state.active[code]) {
+            btn.classList.add("active");
+          } else {
+            btn.classList.remove("active");
+          }
+        });
+      }
+
+      function resetBaseline() {
+        baselineRanges = JSON.parse(JSON.stringify(baseline));
+        state.baselineModified = false;
+        clampBaseline();
+        renderBaselineEditor();
+        update();
+      }
+
+      function resetModifiers() {
+        state.active = {};
+        renderModifiers();
+        update();
+      }
+
+      function updateResetButtons() {
+        const resetBaselineBtn = root.querySelector("#reset-baseline");
+        const resetModsBtn = root.querySelector("#reset-modifiers");
+
+        if (resetBaselineBtn) {
+          if (state.baselineModified) {
+            resetBaselineBtn.textContent = strings.resetBaselineIcon;
+          } else {
+            resetBaselineBtn.textContent = strings.resetBaselineBtn;
+          }
+        }
+
+        if (resetModsBtn) {
+          const hasActiveModifiers = Object.keys(state.active).length > 0;
+          if (hasActiveModifiers) {
+            resetModsBtn.textContent = strings.resetModifiersIcon;
+          } else {
+            resetModsBtn.textContent = strings.resetModifiersBtn;
+          }
+        }
+      }
+
+      function update() {
+        state.total = calculateTotal(state.active);
+        const ranges = applyShift(baselineRanges, state.total);
+        renderScale(ranges, state.total);
+        encodeURL();
+        updateResetButtons();
+        updateSignalChip();
+      }
+
+      function updateSignalChip() {
+        const chip = root.querySelector("#signal-chip");
+        if (!chip) return;
+
+        const userSignal = getUserSignal();
+
+        if (userSignal === null || isNaN(userSignal)) {
+          // Convert to input mode
+          if (chip.tagName !== 'INPUT') {
+            const chipInput = createChipInputElement();
+            chip.parentNode.replaceChild(chipInput, chip);
+          }
+          return;
+        }
+
+        // Convert to display mode
+        if (chip.tagName === 'INPUT') {
+          // Calculate adjusted ranges
+          const ranges = applyShift(baselineRanges, state.total);
+          const zoneIndex = findZoneIndex(userSignal, ranges);
+          const zoneColor = getZoneColor(zoneIndex);
+
+          const chipDisplay = createEl("div", {
+            class: "chip",
+            id: "signal-chip",
+            text: `${userSignal}%`
+          });
+          chipDisplay.style.background = zoneColor;
+          chipDisplay.style.color = "#fff";
+          chipDisplay.style.cursor = "pointer";
+          chip.parentNode.replaceChild(chipDisplay, chip);
+
+          // Add click to make editable again
+          chipDisplay.addEventListener("click", () => {
+            const mainInput = root.querySelector("#signal-input");
+            if (mainInput) {
+              mainInput.value = "";
+              mainInput.dispatchEvent(new Event("input"));
+            }
+          });
+        } else {
+          // Update existing display
+          const ranges = applyShift(baselineRanges, state.total);
+          const zoneIndex = findZoneIndex(userSignal, ranges);
+          const zoneColor = getZoneColor(zoneIndex);
+          chip.textContent = `${userSignal}%`;
+          chip.style.background = zoneColor;
+          chip.style.color = "#fff";
+        }
+      }
+
+      function handleChipKeydown(e) {
+        if (e.key === "Enter") {
+          const chipInput = root.querySelector("#signal-chip");
+          if (!chipInput || chipInput.tagName !== 'INPUT') return;
+
+          let value = chipInput.value.trim();
+          if (value === "") return;
+
+          // Parse and validate
+          const numValue = clampInteger(value, 0, 100);
+
+          // Update main signal input
+          const mainInput = root.querySelector("#signal-input");
+          if (mainInput) {
+            mainInput.value = numValue;
+            mainInput.dispatchEvent(new Event("input"));
+          }
+        }
+      }
+
+      function handleSignalInput(e) {
+        const signalInput = root.querySelector("#signal-input");
+        if (!signalInput) return;
+
+        let value = signalInput.value.trim();
+
+        // Allow empty value
+        if (value === "") {
+          const ranges = applyShift(baselineRanges, state.total);
+          renderScale(ranges, state.total);
+          updateSignalChip();
+          return;
+        }
+
+        // Parse and validate
+        const numValue = clampInteger(value, 0, 100);
+
+        // Update input with sanitized value
+        signalInput.value = numValue;
+
+        const ranges = applyShift(baselineRanges, state.total);
+        renderScale(ranges, state.total);
+        updateSignalChip();
+      }
+
+      function generateReport() {
+        const ranges = applyShift(baselineRanges, state.total);
+        const userSignal = getUserSignal();
+
+        // Get selected modifiers
+        const selectedMods = {};
+        Object.entries(modifiers).forEach(([groupName, groupData]) => {
+          const items = groupData.items || [];
+          const selected = items.filter(item => {
+            const fullCode = getFullCode(groupData.code, item.code);
+            return state.active[fullCode];
+          });
+          if (selected.length > 0) {
+            selectedMods[groupName] = selected;
+          }
+        });
+
+        // Build HTML report
+        const now = new Date().toLocaleDateString('en-US', {
+          year: 'numeric',
+          month: 'long',
+          day: 'numeric'
+        });
+
+        let html = `
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>${strings.reportTitle}</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: white;
+      color: #222;
+      line-height: 1.6;
+      padding: 40px;
+    }
+    h1 { font-size: 2rem; margin-bottom: 8px; color: #0d47a1; }
+    .date { color: #666; margin-bottom: 30px; font-size: 0.95rem; }
+    h2 {
+      font-size: 1.3rem;
+      margin-top: 30px;
+      margin-bottom: 15px;
+      color: #1565c0;
+      border-bottom: 2px solid #e0e0e0;
+      padding-bottom: 8px;
+    }
+    .zone-visualization {
+      margin: 20px 0;
+      padding: 20px;
+      background: #f5f5f5;
+      border-radius: 8px;
+    }
+    .zone-bar-report {
+      position: relative;
+      height: 40px;
+      display: flex;
+      border-radius: 12px;
+      overflow: hidden;
+      background: #e0e0e0;
+      margin-bottom: 12px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    .zone-indicator-report {
+      position: absolute;
+      top: 0;
+      left: 0;
+      transform: translateX(-50%);
+      height: 100%;
+      display: flex;
+      align-items: center;
+      font-size: 1.5rem;
+      line-height: 1;
+      color: #000;
+      -webkit-text-stroke: 1px #fff;
+      text-stroke: 1px #fff;
+      text-shadow: 0 0 1px rgba(0,0,0,0.5);
+      opacity: 0.9;
+      pointer-events: none;
+    }
+    .zone-segment-report {
+      height: 100%;
+      flex-shrink: 0;
+    }
+    .zone-label-report {
+      display: flex;
+      align-items: flex-start;
+      font-size: 0.8rem;
+      color: #666;
+      margin-top: 4px;
+      gap: 0;
+    }
+    .zone-range {
+      font-weight: 500;
+      text-align: center;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      padding: 0 2px;
+      line-height: 1.2;
+    }
+    .modifiers-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 15px 0;
+      background: white;
+      border: 1px solid #ddd;
+    }
+    .modifiers-table th {
+      background: #e3f2fd;
+      padding: 12px;
+      text-align: left;
+      font-weight: 600;
+      border-bottom: 2px solid #90caf9;
+    }
+    .modifiers-table td {
+      padding: 12px;
+      border-bottom: 1px solid #eee;
+    }
+    .modifiers-table tr:hover {
+      background: #f9f9f9;
+    }
+    .group-name {
+      font-weight: 600;
+      color: #0d47a1;
+      background: #f0f4ff;
+      padding: 10px 12px;
+      margin: 15px 0 10px 0;
+      border-left: 4px solid #0d47a1;
+    }
+    .modifier-item {
+      padding: 8px 12px;
+      margin: 4px 0;
+      background: white;
+      border-left: 2px solid #90caf9;
+    }
+    .modifier-label {
+      font-weight: 500;
+      color: #222;
+    }
+    .modifier-points {
+      color: #666;
+      font-size: 0.9rem;
+      margin-top: 2px;
+    }
+    .total-section {
+      background: #f0f4ff;
+      padding: 15px;
+      border-radius: 6px;
+      margin: 20px 0;
+      border-left: 4px solid #0d47a1;
+    }
+    .total-label { color: #666; font-size: 0.95rem; }
+    .total-value {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: #1b5e20;
+      margin-top: 4px;
+    }
+    .total-value.negative { color: #b71c1c; }
+    .url-section {
+      background: #fff3e0;
+      padding: 15px;
+      border-radius: 6px;
+      margin: 20px 0;
+      border-left: 4px solid #f57c00;
+      font-family: monospace;
+      word-break: break-all;
+      font-size: 0.85rem;
+    }
+    .footer {
+      margin-top: 40px;
+      padding-top: 20px;
+      border-top: 1px solid #eee;
+      color: #999;
+      font-size: 0.85rem;
+    }
+    @media print {
+      body { padding: 0; }
+      h1, h2 { page-break-after: avoid; }
+      .zone-visualization, .modifiers-table { page-break-inside: avoid; }
+    }
+  </style>
+</head>
+<body>
+  <h1>${strings.reportTitle}</h1>
+  <div class="date">${strings.reportDatePrefix} ${now}</div>
+
+  <h2>${strings.reportZonesHeading}</h2>
+  <div class="zone-visualization">
+    <div class="zone-bar-report">
+`;
+
+        // Add zone segments
+        ranges.forEach((r, i) => {
+          const width = r.max - r.min;
+          const isLast = i === ranges.length - 1;
+          html += `<div class="zone-segment-report" style="flex-basis:${width}%;${isLast ? 'flex-grow:1;' : ''}background:${getZoneColor(i)};"></div>`;
+        });
+
+        // Add signal indicator if value exists
+        if (userSignal !== null) {
+          html += `<div class="zone-indicator-report" style="left:${userSignal}%;">★</div>`;
+        }
+
+        html += `
+    </div>
+    <div class="zone-label-report">
+`;
+        ranges.forEach((r, i) => {
+          const width = r.max - r.min;
+          const isLast = i === ranges.length - 1;
+          html += `<span class="zone-range" style="flex-basis:${width}%;${isLast ? 'flex-grow:1;' : ''}">${r.min}–${r.max}%</span>`;
+        });
+        html += `
+    </div>
+  </div>
+
+  <div class="total-section">
+    <div class="total-label">${strings.reportTotalLabel}</div>
+    <div class="total-value ${state.total < 0 ? 'negative' : ''}">${state.total >= 0 ? '+' : ''}${state.total}%</div>
+  </div>
+`;
+
+        // Add selected modifiers
+        if (Object.keys(selectedMods).length > 0) {
+          html += `<h2>${strings.reportModifiersHeading}</h2>`;
+          Object.entries(selectedMods).forEach(([groupName, items]) => {
+            html += `<div class="group-name">${groupName}</div>`;
+            items.forEach(item => {
+              html += `
+              <div class="modifier-item">
+                <div class="modifier-label">${item.label}</div>
+                <div class="modifier-points">${item.pts >= 0 ? '+' : ''}${item.pts} points${item.tooltip ? ` — ${item.tooltip}` : ''}</div>
+              </div>
+`;
+            });
+          });
+        } else {
+          html += `<h2>${strings.reportModifiersHeading}</h2><p>${strings.reportNoModifiers}</p>`;
+        }
+
+        html += `
+  <h2>${strings.reportAccessHeading}</h2>
+  <div class="url-section"><strong>${strings.reportUrlLabel}</strong><br>${window.location.href}</div>
+
+  <div class="footer">
+    <p>${strings.reportFooterPara1}</p>
+    <p>${strings.reportFooterPara2}</p>
+  </div>
+</body>
+</html>
+`;
+
+        // Open in new tab
+        const reportWindow = window.open('', '_blank');
+        reportWindow.document.write(html);
+        reportWindow.document.close();
+      }
+
+      function handleClick(e) {
+        const btn = e.target.closest("button");
+        if (!btn) return;
+
+        if (btn.id === "report-btn") {
+          generateReport();
+          return;
+        }
+
+        if (btn.id === "scroll-top") {
+          window.scrollTo({ top: 0, behavior: "smooth" });
+          return;
+        }
+
+        if (btn.id === "copy-url-btn") {
+          const url = window.location.href;
+          navigator.clipboard.writeText(url).then(() => {
+            const originalText = btn.textContent;
+            btn.textContent = strings.copyUrlSuccess;
+            setTimeout(() => {
+              btn.textContent = originalText;
+            }, 2000);
+          });
+          return;
+        }
+
+        if (btn.id === "reset-baseline") {
+          resetBaseline();
+          return;
+        }
+
+        if (btn.id === "reset-modifiers") {
+          resetModifiers();
+          return;
+        }
+
+        if (btn.classList.contains("mod-btn")) {
+          const code = btn.getAttribute("data-code");
+          const groupName = btn.getAttribute("data-group");
+          const idx = parseInt(btn.getAttribute("data-index"), 10);
+          const groupData = modifiers[groupName];
+          const groupCode = groupData.code;
+          const item = groupData.items[idx];
+
+          // If already active, just toggle off
+          if (state.active[code]) {
+            delete state.active[code];
+            renderModifiers();
+            update();
+            return;
+          }
+
+          // If group is exclusive, clear all other items in this group
+          if (groupData.exclusive) {
+            groupData.items.forEach(other => {
+              const otherCode = getFullCode(groupCode, other.code);
+              if (state.active[otherCode]) {
+                delete state.active[otherCode];
+              }
+            });
+          }
+
+          // Activate this item
+          state.active[code] = item.pts;
+
+          renderModifiers();
+          update();
+          return;
+        }
+      }
+
+      buildInitialUI();
+      decodeURL();
+      clampBaseline();
+      renderBaselineEditor();
+      renderModifiers();
+      update();
+
+      const signalInput = root.querySelector("#signal-input");
+      if (signalInput) {
+        signalInput.addEventListener("input", handleSignalInput);
+      }
+
+      const chipInput = root.querySelector("#signal-chip");
+      if (chipInput && chipInput.tagName === 'INPUT') {
+        chipInput.addEventListener("keydown", handleChipKeydown);
+        chipInput.addEventListener("click", (e) => e.stopPropagation());
+      }
+
+      document.addEventListener("click", handleClick);
+    } catch (err) {
+      console.error("signal-calc caught error", err);
+      if (root) {
+        root.innerHTML = '<div style="color:red;font-weight:bold;">' + strings.errorPrefix + ' ' +
+          (err.message || err.toString()) + '</div>';
+      }
+    }
+    })();
+</script>
