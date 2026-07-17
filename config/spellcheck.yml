@@ -4,7 +4,14 @@ matrix:
     lang: en
   dictionary:
     encoding: utf-8
+    wordlists:
+    - config/wordlist.txt
   pipeline:
+  - pyspelling.filters.context:
+      context_visible_first: true
+      delimiters:
+      - open: '(?s)\A---$'
+        close: '^---$'
   - pyspelling.filters.markdown:
   - pyspelling.filters.html:
       comments: false
@@ -12,9 +19,5 @@ matrix:
       - code
       - pre
   sources:
-  - '**/*.md'
+  - 'content/**/*.md'
   default_encoding: utf-8
-  dictionaries:
-  - en_US
-  - en_GB
-  - ./config/wordlist.txt
