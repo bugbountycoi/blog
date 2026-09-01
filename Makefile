@@ -2,7 +2,7 @@
 
 .PHONY: init
 init:
-	hugo mod get
+	hugo mod tidy
 	pre-commit install --install-hooks
 
 .PHONY: update
