@@ -16,6 +16,7 @@ tags: [
 draft: false
 summary: "Why better AI models cannot replace the product judgment behind faster triage, stronger fix validation, and trustworthy evidence."
 ---
+Author: Gabriel Nitu (Splunk, a Cisco Company). Cross-published [by Splunk](https://www.splunk.com/en_us/blog/artificial-intelligence/ai-scales-bug-bounty-reports-product-knowledge-scales-triage.html)
 
 *Why better AI models cannot replace the product judgment behind faster triage, stronger fix validation, and trustworthy evidence.*
 
