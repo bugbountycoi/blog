@@ -2,7 +2,6 @@
 title: "Privacy Policy"
 date: 2020-01-01
 author: [
-  "bbcoi"
 ]
 tags: [
   "about", "privacy", "policy", "legal"

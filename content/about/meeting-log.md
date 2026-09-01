@@ -2,7 +2,6 @@
 title: "Meeting Log"
 date: 2020-01-01
 author: [
-  "bbcoi"
 ]
 tags: [
   "social", "meeting", "discussion", "presentation", "speakers", "notes", "log", "about", "policy"
