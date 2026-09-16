@@ -6,8 +6,14 @@ title: "Join the Bug Bounty COI"
 
 The Bug Bounty Community of Interest (BBCOI) welcomes bug bounty program managers from various companies to join our community.
 
-### Registration Form
+Applications go through a staged review process:
 
-Please fill out the form below to register:
+- admin board vote
+- general member vote
+- NDA signature
+- membership fee payment
+- Slack and meeting onboarding
 
-{{< form 1FAIpQLSc9kXhgmPldYA63Ia3wWUQRBPfzgBFRnsLnO6GkdyWYlTXhLg >}}
+Please use the form below to start the process.
+
+{{< membership-form api="https://membership.bugbountycoi.org/api/applications" >}}

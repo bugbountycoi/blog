@@ -107,7 +107,7 @@ summary: A list of past meeting topics and presenters.
 | July | Matthew Luallen | Presentation |
 | June | -- | Discussion: Strategic planning, Admin Board Elections |
 | May | Dr. Amit Elazari | Discussion: Policy Update - What all these new policies mean |
-| April | Becky Bracken | Presentation: Demystifing Journalist Experience - ThreatPost |
+| April | Becky Bracken | Presentation: Demystifying Journalist Experience - ThreatPost |
 | March | Sarah Jacobs | Presentation: Neurodiversity in Research |
 | February | Jay Angus | Discussion: Common terms - The Impact on language on the security community "terms and conditions" |
 | January | -- | Strategic Sync with Wider BB: How are we doing? |  

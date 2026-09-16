@@ -61,3 +61,96 @@
   color: #666;
   margin-top: 1rem;
 }
+
+.bbcoi-join-form {
+  margin-top: 2rem;
+  padding: 1.5rem;
+  background: #f6f7f9;
+  border: 1px solid #d7dce2;
+  border-radius: 1rem;
+}
+
+.bbcoi-membership-form {
+  display: grid;
+  gap: 1rem;
+}
+
+.bbcoi-form-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1rem;
+}
+
+.bbcoi-membership-form label {
+  display: grid;
+  gap: 0.4rem;
+  font-weight: 600;
+  color: #1f2933;
+}
+
+.bbcoi-membership-form input,
+.bbcoi-membership-form textarea {
+  width: 100%;
+  padding: 0.75rem 0.9rem;
+  font: inherit;
+  font-weight: 400;
+  color: #10212b;
+  background: #fff;
+  border: 1px solid #b8c2cc;
+  border-radius: 0.75rem;
+}
+
+.bbcoi-membership-form textarea {
+  resize: vertical;
+  min-height: 8rem;
+}
+
+.bbcoi-checkbox {
+  grid-template-columns: auto 1fr;
+  align-items: start;
+}
+
+.bbcoi-checkbox input {
+  width: auto;
+  margin-top: 0.2rem;
+}
+
+.bbcoi-form-actions {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.bbcoi-form-actions button {
+  width: fit-content;
+  padding: 0.85rem 1.25rem;
+  border: 0;
+  border-radius: 999px;
+  background: #0f5f8c;
+  color: #fff;
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.bbcoi-form-actions button:disabled {
+  opacity: 0.6;
+  cursor: wait;
+}
+
+.bbcoi-form-status {
+  margin: 0;
+  min-height: 1.5rem;
+  font-weight: 600;
+}
+
+.bbcoi-form-status[data-state="success"] {
+  color: #166534;
+}
+
+.bbcoi-form-status[data-state="error"] {
+  color: #b42318;
+}
+
+.bbcoi-form-status[data-state="pending"] {
+  color: #0f5f8c;
+}
