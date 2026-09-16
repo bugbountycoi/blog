@@ -1,7 +1,6 @@
 ---
 title: "Bug Bounty Community of Interest"
 tags: [
-  "bbcoi"
 ]
 ---
 

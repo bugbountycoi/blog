@@ -2,7 +2,6 @@
 title: "About Us"
 date: 2020-01-01
 author: [
-  "bbcoi"
 ]
 tags: [
   "about", "policy"

@@ -2,7 +2,6 @@
 title: "Non-Disclosure Agreement"
 date: 2025-08-01
 author: [
-  "bbcoi"
 ]
 tags: [
   "pledge", "about", "policy", "membership", "nda"

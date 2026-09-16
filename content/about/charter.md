@@ -2,7 +2,6 @@
 title: "Charter"
 date: 2020-01-01
 author: [
-  "bbcoi"
 ]
 tags: [
   "about", "policy", "charter", "membership"
